@@ -1,4 +1,6 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+th:replace="navbar::layout(~{::section})"
+>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,25 +12,28 @@
       integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
       crossorigin="anonymous"
     />
+    
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Tangerine"
     />
-    <!-- @import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap"); -->
+    
     <link rel="stylesheet" th:href="@{/css/form.css}" />
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+   
     <script
       src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
       crossorigin="anonymous"
     ></script>
     <style>
+      @import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap"); 
       #toast{
         position: fixed;
     bottom: 20px;
@@ -40,7 +45,7 @@
 
   </head>
   <body>
-    <div th:replace="~{navbar ::navbar}"></div>
+    
     <section class="html__section">
       <div class="login-box">
         <h2>Category</h2>
@@ -87,6 +92,23 @@
           <!-- </a> -->
           <script>
             $(document).ready(() => {
+
+              // $('form').submit((even)=>{
+              //   event.preventDefault();
+              //   $.ajax({
+              //     type:'POST',
+              //     url:'/master/savecat',
+                  
+
+
+
+              //   });
+
+
+              // })
+
+
+
               var a = $("#errormessage").html();
               if (a != "" && a != null) {
                 $("#toast").toast("show");
@@ -101,7 +123,7 @@
       
     </section>
     <div
-        class="toast align-items-center text-white alert-danger bg-primary border-0"
+        class="toast align-items-center text-white bg-danger  border-0"
         role="alert"
         aria-live="assertive"
         aria-atomic="true"

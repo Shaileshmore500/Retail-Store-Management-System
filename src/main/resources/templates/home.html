@@ -1,17 +1,19 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-
+th:replace="navbar::layout(~{::section})"
     >
 	<!-- th:replace="navbar::layout(~{::section})" -->
 	<!-- th:replace="~{navbar::layout(~{::section})}" -->
 <head>
 <meta charset="UTF-8" />
+<link href="/dist/output.css" rel="stylesheet">
 <title>this is home page</title>
 </head>
 <body>
+	<!-- <div th:replace="~{navbar ::navbar}"></div> -->
 	<section class="banner d-flex justify-content-center align-items-center ">
 		<div class="text-center">
-			<h1 class="font-weight-bold">Smart Contact Manager</h1>
+			<h1 class="font-weight-bold text-5xl text-red-800">Smart Contact Manager</h1>
 		    <p>
 		        Start Collecting your contacts in very smarter way. We provide
 				very efficient and smarter way of handling contacts.

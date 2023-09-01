@@ -42,7 +42,24 @@ public class ctr {
 
         // model.addAttribute("data", cat);
 
-        return "CategoryForm";
+        return "forms/CategoryForm";
+    }
+
+    @GetMapping("/nav")
+    public String nav() {
+        // Category cat = new Category();
+
+        // cat.setCode("code");
+        // cat.setName("name");
+
+        // model.addAttribute("data", cat);
+
+        return "navbar";
+    }
+
+    @GetMapping("/product")
+    public String product() {
+        return "forms/product";
     }
 
 }
