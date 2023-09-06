@@ -22,8 +22,6 @@ public class SecurtyConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/home")
                 .hasRole("ADMIN")
-                .requestMatchers("/nor")
-                .hasRole("NOR")
                 .requestMatchers("/login")
                 .permitAll()
                 .anyRequest()

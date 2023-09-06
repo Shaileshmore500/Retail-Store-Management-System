@@ -1,9 +1,12 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-th:replace="navbar::layout(~{::section})"
+th:replace="~{navbar::layout(~{::section})}"
     >
 	<!-- th:replace="navbar::layout(~{::section})" -->
 	<!-- th:replace="~{navbar::layout(~{::section})}" -->
+	<!-- navbar::layout(~{::section}) -->
+	
+
 <head>
 <meta charset="UTF-8" />
 <link href="/dist/output.css" rel="stylesheet">
@@ -21,6 +24,9 @@ th:replace="navbar::layout(~{::section})"
 			<button class="btn bg-primary btn-lg text-white">Get Start</button>
 			
 		</div>
+		<script>
+			alert(1)
+		</script>
 	</section>
 </body>
 </html>

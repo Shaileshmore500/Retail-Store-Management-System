@@ -163,6 +163,7 @@
         background-color: var(--aside-bg);
         color: white;
         border-radius: 0px 10px 10px 0px;
+        padding-left: 0px;
       }
       .aside__navbar.active {
         width: 15%;
@@ -209,6 +210,7 @@
         align-items: flex-start;
         flex-direction: column;
         gap: 1.5rem;
+        padding-left: 0px;
       }
       .nav__menu .menu {
         width: 140px;
@@ -232,6 +234,10 @@
         width: 75%;
         height: 100%;
         padding: 2rem;
+      }
+      .transform
+      {
+        transform:rotate(180deg);
       }
     </style>
     <title th:text="${title}">Base html</title>
@@ -307,8 +313,10 @@
         <aside class="aside__navbar active" id="aside">
           <div class="upper__aside">
             <div class="aside__logo">
-              <b class="logo">A</b>
-              <span class="logo__name">Retail</span>
+              <!-- <b class="logo">A</b> -->
+              <i class="fa-solid fa-angles-left fa-2xl" id="open_side"></i>
+             
+              <!-- <span class="logo__name">Retail</span> -->
             </div>
             <ul class="nav__menu">
               <li class="menu">
@@ -336,21 +344,34 @@
           <div class="lower__aside">kefk</div>
         </aside>
         <main class="main__page">
-          <!-- <nav class="page__navbar">Navbar</nav>
+           <nav class="page__navbar">Navbar</nav>
           <section class="page__body">
             <button id="aside_bar">Aside</button>
-          </section> -->
+          </section> 
           <div th:replace="${content}"></div>
          
         </main>
       </div>
       <script>
-        const aside = document.getElementById("aside_bar");
+        // const aside = document.getElementById("aside_bar");
 
-        aside.addEventListener("click", () => {
-          const aside_bar = document.getElementById("aside");
-          aside_bar.classList.toggle("active");
+        // aside.addEventListener("click", () => {
+        //   const aside_bar = document.getElementById("aside");
+        //   aside_bar.classList.toggle("active");
+        // });
+
+        $(document).ready(()=>{
+$("#open_side").click(()=>{
+
+$("#aside").toggleClass("active");
+$("#open_side").toggleClass("transform")
+
+});
+
+
+
         });
+
       </script>
       <!-- 
 	END navbar -->
