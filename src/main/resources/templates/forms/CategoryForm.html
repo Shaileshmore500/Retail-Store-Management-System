@@ -1,5 +1,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-th:replace="navbar::layout(~{::section})"
+th:replace="~{navbar::layout(~{::section})}"
+
+
 >
   <head>
     <meta charset="UTF-8" />
@@ -91,6 +93,7 @@ th:replace="navbar::layout(~{::section})"
           </button>
           <!-- </a> -->
           <script>
+            debugger;
             $(document).ready(() => {
 
               // $('form').submit((even)=>{
@@ -109,12 +112,12 @@ th:replace="navbar::layout(~{::section})"
 
 
 
-              var a = $("#errormessage").html();
-              if (a != "" && a != null) {
-                $("#toast").toast("show");
-              } else {
-                $("#toast").toast("hide");
-              }
+              // var a = '[[${errormessage}]]';
+              // if (a != "" && a != null) {
+              //   $("#toast").toast("show");
+              // } else {
+              //   $("#toast").toast("hide");
+              // }
             });
           </script>
         </form>
@@ -122,23 +125,7 @@ th:replace="navbar::layout(~{::section})"
       <!--toast-->
       
     </section>
-    <div
-        class="toast align-items-center text-white bg-danger  border-0"
-        role="alert"
-        aria-live="assertive"
-        aria-atomic="true"
-        id="toast"
-      >
-        <div class="d-flex">
-          <div class="toast-body">Hello, world! This is a toast message.</div>
-          <button
-            type="button"
-            class="btn-close btn-close-white me-2 m-auto"
-            data-bs-dismiss="toast"
-            aria-label="Close"
-          ></button>
-        </div>
-      </div>
+   
     <script
       src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
       integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"

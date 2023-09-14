@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap"); 
 .login-box {
     position: absolute;
     top: 50%;
@@ -147,6 +148,12 @@
     animation: btn-anim4 1s linear infinite;
     animation-delay: 0.75s;
   } 
+  
+      #toast{
+        position: fixed;
+    bottom: 20px;
+    right: 20px;
+      }
 /* 
   @keyframes btn-anim4 {
     0% {

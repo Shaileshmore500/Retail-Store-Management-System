@@ -1,0 +1,219 @@
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap");
+:root {
+  --color-primary: #3547e8;
+  --color-danger: #ff7782;
+  --color-success: #41f1b6;
+  --color-warning: #ffbb55;
+  --color-white: #fff;
+  --color-info-dark: #7d8da1;
+  --color-info-light: #dce1eb;
+  --color-dark: #363949;
+  --color-light: rgba(132, 139, 200, 0.1);
+  --color-primary-variant: #0f1f99;
+  --color-dark-variant: #677483;
+  --color-background: #f6f6f9;
+  --aside-bg: #1c0c5b;
+  --card-border-radius: 2rem;
+  --border-radius-1: 0.4rem;
+  --border-radius-2: 0.8rem;
+  --border-radius-3: 1.2rem;
+
+  --card-padding: 1.8rem;
+  --padding-1: 1.2rem;
+
+  --box-shadow: 0 2rem 3rem var(--color-light);
+}
+.dark-theme-variables {
+  --color-background: #181a1e;
+  --color-white: #202528;
+  --color-dark: #edeffd;
+  --aside-bg: #3d2c8d;
+  --color-dark-variant: #a3bdcc;
+  --color-light: rgba(0, 0, 0, 0.4);
+  --box-shadow: 0 2rem 3rem var(--color-light);
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-transform: capitalize;
+  border: none;
+  outline: none;
+  list-style: none;
+  transition: all 0.3s ease;
+  font-family: "Lexend", sans-serif;
+}
+html {
+  font-size: 14px;
+  scroll-behavior: smooth;
+}
+body {
+  width: 100vw;
+  height: 100vh;
+  font-size: 0.88rem;
+  background: var(--color-background);
+  user-select: none;
+  overflow-x: hidden;
+  color: var(--color-dark);
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+h1 {
+  font-weight: 800;
+  font-size: 1.8rem;
+}
+h2 {
+  font-size: 1.4rem;
+}
+h3 {
+  font-size: 0.87rem;
+}
+h4 {
+  font-size: 0.8rem;
+}
+h5 {
+  font-size: 0.77rem;
+}
+small {
+  font-size: 0.75rem;
+}
+
+.profile-photo {
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.text-muted {
+  color: var(--color-info-dark);
+}
+.primary {
+  color: var(--color-primary);
+}
+.danger {
+  color: var(--color-danger);
+}
+.success {
+  color: var(--color-success);
+}
+.warning {
+  color: var(--color-warning);
+}
+
+/* CSS START FROM HERE */
+
+.page {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: var(--color-white);
+  color: var(--color-dark);
+}
+
+/* aside bar css */
+.aside__navbar {
+  width: 7%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 2rem;
+  box-shadow: var(--box-shadow);
+  background-color: var(--aside-bg);
+  color: white;
+  border-radius: 0px 0px 0px 0px;
+  padding-left: 0px;
+}
+.aside__navbar.active {
+  width: 15%;
+}
+.aside__navbar .upper__aside {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 4rem;
+}
+.upper__aside .aside__logo {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  padding-left: 15px;
+}
+.aside__logo .logo{
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    color: var(--aside-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: var(--box-shadow);
+    border-radius: 50%;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+.aside__logo .logo__name{
+    display: none;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+.active .logo__name{
+    display: block;
+}
+.nav__menu{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+.nav__menu .menu{
+    width: 140px;
+    padding: .5rem .3rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    height: 39px;
+}
+.menu .menu__link{
+   display: none; 
+    color: white;
+}
+.active .menu__link{
+    display: block;
+}
+/* main page css */
+.main__page {
+  width: 75%;
+  height: 100%;
+}
+.page__navbar{
+  width: 125%;
+  padding: 1rem 2rem;
+  background-color: var(--aside-bg);
+  color: white;
+}
+#aside_bar i{
+  font-size: 2rem;
+  cursor: pointer;
+}
+.page__body{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

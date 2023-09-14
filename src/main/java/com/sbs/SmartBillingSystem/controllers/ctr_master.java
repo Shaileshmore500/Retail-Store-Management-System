@@ -34,7 +34,7 @@ public class ctr_master {
 
         }
 
-        return "CategoryForm";
+        return "forms/CategoryForm";
     }
 
 }
