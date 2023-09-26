@@ -1,17 +1,52 @@
-const aside = document.getElementById('aside_bar');
+const aside = document.getElementById("aside_bar");
 
-aside.addEventListener('click',()=>{
-    const aside_bar = document.getElementById('aside');
-    aside_bar.classList.toggle('active');
-})
-errorToast();
-function errorToast()
-{
-    debugger;
-var a = '[[${errormessage}]]';
-              if (a != "" && a != null) {
-                $("#toast").toast("show");
-              } else {
-                $("#toast").toast("hide");
-              }
-            }
+aside.addEventListener("click", () => {
+  
+  const aside_bar = document.getElementById("aside");
+  aside_bar.classList.toggle("active");
+});
+//errorToast();
+function errorToast(msg) {
+  debugger;
+  var a = msg;
+  if (a != "" && a != null) {
+    $("#toast").toast("show");
+  } else {
+    $("#toast").toast("hide");
+  }
+}
+
+$(document).ready(function() {
+
+debugger;
+
+  $(".toggleChild").click(function() {
+    console.log(this)
+   $(".child-menu_"+this.id).slideToggle();
+      
+  });
+});
+
+
+
+
+
+// $(".toggleChild").click(()=>{
+
+// alert(1)
+// // Find the closest parent li element
+// var parentLi = $(this).closest("li");
+
+// // Find the sibling div with the class child-menu
+// var childMenuDiv = parentLi.next(".child-menu");
+
+// // Toggle the visibility of the child-menu div
+// childMenuDiv.toggle();
+
+
+
+
+
+
+// //$(".clild-menu").slideToggle();
+// });

@@ -163,6 +163,11 @@
   }
   .form-floating > .form-select {
     padding-top: 0px !important;
+    border: none;
+    border-bottom: 1px solid;
+    border-radius: 0px;
+    position: absolute;
+    top: 13px;
   }
   .btn-div {
     justify-content: end;

@@ -24,12 +24,10 @@ th:fragment="layout(content)"
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <link rel="stylesheet" th:href="@{/css/nav.css}" />
 <link rel="stylesheet" th:href="@{/css/form.css}" />
-
-
-
+<link rel="stylesheet" th:href="@{/css/Erp.css}" />
+<link rel="stylesheet" th:href="@{/css/Base.css}" />
+<!-- <link rel="stylesheet" th:href="@{/css/ErpNewHome.css}" /> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
-
 <link
  rel="stylesheet"
  href="https://fonts.googleapis.com/css?family=Tangerine"
@@ -49,37 +47,78 @@ crossorigin="anonymous"
           <b class="logo">S</b>
           <span class="logo__name">Sensys</span>
         </div>
+        
+
+
+
         <ul class="nav__menu">
-          <li class="menu">
+          <li class="menu _menu">
             <i class="icon fa-solid fa-house fa-2xl"></i>
             <a href="/" class="menu__link">Home</a>
+            
           </li>
-          <li class="menu">
-            <i class="icon fa-solid fa-mug-hot fa-2xl"></i>
-            <a href="/" class="menu__link">Retail</a>
+          <li class="menu _menu">
+            
+              <i class="icon fa-solid fa-mug-hot fa-2xl"></i>
+              <a href="/" class="menu__link">Master</a>
+              <i class="fa-solid fa-sort-down toggleChild" id="master"></i>
           </li>
-          <li class="menu">
+          <div class="clild-menu clild-menu_master menu">
+            <ul>
+              <li>
+                <i class="icon fa-solid fa-mug-hot fa-xl "></i>
+              <a href="#" class="menu__link">Product</a>
+              </li>
+              <li>
+                <i class="icon fa-solid fa-mug-hot fa-xl"></i>
+                <a href="#" class="menu__link">Product</a>
+                </li>
+                
+            </ul>
+
+          </div>
+          <li class="_menu menu">
             <i class="icon fa-solid fa-circle-user fa-2xl"></i>
             <a href="/" class="menu__link">User</a>
           </li>
-          <li class="menu">
+          <li class="_menu menu">
             <i class="icon fa-brands fa-dropbox fa-2xl"></i>
             <a href="/" class="menu__link ">DropBox</a>
           </li>
-          <li class="menu">
+          <li class="_menu menu">
             <i class="icon fa-solid fa-gear fa-2xl"></i>
             <a href="/" class="menu__link">Setting</a>
           </li>
           
         </ul>
+
+
+
+
+
+
       </div>
       <div class="lower__aside"></div>
     </aside>
     <main class="main__page">
-      <nav class="page__navbar">
-        <div id="aside_bar">
-          <i class="fa-solid fa-bars"></i>
+      <nav class="page__navbar" >
+        <div style="display: flex;">
+          <div id="aside_bar">          
+            <i class="fa-solid fa-bars fa-2xl"></i>         
+            
+          </div>
+          <div style="position: relative;">  
+            <a href="#">
+              <i class="fa-regular fa-user fa-2xl"></i>
+            </a>         
+            <a href="#" style="position: absolute;
+            border: 1px solid #fff;
+            border-radius: 54px;">              
+              <img th:src="@{\images\Screenshot.png}" class="round-image" alt="123">
+            </a>
+          </div>
         </div>
+       
       </nav>
       <section class="page__body">
         
@@ -97,7 +136,7 @@ crossorigin="anonymous"
   id="toast"
 >
   <div class="d-flex">
-    <div class="toast-body">Hello, world! This is a toast message.</div>
+    <div class="toast-body"></div>
     <button
       type="button"
       class="btn-close btn-close-white me-2 m-auto"
@@ -124,6 +163,8 @@ crossorigin="anonymous"
   integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
   crossorigin="anonymous"
 ></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
 
       <script th:src=@{/js/nav.js}></script>
 </body>

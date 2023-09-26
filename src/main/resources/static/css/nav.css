@@ -40,7 +40,7 @@
   border: none;
   outline: none;
   list-style: none;
-  transition: all 0.3s ease;
+  /* transition: all 0.3s ease; */
   font-family: "Lexend", sans-serif;
 }
 html {
@@ -177,7 +177,7 @@ small {
     flex-direction: column;
     gap: 1.5rem;
 }
-.nav__menu .menu{
+.nav__menu ._menu{
     width: 140px;
     padding: .5rem .3rem;
     border-radius: 10px;
@@ -216,4 +216,39 @@ small {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.round-image
+{
+  height: 25px;
+  width: 25px;
+  cursor: pointer;  
+  border-radius: 54px;
+  inset: 0px;
+
+}
+.clild-menu
+{
+  position: relative;
+    left: 52px;
+    top: -16px;
+}
+.clild-menu ul li
+{
+  display: flex;
+    gap: 11px;
+    
+    padding-top: 3px;
+    height: 20px;
+    padding-bottom: 26px;
+}
+.clild-menu ul li a
+{
+  position: relative;
+    display: flex;
+
+
+}
+.clild-menu ul li i{
+  position: relative;
+  bottom: -11px;
 }
