@@ -23,8 +23,7 @@ $(document).ready(function() {
 //$('.clild-menu').hide();
 debugger;
   $(".toggleChild").click(function() {
- var a=$(this).find(".fa-caret-down")
- 
+ var a=$(this).find(".fa-caret-down") 
  $(a).toggleClass("tarnsform");
    $(".clild-menu_"+$(this)[0].id).slideToggle()
       
