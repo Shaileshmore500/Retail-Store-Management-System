@@ -47,21 +47,26 @@ public class ctr {
         return "forms/CategoryForm";
     }
 
-    @GetMapping("/nav")
-    public String nav() {
-        // Category cat = new Category();
+    // @GetMapping("/nav")
+    // public String nav() {
+    // // Category cat = new Category();
 
-        // cat.setCode("code");
-        // cat.setName("name");
+    // // cat.setCode("code");
+    // // cat.setName("name");
 
-        // model.addAttribute("data", cat);
+    // // model.addAttribute("data", cat);
 
-        return "navbar";
-    }
+    // return "navbar";
+    // }
 
     @GetMapping("/product")
     public String product() {
         return "forms/product";
+    }
+
+    @GetMapping("/brand")
+    public String brand() {
+        return "forms/brand";
     }
 
 }

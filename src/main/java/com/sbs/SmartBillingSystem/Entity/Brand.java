@@ -5,8 +5,10 @@ import jakarta.persistence.*;
 @Entity
 public class Brand {
 	@Id
+	@GeneratedValue
 	private int brand_pid;
 	private String name;
+	@Column(unique = true)
 	private String code;
 
 	public Brand() {

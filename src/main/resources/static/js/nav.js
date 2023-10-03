@@ -1,5 +1,4 @@
 const aside = document.getElementById("aside_bar");
-
 aside.addEventListener("click", () => {
   
   const aside_bar = document.getElementById("aside");
@@ -16,17 +15,25 @@ function errorToast(msg) {
   }
 }
 
+
+
+
 $(document).ready(function() {
 
+//$('.clild-menu').hide();
 debugger;
-
   $(".toggleChild").click(function() {
-    console.log(this)
-   $(".child-menu_"+this.id).slideToggle();
+ var a=$(this).find(".fa-caret-down")
+ 
+ $(a).toggleClass("tarnsform");
+   $(".clild-menu_"+$(this)[0].id).slideToggle()
       
   });
 });
+$("form").submit(()=>{
 
+  $(".loader").show();
+});
 
 
 

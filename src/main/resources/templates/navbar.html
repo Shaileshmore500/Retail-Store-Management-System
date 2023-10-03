@@ -1,44 +1,32 @@
 <!DOCTYPE html>
-<html lang="en"
-xmlns:th="http://www.thymeleaf.org"
-th:fragment="layout(content)"
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content)">
 
->
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
- <!-- Bootstrap CSS -->
- <link
- rel="stylesheet"
- href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
- integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
- crossorigin="anonymous"
-/>
-<link
- href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
- rel="stylesheet"
- integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
- crossorigin="anonymous"
-/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-<link rel="stylesheet" th:href="@{/css/nav.css}" />
-<link rel="stylesheet" th:href="@{/css/form.css}" />
-<link rel="stylesheet" th:href="@{/css/Erp.css}" />
-<link rel="stylesheet" th:href="@{/css/Base.css}" />
-<!-- <link rel="stylesheet" th:href="@{/css/ErpNewHome.css}" /> -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-<link
- rel="stylesheet"
- href="https://fonts.googleapis.com/css?family=Tangerine"
-/>
-<script
-src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-crossorigin="anonymous"
-></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" th:href="@{/css/nav.css}" />
+  <link rel="stylesheet" th:href="@{/css/form.css}" />
+  <!-- <link rel="stylesheet" th:href="@{/css/Erp.css}" />
+<link rel="stylesheet" th:href="@{/css/Base.css}" /> -->
+  <!-- <link rel="stylesheet" th:href="@{/css/ErpNewHome.css}" /> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+    <script th:src=@{/js/script.js}></script>
+   
 
 </head>
+
 <body>
   <section class="page">
     <aside class="aside__navbar active" id="aside">
@@ -47,7 +35,7 @@ crossorigin="anonymous"
           <b class="logo">S</b>
           <span class="logo__name">Sensys</span>
         </div>
-        
+
 
 
 
@@ -55,41 +43,82 @@ crossorigin="anonymous"
           <li class="menu _menu">
             <i class="icon fa-solid fa-house fa-2xl"></i>
             <a href="/" class="menu__link">Home</a>
-            
+
           </li>
-          <li class="menu _menu">
-            
-              <i class="icon fa-solid fa-mug-hot fa-2xl"></i>
-              <a href="/" class="menu__link">Master</a>
-              <i class="fa-solid fa-sort-down toggleChild" id="master"></i>
+          <li class="menu _menu toggleChild" id="master">
+            <i class="fa-solid fa-database fa-2xl"></i>
+            <a class="menu__link">Master</a>
+            <!-- //<i class="fa-solid fa-caret-right " ></i> -->
+            <i class="fa-solid fa-caret-down"></i>
+
           </li>
-          <div class="clild-menu clild-menu_master menu">
+          <div class="clild-menu clild-menu_master menu" >
             <ul>
               <li>
-                <i class="icon fa-solid fa-mug-hot fa-xl "></i>
-              <a href="#" class="menu__link">Product</a>
+
+                <i class="fa-brands fa-font-awesome fa-xl"></i>
+                <!-- <i class="fa-solid fa-circle fa-lg"></i> -->
+                <a href="#" th:href="@{/brand}" class="menu__link">Brand</a>
               </li>
               <li>
-                <i class="icon fa-solid fa-mug-hot fa-xl"></i>
-                <a href="#" class="menu__link">Product</a>
-                </li>
-                
+
+                <i class="fa-solid fa-layer-group fa-xl"></i>
+                <!-- <i class="fa-solid fa-circle fa-lg"></i> -->
+                <a href="#" th:href="@{category}" class="menu__link">Category</a>
+              </li>
+              <li>
+                <!-- <i class="fa-solid fa-box fa-xl"></i> -->
+                <i class="fa-brands fa-product-hunt fa-xl"></i>
+
+                <a href="#" th:href="@{/product}" class="menu__link">Product</a>
+              </li>
+              <li>
+                <!-- <i class="fa-solid fa-user fa-xl"></i> -->
+                <i class="fa-solid fa-user-tie fa-xl"></i>
+                <a href="#" class="menu__link">Customer</a>
+              </li>
+              <li>
+                <i class="fa-solid fa-industry fa-xl"></i>
+                <a href="#" class="menu__link">Supplier</a>
+              </li>
+
             </ul>
 
           </div>
           <li class="_menu menu">
-            <i class="icon fa-solid fa-circle-user fa-2xl"></i>
-            <a href="/" class="menu__link">User</a>
+            <i class="fa-solid fa-magnifying-glass-plus fa-2xl"></i>
+            <a href="/" class="menu__link">Search Product</a>
           </li>
           <li class="_menu menu">
-            <i class="icon fa-brands fa-dropbox fa-2xl"></i>
-            <a href="/" class="menu__link ">DropBox</a>
+            <!-- <i class="icon fa-solid fa-circle-user fa-2xl"></i> -->
+            <!-- <i class="fa-solid fa-bookmark fa-2xl"></i> -->
+            <i class="fa-solid fa-receipt fa-2xl"></i>
+            <a href="/" class="menu__link">Invoice</a>
           </li>
+          <li class="_menu menu">
+            <!-- <i class="icon fa-brands fa-dropbox fa-2xl"></i> -->
+            <i class="fa-solid fa-file-lines fa-2xl"></i>
+            <a href="/" class="menu__link ">Report</a>
+          </li>
+          <li class="_menu menu">
+            <!-- <i class="icon fa-brands fa-dropbox fa-2xl"></i> -->
+            <i class="fa-regular fa-calendar-days fa-2xl"></i>
+            <a href="/" class="menu__link ">Attendence</a>
+          </li>
+          <li class="_menu menu">
+            <!-- <i class="icon fa-brands fa-dropbox fa-2xl"></i> -->
+            <i class="fa-solid fa-cart-plus fa-xl"></i>
+            <a href="/" class="menu__link ">Purchase Order</a>
+          </li>
+
+
+
+          <hr>
           <li class="_menu menu">
             <i class="icon fa-solid fa-gear fa-2xl"></i>
             <a href="/" class="menu__link">Setting</a>
           </li>
-          
+
         </ul>
 
 
@@ -101,71 +130,92 @@ crossorigin="anonymous"
       <div class="lower__aside"></div>
     </aside>
     <main class="main__page">
-      <nav class="page__navbar" >
+      <nav class="page__navbar">
         <div style="display: flex;">
-          <div id="aside_bar">          
-            <i class="fa-solid fa-bars fa-2xl"></i>         
-            
+          <div id="aside_bar">
+            <i class="fa-solid fa-bars fa-2xl"></i>
+
           </div>
-          <div style="position: relative;">  
+          <div style="position: relative;">
             <a href="#">
               <i class="fa-regular fa-user fa-2xl"></i>
-            </a>         
+            </a>
             <a href="#" style="position: absolute;
             border: 1px solid #fff;
-            border-radius: 54px;">              
+            border-radius: 54px;">
               <img th:src="@{\images\Screenshot.png}" class="round-image" alt="123">
             </a>
           </div>
         </div>
-       
+
       </nav>
       <section class="page__body">
-        
+
         <div class="container">
           <div th:replace="${content}"></div>
         </div>
+       
+
+
       </section>
     </main>
   </section>
-  <div
-  class="toast align-items-center text-white bg-danger  border-0"
-  role="alert"
-  aria-live="assertive"
-  aria-atomic="true"
-  id="toast"
->
-  <div class="d-flex">
-    <div class="toast-body"></div>
-    <button
-      type="button"
-      class="btn-close btn-close-white me-2 m-auto"
-      data-bs-dismiss="toast"
-      aria-label="Close"
-    ></button>
+  <div class="toast align-items-center text-white bg-danger  border-0" role="alert" aria-live="assertive"
+    aria-atomic="true" id="toast">
+    <div class="d-flex">
+      <div class="toast-body"></div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+        aria-label="Close"></button>
+    </div>
   </div>
-</div>
+   <!-- loader -->
+   <div class="loader">
+    <div style="top: 25vw;
+    position: fixed;left: 40vw;">
+    <div class="spinner-grow text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-secondary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-success" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-danger" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-warning" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-info" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-light" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-dark" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    </div>
+  </div>
+  <!--  -->
 
 
   <footer class="footer"></footer>
-  <script
-  src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-  integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-  crossorigin="anonymous"
-></script>
-<script
-  src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-  integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-  crossorigin="anonymous"
-></script>
-<script
-  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-  crossorigin="anonymous"
-></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
+  <script th:src=@{/js/nav.js}></script>
+  
 
-      <script th:src=@{/js/nav.js}></script>
 </body>
+
 </html>
