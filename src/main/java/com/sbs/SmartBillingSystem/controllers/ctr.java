@@ -43,6 +43,8 @@ public class ctr {
         // cat.setName("name");
 
         // model.addAttribute("data", cat);
+        // model.addAttribute("errormessage", null);
+        // model.addAttribute("sucmessage", null);
 
         return "forms/CategoryForm";
     }

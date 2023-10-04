@@ -61,6 +61,7 @@ th:replace="~{navbar::layout(~{::section})}"
 
           <div
             th:if="${sucmessage}"
+            id="sucmessage"
             th:text="${sucmessage}"
             class="alert alert-success"
           ></div>
@@ -69,9 +70,12 @@ th:replace="~{navbar::layout(~{::section})}"
             <input
               type="text"
               name="code"
-              th:value="${data!=null? data.code:''}"
+              th:value="${data != null ? data.code : ''}"
+
               required=""
             />
+            <!-- th:value="${data!=null? data.code:''
+          }" -->
             <label>Category Code</label>
           </div>
           <div class="user-box">
@@ -100,11 +104,7 @@ th:replace="~{navbar::layout(~{::section})}"
               //   event.preventDefault();
               //   $.ajax({
               //     type:'POST',
-              //     url:'/master/savecat',
-                  
-
-
-
+              //     url:'/master/savecat',  
               //   });
 
 
@@ -130,7 +130,19 @@ th:replace="~{navbar::layout(~{::section})}"
           
          $("#master .fa-caret-down").toggleClass("tarnsform");
           $(".clild-menu_master").slideToggle();
-        
+          // showToasty(iclass,bgclass,message)
+          if($("#errormessage").text()!=null && $("#errormessage").text()!='')
+          {
+            showToasty("<i class='fa-solid fa-triangle-exclamation fa-shake fa-xl text-white'>&nbsp;&nbsp;</i>","bg-danger",$("#errormessage").text())
+          }
+          else if($("#sucmessage").text()!=null && $("#sucmessage").text()!='')
+          {
+            showToasty("<i class='fa-solid fa-square-check fa-shake fa-xl text-white'>&nbsp;&nbsp</i>","bg-success",$("#sucmessage").text())
+
+          }
+
+
+          
         
         });
         

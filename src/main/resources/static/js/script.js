@@ -1,6 +1,10 @@
 
 
-function abc()
+function showToasty(icon,bgclass,message)
 {
-    alert(1)
+    debugger;
+    $("#toast div strong").prepend(icon);
+    $("#toast .toast-header").addClass(bgclass);
+    $(".toast-body").text(message)
+    $("#toast").show();
 }
