@@ -8,8 +8,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SmartBillingSystemApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(SmartBillingSystemApplication.class, args);
 		System.out.print("started.....");
+
 	}
 
 }

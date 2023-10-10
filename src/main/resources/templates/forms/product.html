@@ -1,209 +1,32 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-th:replace="~{navbar::layout(~{::section})}"
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!-- <html xmlns="http://www.w3.org/1999/xhtml"> -->
+
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{navbar::layout(~{::section})}"
 >
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-   
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+      rel="stylesheet"
+      id="bootstrap-css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+    <title></title>
     <style>
-      .mlr div {
-        margin-left: 15px;
-        margin-right: 15px;
-      }
-
-      .mlr-15 {
-        margin-left: 15px;
-        margin-right: 15px;
-      }
-
-      .panel {
-        border: 1px solid;
-        border-radius: 11px;
-      }
-
-      .panel-header {
-        border-bottom: 1px solid;
-        padding: 4px;
-        background-color: #989898ba;
-        font-weight: 900;
-        font-family: sans-serif;
-        border-radius: 8px 8px 4px 4px;
-      }
-
-      .btn_del {
-        width: 150px;
-        height: 50px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        background: red;
-        border: none;
-        border-radius: 5px;
-        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
-        background: #e62222;
-      }
-
-      .btn_del,
-      .btn_del span {
-        transition: 200ms;
-      }
-
-      .btn_del .text {
-        transform: translateX(35px);
-        color: white;
-        font-weight: bold;
-      }
-
-      .btn_del .icon {
-        position: absolute;
-        border-left: 1px solid #c41b1b;
-        transform: translateX(110px);
-        height: 40px;
-        width: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .btn_del svg {
-        width: 15px;
-        fill: #eee;
-      }
-
-      .btn_del:hover {
-        background: #ff3636;
-      }
-
-      .btn_del:hover .text {
-        color: transparent;
-      }
-
-      .btn_del:hover .icon {
-        width: 150px;
-        border-left: none;
-        transform: translateX(0);
-      }
-
-      .btn_del:focus {
-        outline: none;
-      }
-
-      .btn_del:active .icon svg {
-        transform: scale(0.8);
-      }
-
-      .btn_add {
-        width: 150px;
-        height: 50px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        background: green;
-        border: none;
-        border-radius: 5px;
-        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
-        background: #146e04;
-      }
-
-      .btn_add,
-      .btn_add span {
-        transition: 200ms;
-      }
-
-      .btn_add .text {
-        transform: translateX(35px);
-        color: white;
-        font-weight: bold;
-      }
-
-      .btn_add .icon {
-        position: absolute;
-        border-left: 1px solid #285021;
-        transform: translateX(110px);
-        height: 40px;
-        width: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .btn_add svg {
-        width: 15px;
-        fill: #eee;
-      }
-
-      .btn_add:hover {
-        background: #289514;
-      }
-
-      .btn_add:hover .text {
-        color: transparent;
-      }
-
-      .btn_add:hover .icon {
-        width: 150px;
-        border-left: none;
-        transform: translateX(0);
-      }
-
-      .btn_add:focus {
-        outline: none;
-      }
-
-      .btn_add:active .icon svg {
-        transform: scale(0.8);
-      }
-
-      .ml {
-        margin-left: 3px;
-      }
-      .form-floating > .form-select {
-        padding-top: 0px !important;
-      }
-      .btn-div {
-        justify-content: end;
-        position: relative;
-        right: 15px;
+      .table-sortable tbody tr {
+        cursor: move;
       }
     </style>
   </head>
-
   <body>
-    <!-- <div th:replace="~{navbar ::navbar}"></div> -->
-    <!-- <form class="form-floating mt-3   ">
-        <div class="container">
-            <div class="text-center">
-                <div class="row">
-                    <div class="form-floating col-md-6 mx-auto mb-3 text-center col-4 aligh-center">
-                        <h1>Add Challan</h1>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-floating  mx-auto mb-3  col-2 ">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
-                        <label for="floatingInput" class="ml-15">Challan Number</label>
-                    </div>
-                    <div class="form-floating col-md-2 mx-auto mb-3  col-2 ">
-                        <input type="Date" class="form-control" id="floatingInput" placeholder="name@example.com">
-                        <label for="floatingInput" class="ml-15">Challan Date</label>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-floating col-md-6 mx-auto mb-3  col-2 ">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
-                        <label for="floatingInput mr-5" class="ml-15">Party Name</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </form> -->
-<section>
-  <link rel="stylesheet" th:href="@{/css/ProductForm.css}">
-    <form style=" margin: 0 auto">
+    <section>
+      <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+      <link rel="stylesheet" th:href="@{/css/ProductForm.css}" />
       <div
         class="form-floating col-md-6 mx-auto mb-3 text-center col-4 aligh-center"
       >
@@ -222,13 +45,15 @@ th:replace="~{navbar::layout(~{::section})}"
             <label for="floatingInput mr-5" class="ml-15">Challan Number</label>
           </div>
           <div class="form-floating mb-3 col-7">
-            <input
-              type="text"
-              class="form-control"
-              id="html_SupplierName"
-              placeholder="name@example.com"
-            />
-            <label for="floatingInput mr-5" class="ml-15">Supplier Name</label>
+            <select
+              class="form-select form-select-lg mb-3"
+              aria-label=".form-select-lg example"
+            >
+              <option selected>Supplier</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
           </div>
           <div class="form-floating mb-3 col-7">
             <input
@@ -240,126 +65,244 @@ th:replace="~{navbar::layout(~{::section})}"
             <label for="floatingInput mr-5" class="ml-15">Challan Date</label>
           </div>
         </div>
-      </div>
-      <div class="panel mlr-15 mt-1">
-        <div class="panel-header">Product Details</div>
-        <div class="row">
-          <div class="mb-2 col-6 text-center mt-2 d-flex mlr">
-            <div class="form-floating mb-3 col-7">
-              <input
-                type="text"
-                class="form-control"
-                id="html_SupplierName"
-                placeholder="name@example.com"
-              />
-              <label for="floatingInput mr-5" class="ml-15"
-                >Supplier Name</label
-              >
-            </div>
-            <div class="form-floating mb-3 col-7">
-              <select
-                class="form-select form-select-lg mb-3"
-                aria-label=".form-select-lg example"
-              >
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-            </div>
-            <div class="form-floating mb-3 col-7">
-              <select
-                class="form-select form-select-lg mb-3"
-                aria-label=".form-select-lg example"
-              >
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-            </div>
+        <div class="mb-2 col-6 text-center mt-2 d-flex mlr">
+          <div class="form-floating mb-2 col-7">
+            <input
+              type="number"
+              class="form-control"
+              id="html_Quantity"
+              placeholder="name@example.com"
+            />
+            <label for="floatingInput mr-5" class="ml-15">Quantity</label>
+          </div>
+          <div class="form-floating mb-2 col-7">
+            <input
+              type="number"
+              class="form-control"
+              id="html_Quantity"
+              placeholder="name@example.com"
+            />
+            <label for="floatingInput mr-5" class="ml-15">Amount</label>
           </div>
         </div>
-        <div class="row">
-          <div class="mb-2 col-6 text-center mt-2 d-flex mlr">
-            <div class="form-floating mb-3 col-7">
-              <input
-                type="number"
-                class="form-control"
-                id="html_MRP"
-                placeholder="name@example.com"
-              />
-              <label for="floatingInput mr-5" class="ml-15">MRP</label>
-            </div>
+      </div>
 
-            <div class="form-floating mb-2 col-7">
-              <input
-                type="number"
-                class="form-control"
-                id="html_PurchaseRate"
-                placeholder="name@example.com"
-              />
-              <label for="floatingInput mr-5" class="ml-15"
-                >Purchase Rate</label
+      <div class="panel mlr-15 mt-5">
+        <div class="panel-header">Add Products</div>
+        <div class="container ">
+          <div class="row clearfix">
+            <div class="col-md-12 table-responsive">
+              <table
+                class="table table-bordered table-hover table-sortable"
+                id="tab_logic"
               >
-            </div>
+                <thead>
+                  <tr>
+                    <th class="text-center">Product Code</th>
+                    <th class="text-center">Product Style</th>
+                    <th class="text-center">Purchase Rate</th>
+                    <th class="text-center">Purchase MRP</th>
+                    <th class="text-center mw150">Brand    </th>
+                    <th class="text-center mw150">Category</th>
+                    
+                    <th
+                      class="text-center"
+                      style="
+                        border-top: 1px solid #ffffff;
+                        border-right: 1px solid #ffffff;
+                      "
+                    ></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr id="addr0" data-id="0" >
+                    <td data-name="mail">
+                      <div class="form-floating mb-3 ">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="html_MRP"
+                          placeholder="name@example.com"
+                        />
+                        <label for="floatingInput mr-5" class="ml-15">Product Code</label>
+                      </div>
+                    </td>
+                    <td data-name="mail">
+                      <div class="form-floating mb-3 ">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="html_style"
+                          placeholder="name@example.com"
+                        />
+                        <label for="floatingInput mr-5" class="ml-15">Product Style</label>
+                      </div>
+                    </td>                      
+                   
+                    <td data-name="mail">
+                        <div class="form-floating mb-3 ">
+                            <input
+                              type="number"
+                              class="form-control"
+                              id="html_MRP"
+                              placeholder="name@example.com"
+                            />
+                            <label for="floatingInput mr-5" class="ml-15">Purchase Rate</label>
+                          </div>
+                    </td>
+                    <td data-name="mail">
+                      <div class="form-floating mb-3 ">
+                          <input
+                            type="number"
+                            class="form-control"
+                            id="html_MRP"
+                            placeholder="name@example.com"
+                          />
+                          <label for="floatingInput mr-5" class="ml-15">MRP</label>
+                        </div>
+                  </td>
+                    <td data-name="mail">
+                        <div class="form-floating mb-3 ">
+                            <select 
+                              class="form-select form-select-lg mb-3"
+                              aria-label=".form-select-lg example"
+                            >                           
 
-            <div class="form-floating mb-2 col-7">
-              <input
-                type="number"
-                class="form-control"
-                id="html_Quantity"
-                placeholder="name@example.com"
-              />
-              <label for="floatingInput mr-5" class="ml-15">Quantity</label>
+                              
+                              <option >Brand</option>
+                                   <option th:each="b:${brands}" th:value="${b.brand_pid}" th:text="${b.code + ' - ' + b.name}"></option>
+                            
+                              
+                            </select>
+                          </div>
+                      </td>
+                    <td data-name="mail">
+                        <div class="form-floating mb-3 ">
+                            <select
+                              class="form-select form-select-lg mb-3"
+                              aria-label=".form-select-lg example"
+                            >
+                              <option selected>Category</option>
+                              <option th:each="c:${categories}" value="c.category_pid" th:text="${c.name+'-'+c.code}"></option>
+                              
+                            </select>
+                          </div>
+                    </td>
+                    <td data-name="del">
+                      <button
+                        name="del0"
+                        class="btn btn-danger glyphicon glyphicon-remove row-remove"
+                      >
+                        <span aria-hidden="true">×</span>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
-        </div>
-        <div class="d-flex mb-2 btn-div">
-          <button class="noselect btn_del ml">
-            <span class="text">Delete</span
-            ><span class="icon"
-              ><svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"
-                ></path></svg></span>
-          </button>
-          <button class="noselect btn_add ml">
-            <span class="text">Add</span><span class="icon"
-              ><svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="1em"
-                viewBox="0 0 512 512"
-              >
-                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                <path
-                  d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg></span>
-          </button>
+          <a id="add_row" class="btn btn-primary float-right">Add Row</a>
         </div>
       </div>
-    </form>
-    <script>
 
+      <script>
+        $(document).ready(function () {
+          
+          
+          //add row function
+          $("#add_row").on("click", function () {
+            debugger;
+            // Dynamic Rows Code
 
-      $(document).ready(() => {
-      
-        
-       $("#master .fa-caret-down").toggleClass("tarnsform");
-        $(".clild-menu_master").slideToggle();
-      
-      
-      });
-      
-      
-            </script>
-            
-          </section>
-         
+            // Get max row id and set new id
+            var newid = 0;
+            $.each($("#tab_logic tr"), function () {
+
+              if (parseInt($(this).data("id")) > newid) {
+
+                newid = parseInt($(this).data("id"));
+
+              }
+            });
+            newid++;
+
+            var tr = $("<tr></tr>", {
+              id: "addr" + newid,
+              "data-id": newid,
+            });
+
+            // loop through each td and create new elements with name of newid
+            $.each($("#tab_logic tbody tr:nth(0) td"), function () {
+              var td;
+              var cur_td = $(this);
+              var children = cur_td.children();
+              
+              // add new td and element if it has a nane
+
+              if ($(this).data("name") !== undefined) {
+                td = $("<td></td>", {
+                  "data-name": $(cur_td).data("name"),
+                });
+
+                var c = $(cur_td)
+                  .find($(children[0]).prop("tagName"))
+                  .clone()
+                  .val("");
+                c.attr("name", $(cur_td).data("name") + newid);
+                c.appendTo($(td));
+                td.appendTo($(tr));
+              } else {
+                td = $("<td></td>", {
+                  text: $("#tab_logic tr").length,
+                }).appendTo($(tr));
+              }
+            });
+
+            // add delete button and td
+            /*
+            $("<td></td>").append(
+            $("<button class='btn btn-danger glyphicon glyphicon-remove row-remove'></button>")
+            .click(function() {
+            $(this).closest("tr").remove();
+            })
+            ).appendTo($(tr));
+            */
+
+            // add the new row
+            $(tr).appendTo($("#tab_logic"));
+
+            $(tr)
+              .find("td button.row-remove")
+              .on("click", function () {
+                $(this).closest("tr").remove();
+              });
+          });
+
+          // Sortable Code
+          // var fixHelperModified = function (e, tr) {
+          //   var $originals = tr.children();
+          //   var $helper = tr.clone();
+
+          //   $helper.children().each(function (index) {
+
+          //     $(this).width($originals.eq(index).width());
+              
+          //   });
+
+          //   return $helper;
+          // };
+
+          // $(".table-sortable tbody")
+          //   .sortable({
+          //     helper: fixHelperModified,
+          //   })
+          //   .disableSelection();
+
+          // $(".table-sortable thead").disableSelection();
+
+          // $("#add_row").trigger("click");
+        });
+      </script>
     </section>
   </body>
 </html>

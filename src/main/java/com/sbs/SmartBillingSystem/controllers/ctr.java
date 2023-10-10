@@ -1,5 +1,6 @@
 package com.sbs.SmartBillingSystem.controllers;
 
+import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,7 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sbs.SmartBillingSystem.Entity.Brand;
 import com.sbs.SmartBillingSystem.Entity.Category;
+import com.sbs.SmartBillingSystem.Repository.BrandRepo;
 import com.sbs.SmartBillingSystem.Repository.CategoryRepo;
 
 import ch.qos.logback.core.model.Model;
@@ -17,6 +20,11 @@ import ch.qos.logback.core.model.Model;
 // if u want to use method base authorization then use this anotation
 // @EnableMethodSecurity
 public class ctr {
+
+    @Autowired
+    CategoryRepo categoryRepo;
+    @Autowired
+    BrandRepo brandRepo;
 
     @GetMapping("/home")
     public String homepage() {
@@ -62,7 +70,13 @@ public class ctr {
     // }
 
     @GetMapping("/product")
-    public String product() {
+    public String product(org.springframework.ui.Model model) {
+
+        List<Category> categories = categoryRepo.findAll();
+        List<Brand> brands = brandRepo.findAll();
+        model.addAttribute("categories", categories);
+        model.addAttribute("brands", brands);
+
         return "forms/product";
     }
 

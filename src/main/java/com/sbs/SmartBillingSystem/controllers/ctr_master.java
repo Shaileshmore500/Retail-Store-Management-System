@@ -34,7 +34,7 @@ public class ctr_master {
             model.addAttribute("sucmessage", "Category Added...");
         } catch (Exception e) {
             model.addAttribute("errormessage", code + " Already Present...");
-            model.addAttribute("data", cat);
+            // model.addAttribute("data", cat);
 
         }
 
@@ -54,7 +54,7 @@ public class ctr_master {
             // model.addAttribute("errormessage", code + " Already Present..." +
             // e.getMessage());
             model.addAttribute("errormessage", e.getMessage());
-            model.addAttribute("data", brand);
+            // model.addAttribute("data", brand);
 
         }
 
