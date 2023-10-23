@@ -21,7 +21,7 @@ function errorToast(msg) {
 $(document).ready(function() {
 
 //$('.clild-menu').hide();
-debugger;
+
   $(".toggleChild").click(function() {
  var a=$(this).find(".fa-caret-down") 
  $(a).toggleClass("tarnsform");

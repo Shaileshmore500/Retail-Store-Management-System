@@ -164,3 +164,16 @@
       bottom: 100%;
     }
   } */
+  ._error
+  {
+    display: inline-block;
+    width: 100%;
+    white-space: nowrap;
+    color: red;
+    overflow: hidden;
+    font-size: 9px;
+    text-overflow: ellipsis;
+    line-height: 14px;
+    position: absolute;
+    top: 51px;
+  }

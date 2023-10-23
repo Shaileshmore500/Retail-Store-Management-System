@@ -36,7 +36,7 @@
   }
   .mw150
   {
-    min-width: 150px !important;
+    min-width: 100px !important;
   }
 
   .btn_del {
@@ -178,3 +178,16 @@
     position: relative;
     right: 15px;
   }
+  .mandatory label.md_lbl:before {
+    content: "\f069";
+    color: red;
+    font-family: fontawesome;
+    font-size: 8px;
+    vertical-align: super;
+    margin-right: 2px;
+    position: relative;
+    left: -8px;
+}
+
+
+  

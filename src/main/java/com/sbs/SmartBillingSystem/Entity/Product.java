@@ -5,17 +5,18 @@ import jakarta.persistence.*;
 @Entity
 public class Product {
 	@Id
+	@GeneratedValue
 	private int product_pid;
 	private String code;
 	private String name;
 	private String style;
 	private float purchase_rate;
-	private float MRP;
-	private float Quantity;
+	private float mrp;
+	private float quantity;
 	private float total_amount;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private Brand brand_fid;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private Category category_fid;
 	@OneToOne
 	private Suppiler supplier_fid;
@@ -37,8 +38,8 @@ public class Product {
 		this.name = name;
 		this.style = style;
 		this.purchase_rate = purchase_rate;
-		MRP = mRP;
-		Quantity = quantity;
+		this.mrp = mRP;
+		this.quantity = quantity;
 		this.total_amount = total_amount;
 		this.brand_fid = brand_fid;
 		this.category_fid = category_fid;
@@ -88,19 +89,19 @@ public class Product {
 	}
 
 	public float getMRP() {
-		return MRP;
+		return mrp;
 	}
 
 	public void setMRP(float mRP) {
-		MRP = mRP;
+		mrp = mRP;
 	}
 
 	public float getQuantity() {
-		return Quantity;
+		return quantity;
 	}
 
 	public void setQuantity(float quantity) {
-		Quantity = quantity;
+		this.quantity = quantity;
 	}
 
 	public float getTotal_amount() {
@@ -149,6 +150,14 @@ public class Product {
 
 	public void setPartyChallan_fid(Challan partyChallan_fid) {
 		challan_fid = partyChallan_fid;
+	}
+
+	@Override
+	public String toString() {
+		return "Product [product_pid=" + product_pid + ", code=" + code + ", name=" + name + ", style=" + style
+				+ ", purchase_rate=" + purchase_rate + ", mrp=" + mrp + ", quantity=" + quantity + ", total_amount="
+				+ total_amount + ", brand_fid=" + brand_fid + ", category_fid=" + category_fid + ", supplier_fid="
+				+ supplier_fid + ", barcode=" + barcode + ", challan_fid=" + challan_fid + "]";
 	}
 
 }

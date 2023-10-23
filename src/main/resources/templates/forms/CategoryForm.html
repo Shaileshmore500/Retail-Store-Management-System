@@ -59,30 +59,7 @@
           Save
         </button>
         <!-- </a> -->
-        <script>
-          debugger;
-          $(document).ready(() => {
-
-            // $('form').submit((even)=>{
-            //   event.preventDefault();
-            //   $.ajax({
-            //     type:'POST',
-            //     url:'/master/savecat',  
-            //   });
-
-
-            // })
-
-
-
-            // var a = '[[${errormessage}]]';
-            // if (a != "" && a != null) {
-            //   $("#toast").toast("show");
-            // } else {
-            //   $("#toast").toast("hide");
-            // }
-          });
-        </script>
+        
         <div th:if="${errormessage}" th:text="${errormessage}" id="errormessage" class="alert alert-danger"
           style="display: none;"></div>
 
@@ -92,30 +69,7 @@
 
 
     </div>
-<!--  -->
-<style>
-  
-</style>
-<table class="styled-table">
-  <thead>
-      <tr>
-          <th>Name</th>
-          <th>Points</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>Dom</td>
-          <td>6000</td>
-      </tr>
-      <tr class="active-row">
-          <td>Melissa</td>
-          <td>5150</td>
-      </tr>
-      <!-- and so on... -->
-  </tbody>
-</table>
-<!--  -->
+
     <script>
 
 
