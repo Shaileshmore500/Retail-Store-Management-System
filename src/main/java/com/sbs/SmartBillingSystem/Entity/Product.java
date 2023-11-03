@@ -11,7 +11,34 @@ public class Product {
 	private String name;
 	private String style;
 	private float purchase_rate;
+
+	public void setMrp(float mrp) {
+		this.mrp = mrp;
+	}
+
+	public void setSize(float size) {
+		this.size = size;
+	}
+
+	public void setChallan_fid(Challan challan_fid) {
+		this.challan_fid = challan_fid;
+	}
+
 	private float mrp;
+	private float size;
+
+	public float getMrp() {
+		return mrp;
+	}
+
+	public float getSize() {
+		return size;
+	}
+
+	public Challan getChallan_fid() {
+		return challan_fid;
+	}
+
 	private float quantity;
 	private float total_amount;
 	@OneToOne(cascade = CascadeType.PERSIST)
@@ -27,25 +54,6 @@ public class Product {
 	public Product() {
 		super();
 		// TODO Auto-generated constructor stub
-	}
-
-	public Product(int product_pid, String code, String name, String style, float purchase_rate, float mRP,
-			float quantity, float total_amount, Brand brand_fid, Category category_fid, Suppiler supplier_fid,
-			String barcode, Challan partyChallan_fid) {
-		super();
-		this.product_pid = product_pid;
-		this.code = code;
-		this.name = name;
-		this.style = style;
-		this.purchase_rate = purchase_rate;
-		this.mrp = mRP;
-		this.quantity = quantity;
-		this.total_amount = total_amount;
-		this.brand_fid = brand_fid;
-		this.category_fid = category_fid;
-		this.supplier_fid = supplier_fid;
-		this.barcode = barcode;
-		challan_fid = partyChallan_fid;
 	}
 
 	public int getProduct_pid() {

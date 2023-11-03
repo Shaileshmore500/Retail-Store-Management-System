@@ -1,0 +1,126 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+th:replace="~{navbar::layout(~{::section})}"
+
+
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Print Barcode</title>
+    
+    
+  </head>
+  <body>
+    
+    <section class="html__section">
+        <style>
+            body {
+              background-color: rgb(3, 138, 210);
+            }
+        
+            .content {
+              width: 350px;
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              background-color: #fff;
+              padding: 20px;
+              text-align: center;
+        
+            }
+        
+            input {
+              width: 328px;
+              padding: 15px 10px;
+              border: 1.5px solid rgb(52, 51, 51);
+              font-size: 17px;
+              outline: none;
+            }
+        
+            input:focus {
+              border: 1.7px solid rgb(4, 84, 213);
+            }
+        
+            #barcode {
+              box-shadow: 0 0 20px rgba(0, 139, 253, 0.25);
+              width: 300px;
+              margin: 30px 0px 30px 0px;
+            }
+        
+            #btn {
+              padding: 12px 40px;
+              background-color: rgb(2, 103, 66);
+              color: #fff;
+              font-size: 17px;
+              border: none;
+              border-radius: 3px;
+            }
+        
+            #content {
+              display: flex;
+              flex-wrap: wrap;
+             
+        
+            }
+        
+            #content div {
+              position: relative;
+              top: 2px;
+              bottom: 2px;
+              padding: 20px 60px 24px 60px;
+              border: 1px solid black;
+            }
+          </style>
+        <div id="content">
+
+        </div>
+        <div>
+      
+          <svg class="barcode" jsbarcode-format="upc" jsbarcode-value="12345678901" jsbarcode-textmargin="1"
+            jsbarcode-fontoptions="bold">
+          </svg>
+          <button id="btn">Generate</button>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+        <script>
+$(document).ready(()=>{
+
+          document.getElementById("btn").addEventListener("click", () => {
+            debugger;
+      
+      
+      
+            var a = ['123df', '456fdf', '789dfdsf', '321fdfdfd', "google"];
+      
+      
+            var barcodeContainer = document.getElementById('content');
+            //barcodeContainer.innerHTML="";
+            for (var i = 0; i < a.length; i++) {
+      
+              var svgElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+              svgElement.classList.add("barcode");
+              svgElement.setAttribute("id", "barcode" + i);
+              svgElement.setAttribute("jsbarcode-format", "CODE128");
+              //svgElement.setAttribute("jsbarcode-value", a[i]);
+              svgElement.setAttribute("jsbarcode-textmargin", "1");
+              svgElement.setAttribute("jsbarcode-fontoptions", "bold");
+      
+              barcodeContainer.appendChild(svgElement);
+              $("#barcode" + i).wrap("<div style=''></div>")
+              
+              JsBarcode("#barcode" + i, a[i])
+              //$("#barcode" + i).find('text').text("121321564564456sdfffffffffffffffffffffffffffffff12343553");
+            }
+      
+      
+          });
+        });
+        </script>
+      
+    </section>
+   
+    
+    
+  </body>
+</html>

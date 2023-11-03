@@ -59,7 +59,7 @@
           Save
         </button>
         <!-- </a> -->
-        
+
         <div th:if="${errormessage}" th:text="${errormessage}" id="errormessage" class="alert alert-danger"
           style="display: none;"></div>
 
@@ -75,20 +75,23 @@
 
       $(document).ready(() => {
 
-debugger;
+        debugger;
         $("#master .fa-caret-down").toggleClass("tarnsform");
         $(".clild-menu_master").slideToggle();
         // showToasty(iclass,bgclass,message)
 
-        if ($("#code").val() != '' && $("#name").val() != '')
+        // if ($("#code").val() != '' && $("#name").val() != '')
         {
           if ($("#errormessage").text() != null && $("#errormessage").text() != '') {
             showToasty("<i class='fa-solid fa-triangle-exclamation fa-shake fa-xl text-white'>&nbsp;&nbsp;</i>", "bg-danger", $("#errormessage").text(), "Error")
+           
           }
           else if ($("#sucmessage").text() != null && $("#sucmessage").text() != '') {
             showToasty("<i class='fa-solid fa-square-check fa-shake fa-xl text-white'>&nbsp;&nbsp</i>", "bg-success", $("#sucmessage").text(), "Success")
+            
 
           }
+
         }
 
 

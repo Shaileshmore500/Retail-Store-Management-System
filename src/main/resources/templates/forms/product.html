@@ -32,64 +32,78 @@
       >
         <h2>Add Challan</h2>
       </div>
-      <div class="panel mlr-15">
+      <div class="panel mlr-15" id="pnl_challan">
         <div >
         <div class="panel-header">Challan Details</div>
         <div class="mb-2 col-6 text-center mt-2 d-flex mlr">
-          <div class="form-floating mb-3 col-7">
+          <div class="form-floating mb-3 col-7 mandatory">
             <input
               type="text"
               class="form-control"
               id="html_challanno"
+              data-field="challanno"
                
             />
-            <label for="floatingInput mr-5" class="ml-15">Challan Number</label>
+            <label for="floatingInput mr-5" class="ml-15 md_lbl">Challan Number</label>
+            <span class="_error2"></span>
           </div>
-          <div class="form-floating mb-3 col-7">
+          <div class="form-floating mb-3 col-7 mandatory">
+            <label for="" class="md_lblsel"></label>
             <select
               class="form-select form-select-lg mb-3"
               aria-label=".form-select-lg example"
-            >
-              <option selected>Supplier</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
+              id="html_supplier"
+              data-field="supplier_fid"
+            >            
+              <option selected value="">Supplier</option>
+              <option th:each="s:${suppliers}" th:value="${s.supplier_pid}" th:text="${s.code + ' - ' + s.name}"></option>
+              
+                            
+            </select>            
+            <span class="_error2" style="position: absolute !important;"></span>
           </div>
-          <div class="form-floating mb-3 col-7">
+          <div class="form-floating mb-3 col-7 mandatory">
             <input
               type="date"
               class="form-control"
               id="html_ChallanDate"
+              data-field="challandate"
                
             />
-            <label for="floatingInput mr-5" class="ml-15">Challan Date</label>
+            <label for="floatingInput mr-5" class="ml-15 md_lbl">Challan Date</label>
+            <span class="_error2"></span>
           </div>
         </div>
-        <div class="mb-2 col-6 text-center mt-2 d-flex mlr">
-          <div class="form-floating mb-2 col-7">
+        <div class="mb-2 col-6 text-center mt-2 d-flex mlr ">
+          <div class="form-floating mb-2 col-7 mandatory">
             <input
               type="number"
               class="form-control"
               id="html_Quantity"
+              data-field="quantity"
                
             />
-            <label for="floatingInput mr-5" class="ml-15">Quantity</label>
+            <label for="floatingInput mr-5" class="ml-15 md_lbl">Quantity</label>
+            <span class="_error2">
+              
+            </span>
           </div>
-          <div class="form-floating mb-2 col-7">
+          <div class="form-floating mb-2 col-7 mandatory">
             <input
               type="number"
               class="form-control"
-              id="html_Quantity"
+              id="html_Amount"
+              data-field="amount"
                
             />
-            <label for="floatingInput mr-5" class="ml-15">Amount</label>
+            <label for="floatingInput mr-5" class="ml-15 md_lbl">Amount</label>
+            <span class="_error2"></span>
           </div>
         </div>
         </div>
       </div>
 
-      <div class="panel mlr-15 mt-5">
+      <div class="panel mlr-15 mt-5" id="addProduct">
         <div class="panel-header">Add Products</div>
         <div class="container ">
           <div class="row clearfix">
@@ -101,10 +115,11 @@
                 <thead>
                   <tr>
                     <th class="text-center mw150"> Code</th>
-                    <th class="text-center mw150"> Style</th>
+                    <th class="text-center mw150"> Name</th>
+                    <th class="text-center mw150">Size</th>
                     <th class="text-center mw150">Quantity</th>
                     <th class="text-center mw150"> MRP</th>
-                    <th class="text-center mw150"> Rate</th>
+                    <th class="text-center mw150">Purchase Rate</th>
                     <th class="text-center mw150">Brand</th>
                     <th class="text-center mw150">Category</th>
                     
@@ -144,7 +159,20 @@
                         <label for="floatingInput mr-5" class="ml-15 md_lbl">Product Name</label>
                         <span class="_error"></span>
                       </div>
-                    </td>                      
+                    </td>  
+                    <td data-name="mail">
+                      <div class="form-floating mb-3 mandatory">
+                          <input
+                            type="number"
+                            class="form-control"
+                            id="html_size"
+                            data-field="size"
+                            
+                          />
+                          <label for="floatingInput mr-5" class="ml-15 md_lbl">Size</label>
+                          <span class="_error"></span>
+                        </div>
+                  </td>                    
                    
                     
                     <td data-name="mail">

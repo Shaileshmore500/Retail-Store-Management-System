@@ -8,7 +8,7 @@
     margin-right: 15px;
   }
   .ml-15{
-    left: 15px !important;
+    /* left: 15px !important; */
   }
 
   .panel {
@@ -187,6 +187,17 @@
     margin-right: 2px;
     position: relative;
     left: -8px;
+}
+
+.mandatory label.md_lblsel:before {
+  content: "\f069";
+  color: red;
+  font-family: fontawesome;
+  font-size: 8px;
+  vertical-align: super;
+  margin-right: 2px;
+  position: relative;
+  left: 8px;
 }
 
 

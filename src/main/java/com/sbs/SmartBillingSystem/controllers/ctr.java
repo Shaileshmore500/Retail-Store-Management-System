@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sbs.SmartBillingSystem.Entity.Brand;
 import com.sbs.SmartBillingSystem.Entity.Category;
+import com.sbs.SmartBillingSystem.Entity.Suppiler;
 import com.sbs.SmartBillingSystem.Repository.BrandRepo;
 import com.sbs.SmartBillingSystem.Repository.CategoryRepo;
+import com.sbs.SmartBillingSystem.Repository.SupplierRepo;
 
 import ch.qos.logback.core.model.Model;
 
@@ -25,6 +27,8 @@ public class ctr {
     CategoryRepo categoryRepo;
     @Autowired
     BrandRepo brandRepo;
+    @Autowired
+    SupplierRepo supplierRepo;
 
     @GetMapping("/home")
     public String homepage() {
@@ -41,6 +45,25 @@ public class ctr {
     @GetMapping("/")
     public String home() {
         return "home";
+    }
+
+    @GetMapping("/supplier")
+    public String supplier(org.springframework.ui.Model model) {
+        // Category cat = new Category();
+
+        // cat.setCode("code");
+        // cat.setName("name");
+
+        // model.addAttribute("data", cat);
+        // model.addAttribute("errormessage", null);
+        // model.addAttribute("sucmessage", null);
+
+        return "forms/Supplier";
+    }
+
+    @GetMapping("/printbarcode")
+    public String printbarcode() {
+        return "forms/PrintBarcode";
     }
 
     @GetMapping("/category")
@@ -74,8 +97,10 @@ public class ctr {
 
         List<Category> categories = categoryRepo.findAll();
         List<Brand> brands = brandRepo.findAll();
+        List<Suppiler> suppilers = supplierRepo.findAll();
         model.addAttribute("categories", categories);
         model.addAttribute("brands", brands);
+        model.addAttribute("suppliers", suppilers);
 
         return "forms/product";
     }

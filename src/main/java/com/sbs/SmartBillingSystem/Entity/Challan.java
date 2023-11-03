@@ -13,12 +13,21 @@ public class Challan {
 	private float amount;
 	private float Quantity;
 	private Date challan_date;
+	private String challan_no;
+
 	@OneToOne
 	private Suppiler supplier_fid;
-
 	@OneToOne
 	private Branch branch_fid;
 	private Date purchase_date;
+
+	public String getChallan_no() {
+		return challan_no;
+	}
+
+	public void setChallan_no(String challan_no) {
+		this.challan_no = challan_no;
+	}
 
 	public int getPartyChallan_pid() {
 		return PartyChallan_pid;

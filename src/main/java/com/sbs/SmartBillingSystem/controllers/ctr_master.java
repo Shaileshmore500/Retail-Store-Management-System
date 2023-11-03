@@ -8,20 +8,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sbs.SmartBillingSystem.Entity.Brand;
 import com.sbs.SmartBillingSystem.Entity.Category;
+import com.sbs.SmartBillingSystem.Entity.Challan;
 import com.sbs.SmartBillingSystem.Entity.Product;
+import com.sbs.SmartBillingSystem.Entity.Suppiler;
 // import com.sbs.SmartBillingSystem.Entity.Product;
 import com.sbs.SmartBillingSystem.Repository.BrandRepo;
 import com.sbs.SmartBillingSystem.Repository.CategoryRepo;
+import com.sbs.SmartBillingSystem.Repository.ChallanRepo;
 import com.sbs.SmartBillingSystem.Repository.ProductRepo;
+import com.sbs.SmartBillingSystem.Repository.SupplierRepo;
 import com.sbs.SmartBillingSystem.Entity.serializedObject.*;
 
 @Controller
-@RequestMapping("/master")
+// @RequestMapping("/master")
 public class ctr_master {
 
     @Autowired
@@ -30,6 +37,10 @@ public class ctr_master {
     BrandRepo brandRepo;
     @Autowired
     ProductRepo productRepo;
+    @Autowired
+    SupplierRepo supplierRepo;
+    @Autowired
+    ChallanRepo challanRepo;
 
     private final ObjectMapper objectMapper;
 
@@ -37,7 +48,7 @@ public class ctr_master {
         this.objectMapper = objectMapper;
     }
 
-    @PostMapping("/savecat")
+    @PostMapping("/master/savecat")
     public String saveString(@RequestParam("name") String name, @RequestParam("code") String code, Model model) {
         Category cat = new Category();
         System.out.println("in cat add");
@@ -58,11 +69,29 @@ public class ctr_master {
         return "forms/CategoryForm";
     }
 
-    @PostMapping("/saveproduct")
-    public ResponseEntity<String> saveProduct(@RequestBody List<DesObjProduct> desObjProduct) {
-        System.out.println("in product 123");
+    @PostMapping("/master/saveproduct")
+    public ResponseEntity<String> saveProduct(@RequestBody DesObjChallanProduct desObjChallanProduct)
+            throws ParseException {
 
-        // productRepo.saveAll(lstProduct);
+        DesObjChallan desObjChallan = desObjChallanProduct.getDesObjChallan();
+        List<DesObjProduct> desObjProduct = desObjChallanProduct.getDesObjProduct();
+        System.out.println("in product 1234");
+        System.out.println(desObjChallan);
+        // setting values in challan object
+        Challan challan = new Challan();
+
+        Optional<Suppiler> supplierOptional = supplierRepo.findById(Integer.parseInt(desObjChallan.getSupplier_fid()));
+        Suppiler suppiler = supplierOptional.orElseThrow(() -> new RuntimeException("Supplier not found"));
+        challan.setSupplier_fid(suppiler);
+        challan.setAmount(desObjChallan.getAmount());
+        challan.setChallan_date(new SimpleDateFormat("yyyy-MM-dd").parse(desObjChallan.getChallan_date()));
+        challan.setChallan_no(desObjChallan.getChallan_no());
+        challan.setPurchase_date(new Date());
+        challan.setQuantity(desObjChallan.getQuantity());
+
+        Challan savedChallan = challanRepo.save(challan);
+
+        // setting values in product object
         List<Product> lst_Products = new ArrayList<Product>();
 
         for (DesObjProduct objproduct : desObjProduct) {
@@ -81,7 +110,10 @@ public class ctr_master {
             p.setBrand_fid(brand);
             p.setQuantity(objproduct.getQuantity());
             p.setTotal_amount(objproduct.getQuantity() * objproduct.getPurchase_rate());
+            p.setPartyChallan_fid(savedChallan);
+            p.setStyle(suppiler.getCode() + "-" + brand.getCode() + "-" + category.getCode());
             lst_Products.add(p);
+
         }
         productRepo.saveAll(lst_Products);
         System.out.println("saves");
@@ -125,12 +157,11 @@ public class ctr_master {
         // System.out.println(lstProduct.get(0).getName());
         // System.out.println("in product save");
         // productRepo.save(lstProduct);
-
         return ResponseEntity.ok("ok");
 
     }
 
-    @PostMapping("/savebrand")
+    @PostMapping("/master/savebrand")
     public String saveBrand(@RequestParam String name, @RequestParam String code, Model model) {
         Brand brand = new Brand();
         brand.setCode(code);
@@ -148,6 +179,36 @@ public class ctr_master {
         }
 
         return "forms/Brand";
+    }
+
+    @PostMapping("/master/savesupplier")
+    public String savesupplier(@RequestParam String name,
+            @RequestParam String code,
+            @RequestParam String mobile_no,
+            @RequestParam String address,
+            @RequestParam String GST_no,
+            Model model) {
+
+        Suppiler supplier = new Suppiler();
+        supplier.setName(name);
+        supplier.setAddress(address);
+        supplier.setGST_no(GST_no);
+        supplier.setCode(code);
+        supplier.setMobile_no(mobile_no);
+
+        try {
+            supplierRepo.save(supplier);
+            model.addAttribute("sucmessage", "Supplier Added...");
+
+        } catch (Exception e) {
+            // model.addAttribute("errormessage", code + " Already Present..." +
+            // e.getMessage());
+            model.addAttribute("errormessage", e.getMessage());
+            // model.addAttribute("data", brand);
+
+        }
+
+        return "forms/Supplier";
     }
 
 }

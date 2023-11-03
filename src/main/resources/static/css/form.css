@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap"); 
 .login-box {
     position: absolute;
-    top: 50%;
+    /* top: 50%; */
     left: 50%;
     width: 400px;
     padding: 40px;
@@ -164,7 +164,7 @@
       bottom: 100%;
     }
   } */
-  ._error
+   ._error
   {
     display: inline-block;
     width: 100%;
@@ -176,4 +176,19 @@
     line-height: 14px;
     position: absolute;
     top: 51px;
-  }
+  } 
+  
+   ._error2 {
+    display: inline-block;
+    /* width: 100%; */
+    white-space: nowrap;
+    color: red;
+    overflow: hidden;
+    font-size: 9px;
+    text-overflow: ellipsis;
+    line-height: 14px;
+    /* position: absolute; */
+    top: 51px;
+    float: left;
+    display: block;
+} 
