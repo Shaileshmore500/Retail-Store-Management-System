@@ -51,7 +51,7 @@
           <label>Category Name</label>
         </div>
         <!-- <a href="#" th:href="@{/savecat?name=marur&code=dalvi}" style="border: 1px solid;"> -->
-        <button type="submit" style="border-radius: 25px" class="btn-form">
+        <button type="" id="save" style="border-radius: 25px" class="btn-form">
           <span></span>
           <span></span>
           <span></span>
@@ -76,6 +76,12 @@
       $(document).ready(() => {
 
         debugger;
+$("#save").click(()=>{
+  debugger;
+  $("form").submit();
+})
+
+
         $("#master .fa-caret-down").toggleClass("tarnsform");
         $(".clild-menu_master").slideToggle();
         // showToasty(iclass,bgclass,message)

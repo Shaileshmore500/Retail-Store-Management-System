@@ -53,6 +53,8 @@ public class ctr_master {
         Category cat = new Category();
         System.out.println("in cat add");
         cat.setCode(code);
+        System.out.println("code" + code);
+        System.out.println("name:" + name);
         cat.setName(name);
         try {
             categoryRepo.save(cat);
