@@ -4,18 +4,15 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
 
 import com.sbs.SmartBillingSystem.Entity.Brand;
 import com.sbs.SmartBillingSystem.Entity.Category;
 import com.sbs.SmartBillingSystem.Entity.Suppiler;
 import com.sbs.SmartBillingSystem.Repository.BrandRepo;
 import com.sbs.SmartBillingSystem.Repository.CategoryRepo;
+import com.sbs.SmartBillingSystem.Repository.ChallanRepo;
 import com.sbs.SmartBillingSystem.Repository.SupplierRepo;
-
-import ch.qos.logback.core.model.Model;
 
 @Controller
 
@@ -29,6 +26,8 @@ public class ctr {
     BrandRepo brandRepo;
     @Autowired
     SupplierRepo supplierRepo;
+    @Autowired
+    ChallanRepo challanRepo;
 
     @GetMapping("/home")
     public String homepage() {
@@ -61,8 +60,10 @@ public class ctr {
         return "forms/Supplier";
     }
 
-    @GetMapping("/printbarcode")
-    public String printbarcode() {
+    @GetMapping("/barcode")
+    public String printbarcode(Model model) {
+
+        model.addAttribute("challan", challanRepo.findAll());
         return "forms/PrintBarcode";
     }
 

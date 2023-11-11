@@ -108,11 +108,11 @@ public class ctr_master {
             p.setCode(objproduct.getCode());
             p.setCategory_fid(category);
             p.setPurchase_rate(objproduct.getPurchase_rate());
-            p.setMRP(objproduct.getMrp());
+            p.setMrp(objproduct.getMrp());
             p.setBrand_fid(brand);
             p.setQuantity(objproduct.getQuantity());
             p.setTotal_amount(objproduct.getQuantity() * objproduct.getPurchase_rate());
-            p.setPartyChallan_fid(savedChallan);
+            p.setChallan_fid(savedChallan);
             p.setStyle(suppiler.getCode() + "-" + brand.getCode() + "-" + category.getCode());
             lst_Products.add(p);
 
