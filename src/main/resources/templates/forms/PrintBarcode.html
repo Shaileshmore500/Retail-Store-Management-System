@@ -31,7 +31,7 @@
         margin: 30px 0px 30px 0px;
       }
 
-      #btn_generatebarcode {
+      .btn_generatebarcode {
         padding: 12px 40px;
         background-color: rgb(2, 103, 66);
         color: #fff;
@@ -69,7 +69,11 @@
           <span class="_error2" style="position: absolute !important;"></span>
         </div>
         <div>
-          <button id="btn_generatebarcode">Generate</button>
+          <button id="btn_generatebarcode" class="btn_generatebarcode">Generate</button>
+        </div>
+        <div id="buttonContainer">
+          <button id="btn_print" class="btn_generatebarcode ml-2" onclick="printscreen()" style="display: none;">Print</button>
+          <!-- <button style="" onclick="printscreen()"></button> -->
         </div>
       </div>
 

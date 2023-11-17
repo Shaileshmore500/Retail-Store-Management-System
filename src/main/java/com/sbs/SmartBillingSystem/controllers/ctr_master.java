@@ -113,7 +113,9 @@ public class ctr_master {
             p.setQuantity(objproduct.getQuantity());
             p.setTotal_amount(objproduct.getQuantity() * objproduct.getPurchase_rate());
             p.setChallan_fid(savedChallan);
-            p.setStyle(suppiler.getCode() + "-" + brand.getCode() + "-" + category.getCode());
+            p.setStyle(suppiler.getCode().toString().substring(0, Math.min(suppiler.getCode().length(), 3)) + "-"
+                    + brand.getCode().substring(0, Math.min(brand.getCode().length(), 3)) + "-"
+                    + category.getCode().substring(0, Math.min(category.getCode().length(), 3)));
             lst_Products.add(p);
 
         }

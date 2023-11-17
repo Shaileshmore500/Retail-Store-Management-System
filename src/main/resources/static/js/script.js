@@ -1,5 +1,8 @@
+
 function showToasty(icon, bgclass, message, stat) {
   debugger;
+
+  $("#toast div i").remove();
   $("#toast div strong").before(icon);
   $("#toast div strong").text(stat);
   $("#toast .toast-header").addClass(bgclass);
@@ -39,8 +42,23 @@ function showToasty(icon, bgclass, message, stat) {
 
 
 }
-$(document).ready(() => {
-  debugger;
+
+function hideToasty()
+{
+  $("#toast").hide()
+}
+
+  
+  $(document).ready(() => {
+  $("#btn_toastclose").click(()=>{
+    $("#toast").fadeOut(500)
+  //   $("#toast").animate({ opacity: 0 }, 500, function(){
+  //     // This callback function will be executed after the animation is complete
+  //     // Use .stop() to clear any ongoing animations and prevent hide when hovered
+  //     $(this).stop(true, true).hide();
+  // });
+  })
+
   $("#btn_cancle").click(() => {
     if (confirm("Are You Sure ! Want to exit from this page..."))
       window.location.href = "\\";
