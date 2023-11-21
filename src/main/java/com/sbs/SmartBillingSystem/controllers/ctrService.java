@@ -6,6 +6,7 @@ import com.sbs.SmartBillingSystem.Repository.ChallanRepo;
 import com.sbs.SmartBillingSystem.Repository.ProductRepo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,6 +46,34 @@ public class ctrService {
         return ResponseEntity.ok(list_product);
         // }
         // return ResponseEntity.notFound().build();
+
+    }
+
+    @PostMapping("/searchProduct")
+    public ResponseEntity<?> serachProductEntity(@RequestBody Map<String, String> details) {
+        var pid = details.get("id");
+        String qty = details.get("qty");
+
+        Product product = productRepo.findById(Integer.parseInt(pid)).orElse(null);
+        if (product != null) {
+
+            if (Integer.parseInt(qty) <= product.getQuantity()) {
+                Product p = new Product();
+                p.setProduct_pid(product.getProduct_pid());
+                p.setStyle(product.getStyle());
+                p.setMrp(product.getMrp());
+                p.setQuantity(Float.parseFloat(qty));
+                p.setTotal_amount(product.getMrp() * p.getQuantity());
+
+                return new ResponseEntity<>(p, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Available Quantity is Only " + product.getQuantity(),
+                        HttpStatus.NOT_FOUND);
+            }
+
+        } else {
+            return new ResponseEntity<>("Product Not Found...", HttpStatus.NOT_FOUND);
+        }
 
     }
 

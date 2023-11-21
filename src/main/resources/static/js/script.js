@@ -1,13 +1,15 @@
 
 function showToasty(icon, bgclass, message, stat) {
   debugger;
-
+   
   $("#toast div i").remove();
   $("#toast div strong").before(icon);
   $("#toast div strong").text(stat);
-  $("#toast .toast-header").addClass(bgclass);
+  $("#toast #toast-header").removeClass();
+  var classname="toast-header "+bgclass;
+  $("#toast #toast-header").addClass(classname);
   $(".toast-body").text(message);
-  $("#toast").css("opacity",1);
+  $("#toast").css("opacity", 1);
   // $("#toast").show(()=>{
   //   setTimeout(function(){
   //     //$("#toast").hide()
@@ -16,47 +18,105 @@ function showToasty(icon, bgclass, message, stat) {
   //     }  ,3000)
   // ;
   //   });
-  $("#toast").show(()=>{
-  var toastElement = $("#toast");
+  $("#toast").show(() => {
+    var toastElement = $("#toast");
 
-  // Hide the element with opacity animation and a delay of 3000 milliseconds (3 seconds)
-  toastElement.animate({ opacity: 0 }, 5000, function(){
+    // Hide the element with opacity animation and a delay of 3000 milliseconds (3 seconds)
+    toastElement.animate({ opacity: 0 }, 7000, function () {
       // This callback function will be executed after the animation is complete
       // Use .stop() to clear any ongoing animations and prevent hide when hovered
       toastElement.stop(true, true).hide();
-  });
-  
-  // Prevent the element from hiding when hovered
-  toastElement.hover(function(){
+    });
+
+    // Prevent the element from hiding when hovered
+    toastElement.hover(function () {
       // Mouse enter event: clear the hide animation using .stop()
       $(this).stop().css('opacity', 1);;
-  }, function(){
+    }, function () {
       // Mouse leave event: resume the hide animation
-      $(this).animate({ opacity: 0 }, 3000, function(){
-          // This callback function will be executed after the animation is complete
-          // Use .stop() to clear any ongoing animations and prevent hide when hovered
-          $(this).stop(true, true).hide();
+      $(this).animate({ opacity: 0 }, 3000, function () {
+        // This callback function will be executed after the animation is complete
+        // Use .stop() to clear any ongoing animations and prevent hide when hovered
+        $(this).stop(true, true).hide();
       });
-  });
+    });
   });
 
 
 }
 
-function hideToasty()
-{
+function hideToasty() {
   $("#toast").hide()
 }
+//this function for valid table data \
 
-  
-  $(document).ready(() => {
-  $("#btn_toastclose").click(()=>{
+function validateTable(id) {
+  let flag = true;
+  $.each($("#" + id + " tr"), (index, tr) => {
+    var mandatoryFields = $(tr).find(".mandatory");
+    $.each(mandatoryFields, (i, f) => {
+      if ($(f).find("[data-field]").val() == "") {
+        // $(f).append('<span class="_error">Field is Mandatory</span>');
+        $(f).find("span").text("fields Is Mandatory");
+
+        flag = false;
+      } else {
+        $(f).find("span").text("");
+      }
+    });
+  });
+  return flag;
+}
+
+function validPanel(id) {
+  let flag = true;
+  $.each($("#" + id).find(".form-floating.mandatory"), (index, f) => {
+
+
+    if ($(f).find("[data-field]").attr("type") == "number") {
+      debugger;
+      var min = $(f).find("[data-field]").attr("min");
+      if($(f).find("[data-field]").val() == '')
+      {
+      $(f).find("span").text("fields Is Mandatory");
+      flag = false;
+      }
+      else if (min != null && $(f).find("[data-field]").val()<min) {
+        $(f).find("span").text("Value Should Be Greater Than " + min);
+        flag = false;
+
+      }else {
+        $(f).find("span").text("");
+}
+
+
+
+    }
+
+
+    else if ($(f).find("[data-field]").val() == "") {
+      // $(f).append('<span class="_error">Field is Mandatory</span>');
+      $(f).find("span").text("fields Is Mandatory");
+
+      flag = false;
+    } else {
+      $(f).find("span").text("");
+    }
+
+  });
+  return flag;
+
+}
+
+
+$(document).ready(() => {
+  $("#btn_toastclose").click(() => {
     $("#toast").fadeOut(500)
-  //   $("#toast").animate({ opacity: 0 }, 500, function(){
-  //     // This callback function will be executed after the animation is complete
-  //     // Use .stop() to clear any ongoing animations and prevent hide when hovered
-  //     $(this).stop(true, true).hide();
-  // });
+    //   $("#toast").animate({ opacity: 0 }, 500, function(){
+    //     // This callback function will be executed after the animation is complete
+    //     // Use .stop() to clear any ongoing animations and prevent hide when hovered
+    //     $(this).stop(true, true).hide();
+    // });
   })
 
   $("#btn_cancle").click(() => {
@@ -67,9 +127,9 @@ function hideToasty()
   // this function create object of table data  and send to server side
   $("#tbl_addProduct").click(() => {
     $(".loader").show();
-    
 
-    if (!validPanel("pnl_challan") || !validateTable("tab_logic")  ) {
+
+    if (!validPanel("pnl_challan") || !validateTable("tab_logic")) {
       showToasty(
         "<i class='fa-solid fa-triangle-exclamation fa-shake fa-xl text-white'>&nbsp;&nbsp;</i>",
         "bg-danger",
@@ -80,16 +140,16 @@ function hideToasty()
     }
 
     let obj_product = [];
-    let obj_challan={
-      challan_no:$('#html_challanno').val(),
-      supplier_fid:$('#html_supplier').val(),
-      challan_date:$('#html_ChallanDate').val(),
-      quantity:$('#html_Quantity').val(),
-      amount:$('#html_Amount').val()
+    let obj_challan = {
+      challan_no: $('#html_challanno').val(),
+      supplier_fid: $('#html_supplier').val(),
+      challan_date: $('#html_ChallanDate').val(),
+      quantity: $('#html_Quantity').val(),
+      amount: $('#html_Amount').val()
 
 
     };
-    
+
 
 
 
@@ -116,14 +176,14 @@ function hideToasty()
       // })
     });
 
-    const obj={
-      desObjProduct:obj_product,
-      desObjChallan:obj_challan
-      
-      
-          }
+    const obj = {
+      desObjProduct: obj_product,
+      desObjChallan: obj_challan
 
-    
+
+    }
+
+
     if (obj_product.length > 0) {
       $.ajax({
         type: "POST",
@@ -133,53 +193,16 @@ function hideToasty()
         success: function (response) {
           // Handle the response from the server
           console.log("Data sent successfully:", response);
-          window.setTimeout(()=>$(".loader").hide(),2000);
+          window.setTimeout(() => $(".loader").hide(), 2000);
         },
         error: function (error) {
           console.error("Error sending data:", error);
-         window.setTimeout(()=>$(".loader").hide(),2000);
+          window.setTimeout(() => $(".loader").hide(), 2000);
         },
       });
     }
   });
-  //this function for valid table data \
 
-  function validateTable(id) {
-    let flag = true;
-    $.each($("#" + id + " tr"), (index, tr) => {
-      var mandatoryFields = $(tr).find(".mandatory");
-      $.each(mandatoryFields, (i, f) => {
-        if ($(f).find("[data-field]").val() == "") {
-          // $(f).append('<span class="_error">Field is Mandatory</span>');
-          $(f).find("span").text("fields Is Mandatory");
-
-          flag = false;
-        } else {
-          $(f).find("span").text("");
-        }
-      });
-    });
-    return flag;
-  }
-
-  function validPanel(id)
-  {
-    let flag =true;
-    $.each($("#" + id).find(".form-floating"), (index, f) => {
-     
-        if ($(f).find("[data-field]").val() == "") {
-          // $(f).append('<span class="_error">Field is Mandatory</span>');
-          $(f).find("span").text("fields Is Mandatory");
-
-          flag = false;
-        } else {
-          $(f).find("span").text("");
-        }
-      
-    });
-    return flag;
-
-  }
 
   //add row function
   $("#add_row").on("click", function () {

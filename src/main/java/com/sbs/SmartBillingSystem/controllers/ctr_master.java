@@ -115,7 +115,8 @@ public class ctr_master {
             p.setChallan_fid(savedChallan);
             p.setStyle(suppiler.getCode().toString().substring(0, Math.min(suppiler.getCode().length(), 3)) + "-"
                     + brand.getCode().substring(0, Math.min(brand.getCode().length(), 3)) + "-"
-                    + category.getCode().substring(0, Math.min(category.getCode().length(), 3)));
+                    + category.getCode().substring(0, Math.min(category.getCode().length(), 3))
+                    + "#" + p.getSize());
             lst_Products.add(p);
 
         }

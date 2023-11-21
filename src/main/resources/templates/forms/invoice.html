@@ -1,58 +1,170 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!-- <html xmlns="http://www.w3.org/1999/xhtml"> -->
+
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{navbar::layout(~{::section})}">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
-
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine" />
-
-  <link rel="stylesheet" th:href="@{/css/form.css}" />
-
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-    crossorigin="anonymous"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet"
+    id="bootstrap-css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!------ Include the above in your HEAD tag ---------->
+  <title></title>
   <style>
-    @import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap");
-
-    #toast {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
+    .table-sortable tbody tr {
+      cursor: move;
     }
   </style>
-
 </head>
 
 <body>
-
-  <section class="html__section">
-
-
-
-
+  <section>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/invoiveForm.css}" />
+    <div class="form-floating col-md-6 mx-auto mb-3 text-center col-4 aligh-center">
+      <h2>Invoice</h2>
+    </div>
     
+      <div class="panel mlr-15" id="pnl_invoiceDetails">
+        <div>
+          <div class="panel-header">Invoice Details</div>
+          <div class="mb-2 col-6 text-center mt-2 d-flex mlr">
+            <div class="form-floating mb-3 col-7 mandatory">
+              <input type="text" class="form-control" id="html_productID" data-field=""/>
+              <label for="floatingInput mr-5" class="ml-15 md_lbl">Product ID</label>
+              <span class="_error2"></span>
+            </div>
+            <div class="form-floating mb-3 col-7 mandatory">
+              <input type="number" class="form-control" id="html_quantity" data-field="" min=0.1 />
+              <label for="floatingInput mr-5" class="ml-15 md_lbl">Quantity</label>
+              <span class="_error2"></span>
+            </div>
+            <div class="d-flex mb-2 btn-div ">
+
+              <button class="noselect btn_add ml" id="btn_addProduct">
+                <span class="text">Add</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                    viewBox="0 0 512 512">
+                    <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                    <path
+                      d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
+                  </svg></span>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    
+    <div class="panel mlr-15 mt-5" id="addProduct">
+      <div class="panel-header">Product Details</div>
+      <div class="container ">
+
+        <div class="row clearfix">
+          <div class="col-md-12 table-responsive">
+            <table class="table table-bordered table-hover table-sortable" id="tab_logic">
+              <thead>
+                <tr>
+                  <th class="text-center mw150"> ProductID</th>
+                  <th class="text-center mw150"> Style</th>
+                  <th class="text-center mw150">MRP</th>
+                  <th class="text-center mw150">Quantity</th>
+                  <th class="text-center mw150">Discount(%)</th>
+                  <th class="text-center mw150"> Discount(₹)</th>
+                  <th class="text-center mw150">Total</th>
+                  
+
+                  
+                </tr>
+              </thead>
+              <tbody>
+                <tr id="addr0" data-id="0">
+                  <td data-name="mail">
+                    <div class="form-floating mb-3 mandatory">
+                      <input type="text" id="html_MRP" data-field="code" />
+                      
+
+                    </div>
+                  </td>
+                  <td data-name="mail">
+                    <div class="form-floating mb-3 ">
+                      <input type="text" class="form-control" id="html_style" data-field="name" />
+                      <label for="floatingInput mr-5" class="ml-15 md_lbl">Product Name</label>
+                      <span class="_error"></span>
+                    </div>
+                  </td>
+                  <td data-name="mail">
+                    <div class="form-floating mb-3 mandatory">
+                      <input type="number" class="form-control" id="html_size" data-field="size" />
+                      <label for="floatingInput mr-5" class="ml-15 md_lbl">Size</label>
+                      <span class="_error"></span>
+                    </div>
+                  </td>
+
+
+                  <td data-name="mail">
+                    <div class="form-floating mb-3 mandatory">
+                      <input type="number" class="form-control" id="html_qty" data-field="quantity" />
+                      <label for="floatingInput mr-5" class="ml-15 md_lbl">Quantity</label>
+                      <span class="_error"></span>
+                    </div>
+                  </td>
+                  <td data-name="mail">
+                    <div class="form-floating mb-3 mandatory">
+                      <input type="number" class="form-control" id="html_MRP" data-field="mrp" />
+                      <label for="floatingInput mr-5" class="ml-15 md_lbl">MRP</label>
+                      <span class="_error"></span>
+                    </div>
+                  </td>
+                  <td data-name="mail">
+                    <div class="form-floating mb-3 mandatory">
+                      <input type="number" class="form-control" id="html_MRP" data-field="purchase_rate" />
+                      <label for="floatingInput mr-5" class="ml-15 md_lbl">Purchase Rate</label>
+                      <span class="_error"></span>
+                    </div>
+                  </td>
+                  
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <a id="add_row" class="btn btn-primary float-right">Add Row</a>
+      </div>
+
+    </div>
+    <div class="d-flex mb-2 btn-div mt-5">
+      <button class="noselect btn_del ml" id="btn_cancle">
+        <span class="text">Cancle</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+            height="24" viewBox="0 0 24 24">
+            <path
+              d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z">
+            </path>
+          </svg></span>
+      </button>
+      <button class="noselect btn_add ml" id="btn_addProduct">
+        <span class="text">Add</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" height="1em"
+            viewBox="0 0 512 512">
+            <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+            <path
+              d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
+          </svg></span>
+      </button>
+    </div>
+
+
+
+<script th:src=@{/js/invoice.js}></script>
+    <script>
+      $(document).ready(function () {
+
+
+
+      });
+    </script>
   </section>
-
-
-  </section>
-
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-    crossorigin="anonymous"></script>
-  <!-- <script src="/js/script.js"></script> -->
 </body>
 
 </html>

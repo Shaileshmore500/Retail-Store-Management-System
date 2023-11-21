@@ -111,4 +111,9 @@ public class ctr {
         return "forms/brand";
     }
 
+    @GetMapping("/invoice")
+    public String invoice() {
+        return "forms/invoice";
+    }
+
 }
