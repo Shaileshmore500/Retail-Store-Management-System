@@ -37,7 +37,7 @@
               <span class="_error2"></span>
             </div>
             <div class="form-floating mb-3 col-7 mandatory">
-              <input type="number" class="form-control" id="html_quantity" data-field="" min=0.1 />
+              <input type="number" value="1" class="form-control" id="html_quantity" data-field="" min=0.1 />
               <label for="floatingInput mr-5" class="ml-15 md_lbl">Quantity</label>
               <span class="_error2"></span>
             </div>
@@ -64,7 +64,7 @@
 
         <div class="row clearfix">
           <div class="col-md-12 table-responsive">
-            <table class="table table-bordered table-hover table-sortable" id="tab_logic">
+            <table class="table table-bordered table-hover table-sortable" id="tbl_product">
               <thead>
                 <tr>
                   <th class="text-center mw150"> ProductID</th>
@@ -80,12 +80,12 @@
                 </tr>
               </thead>
               <tbody>
-                <tr id="addr0" data-id="0">
+                <!-- <tr id="addr0" data-id="0">
                   <td data-name="mail">
-                    <div class="form-floating mb-3 mandatory">
-                      <input type="text" id="html_MRP" data-field="code" />
-                      
-
+                    <div class="form-floating mb-3 ">
+                      <input type="text" class="form-control" id="html_ProductID" data-field="name" />
+                      <label for="floatingInput mr-5" class="ml-15 md_lbl">Product ID</label>
+                      <span class="_error"></span>
                     </div>
                   </td>
                   <td data-name="mail">
@@ -125,9 +125,26 @@
                       <span class="_error"></span>
                     </div>
                   </td>
-                  
-                </tr>
+                  <td data-name="mail">
+                    <div class="form-floating mb-3 mandatory">
+                      <input type="number" class="form-control" id="html_MRP" data-field="purchase_rate" />
+                      <label for="floatingInput mr-5" class="ml-15 md_lbl">Purchase Rate</label>
+                      <span class="_error"></span>
+                    </div>
+                  </td>                  
+                </tr> -->
               </tbody>
+              <tfoot>
+                <tr></tr>
+                
+                <tr>                  
+                    <td colspan="3">Total</td>
+                    <td ><label id="" class="fl-inend" for="qty">0</label></td>
+                    <td></td>
+                    <td> <label class="fl-inend" for="disamt">0</label></td>
+                    <td><label class="fl-inend" for="total">0</label></td>
+                </tr>
+            </tfoot>
             </table>
           </div>
         </div>

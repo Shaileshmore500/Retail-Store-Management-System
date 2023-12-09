@@ -1,7 +1,7 @@
 
 function showToasty(icon, bgclass, message, stat) {
   debugger;
-   
+  $("#toast").hide();
   $("#toast div i").remove();
   $("#toast div strong").before(icon);
   $("#toast div strong").text(stat);
@@ -20,9 +20,10 @@ function showToasty(icon, bgclass, message, stat) {
   //   });
   $("#toast").show(() => {
     var toastElement = $("#toast");
-
+    
     // Hide the element with opacity animation and a delay of 3000 milliseconds (3 seconds)
-    toastElement.animate({ opacity: 0 }, 7000, function () {
+    
+    toastElement.animate({ opacity: 0 }, 3000, function () {
       // This callback function will be executed after the animation is complete
       // Use .stop() to clear any ongoing animations and prevent hide when hovered
       toastElement.stop(true, true).hide();
@@ -34,7 +35,7 @@ function showToasty(icon, bgclass, message, stat) {
       $(this).stop().css('opacity', 1);;
     }, function () {
       // Mouse leave event: resume the hide animation
-      $(this).animate({ opacity: 0 }, 3000, function () {
+      $(this).animate({ opacity: 0 }, 1000, function () {
         // This callback function will be executed after the animation is complete
         // Use .stop() to clear any ongoing animations and prevent hide when hovered
         $(this).stop(true, true).hide();
@@ -81,7 +82,7 @@ function validPanel(id) {
       $(f).find("span").text("fields Is Mandatory");
       flag = false;
       }
-      else if (min != null && $(f).find("[data-field]").val()<min) {
+      else if (min != null && $(f).find("[data-field]").val()<=min) {
         $(f).find("span").text("Value Should Be Greater Than " + min);
         flag = false;
 

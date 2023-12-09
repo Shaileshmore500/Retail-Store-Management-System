@@ -16,8 +16,10 @@ public class Product {
 	private float purchase_rate;
 	private float mrp;
 	private float size;
-
+	private float discountper;
+	private float discountamt;
 	private float quantity;
+	private float netamount;
 	private float total_amount;
 	@OneToOne(cascade = CascadeType.PERSIST)
 	private Brand brand_fid;
@@ -38,6 +40,22 @@ public class Product {
 			// Set the default value to today's date
 			createdDate = LocalDate.now();
 		}
+	}
+
+	public void setDiscountper(float discountper) {
+		this.discountper = discountper;
+	}
+
+	public void setDiscountamt(float discountamt) {
+		this.discountamt = discountamt;
+	}
+
+	public float getDiscountper() {
+		return discountper;
+	}
+
+	public float getDiscountamt() {
+		return discountamt;
 	}
 
 	public void setCreatedDate(LocalDate createdDate) {
@@ -158,6 +176,14 @@ public class Product {
 
 	public void setChallan_fid(Challan challan_fid) {
 		this.challan_fid = challan_fid;
+	}
+
+	public float getNetamount() {
+		return netamount;
+	}
+
+	public void setNetamount(float netamount) {
+		this.netamount = netamount;
 	}
 
 }

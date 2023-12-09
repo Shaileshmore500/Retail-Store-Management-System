@@ -24,6 +24,7 @@ public class BillDetails {
     public BillDetails() {
     }
 
+
     public void setBillDetails_pid(int billDetails_pid) {
         this.billDetails_pid = billDetails_pid;
     }
