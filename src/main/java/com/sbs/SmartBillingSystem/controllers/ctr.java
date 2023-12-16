@@ -45,6 +45,11 @@ public class ctr {
     public String home() {
         return "home";
     }
+    @GetMapping("/customer")
+    public String customer()
+    {
+        return "forms/Customer";
+    }
 
     @GetMapping("/supplier")
     public String supplier(org.springframework.ui.Model model) {
