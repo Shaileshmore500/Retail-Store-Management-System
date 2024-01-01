@@ -1,14 +1,29 @@
 package com.sbs.SmartBillingSystem.controllers;
 
+import jakarta.servlet.ServletContext;
+import org.apache.catalina.core.ApplicationContext;
+import org.apache.tomcat.util.descriptor.web.MultipartDef;
+import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -19,13 +34,21 @@ import com.sbs.SmartBillingSystem.Entity.Category;
 import com.sbs.SmartBillingSystem.Entity.Challan;
 import com.sbs.SmartBillingSystem.Entity.Product;
 import com.sbs.SmartBillingSystem.Entity.Suppiler;
+import com.sbs.SmartBillingSystem.Entity.User;
 // import com.sbs.SmartBillingSystem.Entity.Product;
 import com.sbs.SmartBillingSystem.Repository.BrandRepo;
 import com.sbs.SmartBillingSystem.Repository.CategoryRepo;
 import com.sbs.SmartBillingSystem.Repository.ChallanRepo;
 import com.sbs.SmartBillingSystem.Repository.ProductRepo;
 import com.sbs.SmartBillingSystem.Repository.SupplierRepo;
+import com.sbs.SmartBillingSystem.Repository.UserRepo;
+
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
+
 import com.sbs.SmartBillingSystem.Entity.serializedObject.*;
+import org.springframework.web.context.ServletContextAware;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 // @RequestMapping("/master")
@@ -41,6 +64,10 @@ public class ctr_master {
     SupplierRepo supplierRepo;
     @Autowired
     ChallanRepo challanRepo;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private UserRepo userrepository;
 
     private final ObjectMapper objectMapper;
 
@@ -214,6 +241,56 @@ public class ctr_master {
         }
 
         return "forms/Supplier";
+    }
+
+    @PostMapping("/master/registerUser")
+    public String registerUser(@ModelAttribute("user") User user, @RequestParam("file") MultipartFile file
+
+    ) {
+
+        try {
+
+            if (file != null) {
+
+                // Path path= Paths.get(staticPath,file.getOriginalFilename());
+                // byte[] img_byte=file.getBytes();
+                // Files.write(path,img_byte);
+                // user.setImageUrl(path.toString());
+                // File saveFile = new ClassPathResource("static/images").getFile();
+                // Path path = Paths.get(saveFile.getAbsolutePath() + File.separator +
+                // file.getOriginalFilename());
+                // Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+                String timestamp = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+
+                Path resourcesPath = Paths
+                        .get("src", "main", "resources", "static", "images", timestamp + file.getOriginalFilename())
+                        .toAbsolutePath();
+
+                byte[] img_byte = file.getBytes();
+                Files.write(resourcesPath, img_byte);
+
+                if (resourcesPath == null)
+                    user.setImageUrl("default.png");
+                else
+                    user.setImageUrl(timestamp + file.getOriginalFilename());
+                ;
+
+            }
+
+            if(user.getRole()=="")
+            user.setRole("ROLE_OTHER");
+            user.setEnabled(true);
+
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+            User result = this.userrepository.save(user);
+            return "register";
+
+        } catch (Exception e) {
+
+            return "register";
+        }
+
     }
 
 }

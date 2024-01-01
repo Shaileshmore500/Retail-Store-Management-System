@@ -9,7 +9,9 @@ import com.sbs.SmartBillingSystem.Entity.User;
 
 @Repository
 public interface UserRepo extends JpaRepository<User, Integer> {
-    // @Query("select u form User where email=:email")
-    // public User GetUserByUSerName(@Param("email") String email);
+//    @Query("select u from User where u.name=:name")
+//    public User GetUserByUserName(@Param("name") String 
+@Query("select u from User u where u.email = :email")
+	public User getUserByUserName(@Param("email") String email);
 
 }

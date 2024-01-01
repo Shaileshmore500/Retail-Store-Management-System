@@ -12,8 +12,8 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
-	@NotBlank(message = "Name field is required !!")
-	@Size(min = 2, max = 20, message = "min 2 and max 20 characters are allowed !!")
+//	@NotBlank(message = "Name field is required !!")
+//	@Size(min = 2, max = 20, message = "min 2 and max 20 characters are allowed !!")
 	private String name;
 	@Column(unique = true)
 	private String email;
@@ -21,9 +21,24 @@ public class User {
 	private String role;
 	private boolean enabled;
 	private String imageUrl;
-	@Column(length = 500)
+	private String mobile_no;
+	private String address;
 
-	private String about;
+	public String getMobile_no() {
+		return mobile_no;
+	}
+
+	public void setMobile_no(String mobile_no) {
+		this.mobile_no = mobile_no;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
 	public User() {
 		super();
@@ -86,12 +101,5 @@ public class User {
 		this.imageUrl = imageUrl;
 	}
 
-	public String getAbout() {
-		return about;
-	}
-
-	public void setAbout(String about) {
-		this.about = about;
-	}
 
 }

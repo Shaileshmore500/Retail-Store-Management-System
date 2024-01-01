@@ -8,7 +8,7 @@
     margin-right: 15px;
   }
   .ml-15{
-    /* left: 15px !important; */
+    left: 15px !important;
   }
 
   .panel {
@@ -186,7 +186,8 @@
     vertical-align: super;
     margin-right: 2px;
     position: relative;
-    left: -8px;
+    left: -3px;
+    top: 2px;
 }
 
 .mandatory label.md_lblsel:before {
@@ -198,6 +199,9 @@
   margin-right: 2px;
   position: relative;
   left: 8px;
+}
+.form-floating>label{
+  width: 100%;
 }
 
 
