@@ -1,5 +1,6 @@
 $(document).ready(() => {
 
+  
    // document.getElementById("btn").addEventListener("click", () => {
      $("#btn_generatebarcode") .click(()=>{
         debugger;
@@ -8,7 +9,7 @@ $(document).ready(() => {
 // type:"POST",
 // content:"application/json",
 // url:"/printBarcode",
-// data:JSON.stringify({ challanID:$("#html_challanno").val()}),
+// data:JSON.stringify({ challanID:$("#html_chal``````````````````````````````````````lanno").val()}),
 // success:(response)=>{
 // console.log(response)
 // },

@@ -13,6 +13,8 @@ import com.sbs.SmartBillingSystem.Repository.BrandRepo;
 import com.sbs.SmartBillingSystem.Repository.CategoryRepo;
 import com.sbs.SmartBillingSystem.Repository.ChallanRepo;
 import com.sbs.SmartBillingSystem.Repository.SupplierRepo;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 
@@ -119,6 +121,29 @@ public class ctr {
     @GetMapping("/invoice")
     public String invoice() {
         return "forms/invoice";
+    }
+     @GetMapping("/signup")
+    public String signup(Model model) {
+
+        model.addAttribute("user", null);
+
+        return "register";
+    }
+     @GetMapping("/po")
+    public String po(Model model) {
+
+        List<Suppiler> suppilers = supplierRepo.findAll();
+ model.addAttribute("suppliers", suppilers);
+
+        return "forms/po";
+    }
+    @GetMapping("/attendance")
+    public String attendance() {
+        return "forms/attendance";
+    }
+     @GetMapping("/searchProduct")
+    public String searchProduct() {
+        return "forms/searchProduct";
     }
 
 }

@@ -137,6 +137,7 @@ $(document).ready(() => {
         "Please Fix All Errors",
         "Error"
       );
+      $(".loader").hide();
       return false;
     }
 

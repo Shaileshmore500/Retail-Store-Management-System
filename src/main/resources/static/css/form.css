@@ -23,7 +23,7 @@
     position: relative;
   }
 
-  .login-box .user-box input {
+  .login-box .user-box input , .login-box .user-box  select{
     width: 100%;
     padding: 10px 0;
     font-size: 16px;
@@ -33,6 +33,30 @@
     border-bottom: 1px solid #fff;
     outline: none;
     background: transparent;
+    box-shadow: 2px -3px 12px #513bad94;
+  }
+  .login-box .user-box  select
+  {background-color: #1c0c5b;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    color: white;
+    padding-left: 0px;
+    border-radius: 1px;}
+  .login-box .user-box textarea {
+
+    width: 100%;
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+    margin-bottom: 30px;
+    outline: none;
+    background: transparent;
+    height: 55px;
+    margin-top: 33px;
+    border-bottom: 1px solid;
+    
+    box-shadow: 2px -3px 12px #513bad94;
+
   }
   .login-box .user-box label {
     position: absolute;
