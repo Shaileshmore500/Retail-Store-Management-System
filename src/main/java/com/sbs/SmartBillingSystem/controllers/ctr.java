@@ -1,6 +1,9 @@
 package com.sbs.SmartBillingSystem.controllers;
 
 import java.util.*;
+
+import com.sbs.SmartBillingSystem.Entity.User;
+import com.sbs.SmartBillingSystem.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,10 +12,6 @@ import org.springframework.ui.Model;
 import com.sbs.SmartBillingSystem.Entity.Brand;
 import com.sbs.SmartBillingSystem.Entity.Category;
 import com.sbs.SmartBillingSystem.Entity.Suppiler;
-import com.sbs.SmartBillingSystem.Repository.BrandRepo;
-import com.sbs.SmartBillingSystem.Repository.CategoryRepo;
-import com.sbs.SmartBillingSystem.Repository.ChallanRepo;
-import com.sbs.SmartBillingSystem.Repository.SupplierRepo;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -30,6 +29,8 @@ public class ctr {
     SupplierRepo supplierRepo;
     @Autowired
     ChallanRepo challanRepo;
+    @Autowired
+    UserRepo userRepo;
 
     @GetMapping("/home")
     public String homepage() {
@@ -144,6 +145,16 @@ public class ctr {
      @GetMapping("/searchProduct")
     public String searchProduct() {
         return "forms/searchProduct";
+    }
+
+    @GetMapping("/grid")
+    public String grid1(Model model){
+
+        List<User> users=userRepo.findAll();
+model.addAttribute("user",users);
+
+
+        return "/Grid/gid1";
     }
 
 }
