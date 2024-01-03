@@ -1,7 +1,11 @@
 package com.sbs.SmartBillingSystem.controllers;
 
+import com.sbs.SmartBillingSystem.Entity.Bill;
 import com.sbs.SmartBillingSystem.Entity.Challan;
 import com.sbs.SmartBillingSystem.Entity.Product;
+import com.sbs.SmartBillingSystem.Entity.serializedObject.DesObjBillProduct;
+import com.sbs.SmartBillingSystem.Helper.InvoiveHelper;
+import com.sbs.SmartBillingSystem.Repository.BillRepo;
 import com.sbs.SmartBillingSystem.Repository.ChallanRepo;
 import com.sbs.SmartBillingSystem.Repository.ProductRepo;
 
@@ -98,22 +102,25 @@ public class ctrService {
 
     }
 
-    @PostMapping("/validateinvoice")
-    public ResponseEntity<?> validateinvoice(@RequestBody List<Product> p) {
-        List<Product> valid_productList = new ArrayList<>();
+    // @PostMapping("/validateinvoice")
+    // public ResponseEntity<?> validateinvoice(@RequestBody List<Product> p) {
+    // List<Product> valid_productList = new ArrayList<>();
 
-        for (Product product : p) {
+    // for (Product product : p) {
 
-            float invoiceQTY = product.getQuantity();
-            float availableQTY = productRepo.findById(product.getProduct_pid()).orElseThrow().getQuantity();
-            if (invoiceQTY > availableQTY)
-                return new ResponseEntity<>(
-                        product.getQuantity() + " is not available in " + product.getProduct_pid() + " product",
-                        HttpStatus.NOT_FOUND);
+    // float invoiceQTY = product.getQuantity();
+    // float availableQTY =
+    // productRepo.findById(product.getProduct_pid()).orElseThrow().getQuantity();
+    // if (invoiceQTY > availableQTY)
+    // return new ResponseEntity<>(
+    // product.getQuantity() + " is not available in " + product.getProduct_pid() +
+    // " product",
+    // HttpStatus.NOT_FOUND);
 
-        }
+    // }
 
-        return null;
+    // return null;
 
-    }
+    // }
+
 }

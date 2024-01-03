@@ -9,7 +9,6 @@ public class Bill {
 	@GeneratedValue
 	@Id
 	private int bill_pid;
-	private long bill_no;
 	private float amount;
 	private float Quantity;
 	private Date date;
@@ -25,8 +24,12 @@ public class Bill {
 		// TODO Auto-generated constructor stub
 	}
 
-	public long getBill_no() {
-		return bill_no;
+	public int getBill_pid() {
+		return bill_pid;
+	}
+
+	public void setBill_pid(int bill_pid) {
+		this.bill_pid = bill_pid;
 	}
 
 	public float getAmount() {
@@ -59,10 +62,6 @@ public class Bill {
 
 	public User getUser_fid() {
 		return user_fid;
-	}
-
-	public void setBill_no(long bill_no) {
-		this.bill_no = bill_no;
 	}
 
 	public void setAmount(float amount) {

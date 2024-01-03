@@ -1,6 +1,7 @@
 package com.sbs.SmartBillingSystem.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +15,13 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sbs.SmartBillingSystem.Entity.Bill;
 import com.sbs.SmartBillingSystem.Entity.Brand;
 import com.sbs.SmartBillingSystem.Entity.Category;
 import com.sbs.SmartBillingSystem.Entity.Challan;
 import com.sbs.SmartBillingSystem.Entity.Product;
 import com.sbs.SmartBillingSystem.Entity.Suppiler;
+import com.sbs.SmartBillingSystem.Repository.BillRepo;
 // import com.sbs.SmartBillingSystem.Entity.Product;
 import com.sbs.SmartBillingSystem.Repository.BrandRepo;
 import com.sbs.SmartBillingSystem.Repository.CategoryRepo;
@@ -26,6 +29,7 @@ import com.sbs.SmartBillingSystem.Repository.ChallanRepo;
 import com.sbs.SmartBillingSystem.Repository.ProductRepo;
 import com.sbs.SmartBillingSystem.Repository.SupplierRepo;
 import com.sbs.SmartBillingSystem.Entity.serializedObject.*;
+import com.sbs.SmartBillingSystem.Helper.InvoiveHelper;
 
 @Controller
 // @RequestMapping("/master")
@@ -41,6 +45,10 @@ public class ctr_master {
     SupplierRepo supplierRepo;
     @Autowired
     ChallanRepo challanRepo;
+    @Autowired
+    InvoiveHelper invoiveHelper;
+    @Autowired
+    BillRepo billRepo;
 
     private final ObjectMapper objectMapper;
 
@@ -214,6 +222,24 @@ public class ctr_master {
         }
 
         return "forms/Supplier";
+    }
+
+    @PostMapping("/generateinvoice")
+    public ResponseEntity<?> generateInvoice(@RequestBody String p) {
+
+        List<Product> productList = new ArrayList<>();
+        List<String> errorList = invoiveHelper.validateinvoice(productList);
+
+        if (errorList.size() > 0) {
+            return new ResponseEntity<>(errorList, HttpStatus.NOT_FOUND);
+        }
+        Bill bill = new Bill();
+        Bill bill2 = billRepo.save(bill);
+
+        boolean updateStatus = invoiveHelper.updateProduct(productList, bill2);
+
+        return null;
+
     }
 
 }

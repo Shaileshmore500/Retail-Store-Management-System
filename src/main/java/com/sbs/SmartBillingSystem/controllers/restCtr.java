@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class restCtr {
 
-    @GetMapping("/setattribute")
-    public String product(org.springframework.ui.Model model) {
+    // @GetMapping("/setattribute")
+    // public String product(org.springframework.ui.Model model) {
 
-        model.addAttribute("errormessage", "");
-        model.addAttribute("sucmessage", "");
-        System.out.println("restcontroller");
-        return "/category";
+    // model.addAttribute("errormessage", "");
+    // model.addAttribute("sucmessage", "");
+    // System.out.println("restcontroller");
+    // return "/category";
 
-    }
+    // }
 
 }
