@@ -27,21 +27,21 @@
         <div class="form-floating col-md-6 mx-auto mb-3 text-center col-4 aligh-center">
             <h1><u>Purchase Order</u></h1>
         </div>
-        <form action="/savePO" method="post">
+        <form action="/savePO" method="post" enctype="multipart/form-data">
             <div class="panel mlr-15" id="pnl_po">
                 <div>
                     <div class="panel-header">
                         <h3>Purchase Order Details</h3>
                     </div>
                     <div class="mb-2 col-6 text-center mt-2 d-flex mlr">
-                        <div class="form-floating mb-3 col-7 mandatory">
-                            <input type="text" class="form-control" id="html_challanno" data-field="challanno" />
+                        <div class="form-floating mb-3 col-7               ">
+                            <input type="text" class="form-control" name="ponumber" id="html_challanno" data-field="challanno" />
                             <label for="floatingInput mr-5" class="ml-15 md_lbl">PO Number</label>
                             <span class="_error2"></span>
                         </div>
                         <div class="form-floating mb-3 col-7 mandatory">
                             <label for="" class="md_lblsel"></label>
-                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+                            <select class="form-select form-select-lg mb-3" name="supplier_fid" aria-label=".form-select-lg example"
                                 id="html_supplier" data-field="supplier_fid">
                                 <option selected value="">Supplier</option>
                                 <option th:each="s:${suppliers}" th:value="${s.supplier_pid}"
@@ -52,7 +52,7 @@
                             <span class="_error2" style="position: absolute !important;"></span>
                         </div>
                         <div class="form-floating mb-3 col-7 mandatory">
-                            <input type="date" class="form-control" id="html_ChallanDate" data-field="challandate" />
+                            <input type="date" class="form-control" name="poDate" id="" data-field="challandate" />
                             <label for="floatingInput mr-5" class="ml-15 md_lbl">PO Date</label>
                             <span class="_error2"></span>
                         </div>
@@ -60,17 +60,17 @@
                     </div>
                     <div class="mb-2 col-6 text-center mt-2 d-flex mlr ">
                         <div class="form-floating mb-3 col-7 mandatory">
-                            <input type="date" class="form-control" id="html_ChallanDate" data-field="challandate" />
+                            <input type="date" class="form-control" name="podueDate" id="" data-field="challandate" />
                             <label for="floatingInput mr-5" class="ml-15 md_lbl">PO Due Date</label>
                             <span class="_error2"></span>
                         </div>
                         <div class="form-floating mb-3 col-7 ">
-                            <input type="date" class="form-control" id="html_ChallanDate" data-field="challandate" />
+                            <input type="date" class="form-control" id="" name="poreceivedDate" data-field="challandate" />
                             <label for="floatingInput mr-5" class="ml-15 md_lbl">PO Received Date</label>
                             <span class="_error2"></span>
                         </div>
                         <div class="form-floating mb-2 col-7 mandatory">
-                            <input type="number" class="form-control" id="html_Quantity" data-field="quantity" />
+                            <input type="number" class="form-control" id="html_Quantity" name="qty" data-field="quantity" />
                             <label for="floatingInput mr-5" class="ml-15 md_lbl">PO Estimated Quantity</label>
                             <span class="_error2">
 
@@ -79,12 +79,12 @@
                     </div>
                     <div class="mb-2 col-6 text-center mt-2 d-flex mlr ">
                         <div class="form-floating mb-2 col-7 mandatory">
-                            <input type="number" class="form-control" id="html_Amount" data-field="amount" />
+                            <input type="number" class="form-control" id="" name="amt" data-field="amount" />
                             <label for="floatingInput mr-5" class="ml-15 md_lbl">PO Estimated Amount</label>
                             <span class="_error2"></span>
                         </div>
                         <div class="form-floating mb-2 col-7 mandatory">
-                            <input type="file" class="form-control" id="html_Amount" data-field="amount" />
+                            <input type="file" class="form-control" name="file" id="" data-field="amount" />
                             <label for="floatingInput mr-5" class="ml-15 md_lbl">PO Detail File</label>
                             <span class="_error2"></span>
                         </div>
@@ -92,7 +92,7 @@
                     </div>
                     <div class="mb-2 col-12 text-center mt-2 d-flex mlr ">
                         <div class="form-floating mb-2 col-12 mandatory">
-                            <textarea name="" id="" cols="30" rows="10" class="form-control"
+                            <textarea  id="" cols="30" rows="10" name="note" class="form-control"
                                 data-field="amount"></textarea>
 
                             <label for="floatingInput mr-5" class="ml-15 md_lbl">PO Note</label>

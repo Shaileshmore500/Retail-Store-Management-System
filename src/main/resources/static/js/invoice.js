@@ -1,11 +1,14 @@
 var obj_product = {};
 $(document).ready(() => {
   // $('input[data-field="quantity"]').on("change", function () {
-  //   debugger;
+  
   //   alert(1);
   // });
 
   $("#btn_generateInvoice").click(() => {
+
+
+    debugger;
     var rowcount = $("#tbl_product tbody tr");
     if (rowcount == null || rowcount.length <= 0) {
       showToasty(
@@ -16,6 +19,15 @@ $(document).ready(() => {
       );
       return;
     }
+
+    
+    
+    var a=[];
+    for (let index = 0; index < Object.keys(obj_product).length; index++)
+    {
+    a.push(obj_product[index])  ;
+    }
+    
     
     
 
@@ -23,7 +35,8 @@ $(document).ready(() => {
       type: "POST",
       contentType: "application/json",
       url: "/generateinvoice",
-      data: JSON.stringify(obj_product),
+      dataType: 'json',
+      data: JSON.stringify(a),
       success: function (res) {
 
         console.log("suc");

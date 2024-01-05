@@ -17,8 +17,39 @@ public class DesObjProduct {
 
     private int supplier_fid;
     private String barcode;
+    private float discountper;
 
+    public float getDiscountamt() {
+        return discountamt;
+    }
+
+    public void setDiscountamt(float discountamt) {
+        this.discountamt = discountamt;
+    }
+
+    public float getNetamount() {
+        return netamount;
+    }
+
+    public void setNetamount(float netamount) {
+        this.netamount = netamount;
+    }
+
+    private float discountamt;
+
+    private float netamount;
     private int challan_fid;
+
+    public float getDiscountper() {
+        return discountper;
+    }
+
+    public void setDiscountper(float discountper) {
+        this.discountper = discountper;
+    }
+
+
+
 
     public DesObjProduct() {
         super();

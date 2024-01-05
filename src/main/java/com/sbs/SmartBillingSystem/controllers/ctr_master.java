@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,7 @@ import com.sbs.SmartBillingSystem.Entity.Brand;
 import com.sbs.SmartBillingSystem.Entity.Category;
 import com.sbs.SmartBillingSystem.Entity.Challan;
 import com.sbs.SmartBillingSystem.Entity.Product;
+import com.sbs.SmartBillingSystem.Entity.PurchaseOrder;
 import com.sbs.SmartBillingSystem.Entity.Suppiler;
 
 import com.sbs.SmartBillingSystem.Repository.BillRepo;
@@ -47,6 +49,7 @@ import com.sbs.SmartBillingSystem.Repository.BrandRepo;
 import com.sbs.SmartBillingSystem.Repository.CategoryRepo;
 import com.sbs.SmartBillingSystem.Repository.ChallanRepo;
 import com.sbs.SmartBillingSystem.Repository.ProductRepo;
+import com.sbs.SmartBillingSystem.Repository.PurchaseOrderRepo;
 import com.sbs.SmartBillingSystem.Repository.SupplierRepo;
 import com.sbs.SmartBillingSystem.Repository.UserRepo;
 
@@ -78,6 +81,8 @@ public class ctr_master {
     InvoiveHelper invoiveHelper;
     @Autowired
     BillRepo billRepo;
+    @Autowired
+    PurchaseOrderRepo purchaseOrderRepo;
 
     private BCryptPasswordEncoder passwordEncoder;
     @Autowired
@@ -233,6 +238,7 @@ public class ctr_master {
             @RequestParam String mobile_no,
             @RequestParam String address,
             @RequestParam String GST_no,
+                               @RequestParam String email,
             Model model) {
 
         Suppiler supplier = new Suppiler();
@@ -241,6 +247,7 @@ public class ctr_master {
         supplier.setGST_no(GST_no);
         supplier.setCode(code);
         supplier.setMobile_no(mobile_no);
+        supplier.setEmail(email);
 
         try {
             supplierRepo.save(supplier);
@@ -258,9 +265,22 @@ public class ctr_master {
     }
 
     @PostMapping("/generateinvoice")
-    public ResponseEntity<?> generateInvoice(@RequestBody String p) {
+    public ResponseEntity<?> generateInvoice(@RequestBody List<Product> p) {
 
-        List<Product> productList = new ArrayList<>();
+        List<Product> productList = p;
+
+
+//        List <Product> listProduct=new ArrayList<>();
+//        for (DesObjProduct dp:p) {
+//            Product product=new Product();
+//            product.setProduct_pid(dp.getProduct_pid();
+//            prod
+//
+//
+//        }
+
+
+
         List<String> errorList = invoiveHelper.validateinvoice(productList);
 
         if (errorList.size() > 0) {
@@ -273,6 +293,7 @@ public class ctr_master {
 
         return null;
     }
+
     @PostMapping("/master/registerUser")
     public String registerUser(@ModelAttribute("user") User user, @RequestParam("file") MultipartFile file
 
@@ -307,8 +328,8 @@ public class ctr_master {
 
             }
 
-            if(user.getRole()=="")
-            user.setRole("ROLE_OTHER");
+            if (user.getRole() == "")
+                user.setRole("ROLE_OTHER");
             user.setEnabled(true);
 
             user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -323,6 +344,42 @@ public class ctr_master {
 
     }
 
-    
-    
+    @PostMapping("/savePO")
+    public ResponseEntity<?> savePO(@RequestParam("file") MultipartFile file, @RequestParam String ponumber,
+            @RequestParam String supplier_fid,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date poDate,
+        @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date podueDate,
+        @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date poreceivedDate,
+        
+            @RequestParam String amt,
+            @RequestParam String qty, @RequestParam String note) {
+        try {
+        PurchaseOrder order = new PurchaseOrder();
+        Suppiler suppiler = supplierRepo.findById(Integer.parseInt(supplier_fid)).orElseThrow();
+        order.setSuppiler_fid(suppiler);
+        order.setAmount(Double.parseDouble(amt));
+        order.setQuantity(Double.parseDouble(qty));
+        order.setNotes(note);
+        order.setCreatedDate(poDate);
+        order.setDueDate(podueDate);
+        order.setReceivedDate(poreceivedDate);
+        order.setAttchmentByte(file.getInputStream().readAllBytes());
+        purchaseOrderRepo.save(order);
+            var email=suppiler.getEmail();
+            
+
+
+
+        }catch (Exception e)
+        {
+
+        }
+
+
+
+
+
+        return null;
+    }
+
 }

@@ -49,6 +49,15 @@ th:replace="~{navbar::layout(~{::section})}"
           </div>
           <div class="user-box">
             <input
+                    type="email"
+                    name="email"
+                    th:value="${data!=null? data.email:''}"
+                    required=""
+            />
+            <label>Supplier Email</label>
+          </div>
+          <div class="user-box">
+            <input
               type="text"
               name="mobile_no"
               th:value="${data!=null? data.mobile_no:''}"
