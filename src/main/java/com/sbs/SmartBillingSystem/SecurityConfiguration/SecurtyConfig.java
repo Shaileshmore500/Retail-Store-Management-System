@@ -28,7 +28,13 @@ public class SecurtyConfig {
                 .authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login");
+                .loginPage("/login")
+                .loginProcessingUrl("/login") // Ensure this matches your form's action URL
+                // Add this line to specify the success URL:
+                .defaultSuccessUrl("/", true)
+                // Optionally, specify a failure URL:
+                .failureUrl("/login?error");
+                ;
         // http.csrf().disable()
         // .authorizeRequests()
         //     .antMatchers("/login", "/signup").permitAll() // URLs allowed without authentication

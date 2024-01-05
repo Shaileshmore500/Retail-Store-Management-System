@@ -1,0 +1,167 @@
+ /* /----- Json Table Wrapper Styling-----/ */
+ #jsonTable_wrapper .row{
+    flex-wrap:nowrap;
+    width: 100%;
+    margin: 0 auto;
+  }
+  #jsonTable_wrapper div.row:nth-child(1) {
+    align-items: flex-end;
+  }
+  #jsonTable_wrapper div.row:nth-child(1) div{
+    padding:0;
+  }
+  #jsonTable_wrapper div.row:nth-child(2){
+    width:98%;
+    overflow: auto;
+  }
+  #jsonTable_wrapper div.row:nth-child(2) div{
+    padding: 0;
+  }
+  /* Table Record Limit */
+  #jsonTable_wrapper div.row:nth-child(1) div:nth-child(1){
+    flex: 0 1 ;
+  }
+  /* Button Group */
+  #jsonTable_wrapper div.row:nth-child(1) div:nth-child(2){
+    flex: 1 ;
+    padding-left:30px;
+  }
+  div.dataTables_wrapper div.dataTables_filter label, div.dataTables_wrapper div.dataTables_length label {
+    padding: 5px;
+  }
+  table.dataTable.table-sm .sorting:after, table.dataTable.table-sm .sorting_asc:after, table.dataTable.table-sm .sorting_desc:after,table.dataTable.table-sm .sorting:before, table.dataTable.table-sm .sorting_asc:before, table.dataTable.table-sm .sorting_desc:before
+  {
+    top: 16px;
+  }
+  /* /----- Table Length Selector Styling-----/ */
+  #jsonTable_length label{
+    /* border: solid 3px gray; */
+    border-radius: 25px;
+    padding: 6px 25px;
+    background-color: gray;
+    font-weight: bold;
+    color: #ffffff;
+  }
+  /* /----- Filter Search Bar Styling-----/ */
+  #jsonTable_filter label{
+    /* border: solid 3px gray; */
+    border-radius: 25px;
+    padding: 6px 25px;
+    background-color: gray;
+    font-weight: bold;
+    color: #ffffff;
+  }
+
+  /* /----- Json Table Styling-----/ */
+  #jsonTable thead tr th{
+    font-size: 19px;
+  }
+  #jsonTable thead tr:nth-child(1) th, #jsonTable{
+    border : none;
+  }
+  #jsonTable thead tr:nth-child(2) th:nth-child(1), #jsonTable tbody tr td:nth-child(1){
+    border-left: solid 3px gray;
+  }
+  #jsonTable thead tr:nth-child(2) th:nth-last-child(1), #jsonTable tbody tr td:nth-last-child(1){
+    border-right: solid 3px gray;
+  }
+  #jsonTable tbody tr:nth-child(even){
+    background-color: rgb(243, 241, 241);
+  }
+  #jsonTable tbody tr:nth-child(odd){
+    background-color:         #ffffff;
+  }
+  #jsonTable tbody tr:hover{
+    background-color: rgb(219, 217, 217);
+  }
+  #jsonTable tbody tr td{
+    min-width: 200px;
+  }
+  #jsonTable tbody tr td:nth-child(1){
+    max-width: 100px;
+    text-align: center;
+  }
+  input[type]:after {
+    visibility: hidden;
+    width: 10px;
+    display: block;
+    position: absolute;
+    top: initial !important;
+    bottom: 8px;
+    left: 45% !important;
+    height: 1px;
+    content: '';
+    transition: 0.2s !important;
+    transition-duration: .2s;
+    transition-timing-function: cubic-bezier(.4,0,.2,1);
+    opacity: 1 !important;
+    background-color: var(--input-border-color);
+
+  }
+
+  /* /----- Button Styling-----/ */
+  .btn{
+    border-radius: 20px;
+    width:100px
+  }
+  td .btn{
+    width:50px;
+    padding:0;
+    padding-left: 5px;
+    background-color: transparent;
+  }
+  .btn-add{
+    font-style: normal;
+    font-family: 'fontawesome';
+  }
+  .btn-add:before{
+    content: '\f067';
+    padding-right: 5px;
+  }
+  .btn-delete{
+    font-style: normal;
+    font-family: 'fontawesome';
+    color: black;
+  }
+  .btn:hover .btn-delete{
+    color: white;
+  }
+  .btn-delete:before{
+    content: '\f014';
+    padding-right: 5px;
+  }
+  .btn-view{
+    font-style: normal;
+    font-family: 'fontawesome';
+    color: black;
+  }
+  .btn:hover .btn-view{
+    color: white;
+  }
+  .btn-view:before{
+    content: '\f06e';
+    padding-right: 5px;
+  }
+  .btn-edit{
+    font-style: normal;
+    font-family: 'fontawesome';
+    color: black;
+  }
+  .btn:hover .btn-edit{
+    color: white;
+  }
+  .btn-edit:before{
+    content: '\f044';
+  }
+  .icon-search{
+    font-style: normal;
+    font-family: 'fontawesome';
+    padding-right: 10px;
+  }
+  .icon-search:before{
+    content: '\f002';
+  }
+  #jsonTable thead tr th {
+font-size: 19px;
+text-align: center;
+}
