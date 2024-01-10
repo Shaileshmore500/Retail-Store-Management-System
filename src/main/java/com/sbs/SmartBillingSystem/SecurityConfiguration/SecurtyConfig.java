@@ -22,24 +22,26 @@ public class SecurtyConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/home")
                 .hasRole("ADMIN")
-                .requestMatchers("/login","/signup","/css/nav.css","/css/form.css")
+                .requestMatchers("/login", "/signup", "/css/nav.css", "/css/form.css", "/master/registerUser")
+
                 .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login");
+                .loginPage("/login")
+                .defaultSuccessUrl("/home") // Add this line
+                .permitAll();
         // http.csrf().disable()
         // .authorizeRequests()
-        //     .antMatchers("/login", "/signup").permitAll() // URLs allowed without authentication
-        //     .antMatchers("/home").hasRole("ADMIN") // URL that requires ADMIN role
-        //     .anyRequest().authenticated() // All other URLs require authentication
-        //     .and()
+        // .antMatchers("/login", "/signup").permitAll() // URLs allowed without
+        // authentication
+        // .antMatchers("/home").hasRole("ADMIN") // URL that requires ADMIN role
+        // .anyRequest().authenticated() // All other URLs require authentication
+        // .and()
         // .formLogin()
-        //     .loginPage("/login")
-        //     .permitAll();
-    
-        
+        // .loginPage("/login")
+        // .permitAll();
 
         return http.build();
 
@@ -48,16 +50,18 @@ public class SecurtyConfig {
     // @Bean
     // public UserDetailsService userDetailsService() {
 
-    //     UserDetails u1 = org.springframework.security.core.userdetails.User.withUsername("shailesh")
-    //             .password(bCryptPasswordEncoder().encode("123"))
-    //             .roles("ADMIN")
-    //             .build();
-    //     UserDetails u2 = org.springframework.security.core.userdetails.User.withUsername("rahul")
-    //             .password(bCryptPasswordEncoder().encode("123"))
-    //             .roles("NOR")
-    //             .build();
+    // UserDetails u1 =
+    // org.springframework.security.core.userdetails.User.withUsername("shailesh")
+    // .password(bCryptPasswordEncoder().encode("123"))
+    // .roles("ADMIN")
+    // .build();
+    // UserDetails u2 =
+    // org.springframework.security.core.userdetails.User.withUsername("rahul")
+    // .password(bCryptPasswordEncoder().encode("123"))
+    // .roles("NOR")
+    // .build();
 
-    //     return new InMemoryUserDetailsManager(u1, u2);
+    // return new InMemoryUserDetailsManager(u1, u2);
     // }
 
     @Bean

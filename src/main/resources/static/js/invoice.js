@@ -6,6 +6,7 @@ $(document).ready(() => {
   // });
 
   $("#btn_generateInvoice").click(() => {
+    debugger;
     var rowcount = $("#tbl_product tbody tr");
     if (rowcount == null || rowcount.length <= 0) {
       showToasty(
@@ -16,14 +17,15 @@ $(document).ready(() => {
       );
       return;
     }
-    
+
+  
     
 
     $.ajax({
       type: "POST",
       contentType: "application/json",
       url: "/generateinvoice",
-      data: JSON.stringify(obj_product),
+      data: JSON.stringify({"list":obj_product}),
       success: function (res) {
 
         console.log("suc");

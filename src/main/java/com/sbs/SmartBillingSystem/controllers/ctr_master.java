@@ -5,17 +5,18 @@ import org.apache.catalina.core.ApplicationContext;
 import org.apache.tomcat.util.descriptor.web.MultipartDef;
 import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
+
 import org.springframework.http.HttpStatus;
-=======
+
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.ResourceLoader;
->>>>>>> bd73ce8323737b0d97e12ef35a3914d69be88555
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,11 +40,11 @@ import com.sbs.SmartBillingSystem.Entity.Category;
 import com.sbs.SmartBillingSystem.Entity.Challan;
 import com.sbs.SmartBillingSystem.Entity.Product;
 import com.sbs.SmartBillingSystem.Entity.Suppiler;
-<<<<<<< HEAD
+
 import com.sbs.SmartBillingSystem.Repository.BillRepo;
-=======
+
 import com.sbs.SmartBillingSystem.Entity.User;
->>>>>>> bd73ce8323737b0d97e12ef35a3914d69be88555
+
 // import com.sbs.SmartBillingSystem.Entity.Product;
 import com.sbs.SmartBillingSystem.Repository.BrandRepo;
 import com.sbs.SmartBillingSystem.Repository.CategoryRepo;
@@ -56,12 +57,12 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 import com.sbs.SmartBillingSystem.Entity.serializedObject.*;
-<<<<<<< HEAD
+//<<<<<<< HEAD
 import com.sbs.SmartBillingSystem.Helper.InvoiveHelper;
-=======
+//=======
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
->>>>>>> bd73ce8323737b0d97e12ef35a3914d69be88555
+//>>>>>>> bd73ce8323737b0d97e12ef35a3914d69be88555
 
 @Controller
 // @RequestMapping("/master")
@@ -78,15 +79,16 @@ public class ctr_master {
     @Autowired
     ChallanRepo challanRepo;
     @Autowired
-<<<<<<< HEAD
+    // <<<<<<< HEAD
     InvoiveHelper invoiveHelper;
     @Autowired
     BillRepo billRepo;
-=======
+    // =======
+    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
     @Autowired
     private UserRepo userrepository;
->>>>>>> bd73ce8323737b0d97e12ef35a3914d69be88555
+    // >>>>>>> bd73ce8323737b0d97e12ef35a3914d69be88555
 
     private final ObjectMapper objectMapper;
 
@@ -262,23 +264,25 @@ public class ctr_master {
         return "forms/Supplier";
     }
 
-<<<<<<< HEAD
+    @CrossOrigin
     @PostMapping("/generateinvoice")
-    public ResponseEntity<?> generateInvoice(@RequestBody String p) {
+    public ResponseEntity<?> generateInvoice(@RequestBody List<DesObjProduct> billProduct) {
 
-        List<Product> productList = new ArrayList<>();
-        List<String> errorList = invoiveHelper.validateinvoice(productList);
+        System.out.println("in invoice");
+        // List<Product> productList = billProduct;
+        // List<String> errorList = invoiveHelper.validateinvoice(productList);
 
-        if (errorList.size() > 0) {
-            return new ResponseEntity<>(errorList, HttpStatus.NOT_FOUND);
-        }
-        Bill bill = new Bill();
-        Bill bill2 = billRepo.save(bill);
+        // if (errorList.size() > 0) {
+        // return new ResponseEntity<>(errorList, HttpStatus.NOT_FOUND);
+        // }
+        // Bill bill = new Bill();
+        // Bill bill2 = billRepo.save(bill);
 
-        boolean updateStatus = invoiveHelper.updateProduct(productList, bill2);
+        // boolean updateStatus = invoiveHelper.updateProduct(productList, bill2);
 
         return null;
-=======
+    }
+
     @PostMapping("/master/registerUser")
     public String registerUser(@ModelAttribute("user") User user, @RequestParam("file") MultipartFile file
 
@@ -313,8 +317,8 @@ public class ctr_master {
 
             }
 
-            if(user.getRole()=="")
-            user.setRole("ROLE_OTHER");
+            if (user.getRole() == "")
+                user.setRole("ROLE_OTHER");
             user.setEnabled(true);
 
             user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -326,7 +330,6 @@ public class ctr_master {
 
             return "register";
         }
->>>>>>> bd73ce8323737b0d97e12ef35a3914d69be88555
 
     }
 
