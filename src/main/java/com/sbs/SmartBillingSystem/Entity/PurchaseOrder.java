@@ -5,6 +5,7 @@ import java.util.Date;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -19,7 +20,8 @@ public class PurchaseOrder {
     private Date dueDate;
     private Date receivedDate;
     private String status;
-    private String fileName;    
+    private String fileName;  
+    @Lob  
     private byte[] attchmentByte;
     private String notes;
     private double quantity;

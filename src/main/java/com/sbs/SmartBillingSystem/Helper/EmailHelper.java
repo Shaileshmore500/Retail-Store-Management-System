@@ -1,76 +1,74 @@
-// package com.sbs.SmartBillingSystem.Helper;
+package com.sbs.SmartBillingSystem.Helper;
 
-// import java.maimail.*;
-// import javax.mail.internet.*;
-// import javax.activation.*;
-// import java.util.Properties;
+import java.util.Properties;
 
-// public class EmailHelper {
+import jakarta.activation.DataHandler;
+import jakarta.activation.DataSource;
+import jakarta.mail.*;
+import jakarta.mail.internet.*;
+import jakarta.mail.util.ByteArrayDataSource;
 
-//     public static boolean sendMail()
-//     {
-//      // Sender's email address
-//         String from = "your_email@gmail.com";
+public class EmailHelper {
 
-//         // Recipient's email address
-//         String to = "recipient_email@example.com";
+    public static boolean sendMail(String subject,String body,byte[] attachment,String receiver,String filename){
 
-//         // SMTP server settings (replace with your SMTP server details)
-//         String host = "smtp.gmail.com";
-//         String username = "your_email@gmail.com";
-//         String password = "your_email_password";
+        // Sender's email address and password
+        String senderEmail = "shmore500@gmail.com";
+        String senderPassword = "parumore23";
 
-//         // Create properties for the Session
-//         Properties properties = System.getProperties();
-//         properties.setProperty("mail.smtp.host", host);
-//         properties.setProperty("mail.smtp.port", "587");
-//         properties.setProperty("mail.smtp.auth", "true");
-//         properties.setProperty("mail.smtp.starttls.enable", "true");
+        // Recipient's email address
+        String recipientEmail = receiver;
 
-//         // Create a Session object with the specified properties and authenticator
-//         Session session = Session.getInstance(properties, new Authenticator() {
-//             protected PasswordAuthentication getPasswordAuthentication() {
-//                 return new PasswordAuthentication(username, password);
-//             }
-//         });
+        // Mail server properties (using Jakarta Mail package names)
+        Properties properties = new Properties();
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
 
-//         try {
-//             // Create a MimeMessage object
-//             MimeMessage message = new MimeMessage(session);
+        // Create session using Jakarta Mail Session
+        Session session = Session.getDefaultInstance(properties);
 
-//             // Set the sender and recipient addresses
-//             message.setFrom(new InternetAddress(from));
-//             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+        try {
+            // Create MimeMessage object
+            Message message = new MimeMessage(session);
 
-//             // Set the subject
-//             message.setSubject("Email with Attachment");
+            // Set sender and recipient addresses
+            message.setFrom(new InternetAddress(senderEmail));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
 
-//             // Create the message body
-//             BodyPart messageBodyPart = new MimeBodyPart();
-//             messageBodyPart.setText("This is the message body.");
+            // Set email subject
+            message.setSubject(subject);
 
-//             // Create the attachment
-//             MimeBodyPart attachmentBodyPart = new MimeBodyPart();
-//             String attachmentFilePath = "path/to/your/file.txt";
-//             DataSource source = new FileDataSource(attachmentFilePath);
-//             attachmentBodyPart.setDataHandler(new DataHandler(source));
-//             attachmentBodyPart.setFileName("attachment.txt");
+            // Create MimeBodyPart for the text content
+            BodyPart textPart = new MimeBodyPart();
+            textPart.setText(body);
 
-//             // Create a Multipart object to hold the message body and attachment
-//             Multipart multipart = new MimeMultipart();
-//             multipart.addBodyPart(messageBodyPart);
-//             multipart.addBodyPart(attachmentBodyPart);
+            // Create MimeBodyPart for the attachment
+            MimeBodyPart attachmentPart = new MimeBodyPart();
 
-//             // Set the Multipart object as the message's content
-//             message.setContent(multipart);
+            // Replace 'fileContentByteArray' with the actual byte array representing the file content
+            byte[] fileContentByteArray =attachment; //"Your file content as byte array".getBytes();
+            DataSource source = new ByteArrayDataSource(fileContentByteArray, "application/octet-stream");
+            attachmentPart.setDataHandler(new DataHandler(source));
+            attachmentPart.setFileName(filename); // Replace with the actual file name
 
-//             // Send the message
-//             Transport.send(message);
-//             System.out.println("Email sent successfully.");
+            // Create Multipart and add parts to it
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(textPart);
+            multipart.addBodyPart(attachmentPart);
 
-//         } catch (Exception e) {
-//             e.printStackTrace();
-//         }
-//     }
-    
-// }
+            // Set the Multipart object as the content of the message
+            message.setContent(multipart);
+
+            // Send the message using Jakarta Mail Transport
+            Transport.send(message);
+
+            System.out.println("Email sent successfully!");
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+}

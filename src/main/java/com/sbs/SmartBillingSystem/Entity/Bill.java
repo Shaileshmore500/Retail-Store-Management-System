@@ -15,14 +15,37 @@ public class Bill {
 	private float discount_amount;
 	private float discount_rate;
 	private float net_amount;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Customer customer_fid;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private User user_fid;
+	private String payment_type;
+	//	@Transient
+//	private String _user_fid;
+	@Transient
+	private String _customer_fid;
+	public String getPayment_type() {
+		return payment_type;
+	}
+
+	public void setPayment_type(String payment_type) {
+		this.payment_type = payment_type;
+	}
+
+
 
 	public Bill() {
 		// TODO Auto-generated constructor stub
 	}
+
+	public String get_customer_fid() {
+		return _customer_fid;
+	}
+
+	public void set_customer_fid(String _customer_fid) {
+		this._customer_fid = _customer_fid;
+	}
+
 
 	public int getBill_pid() {
 		return bill_pid;
@@ -95,5 +118,10 @@ public class Bill {
 	public void setUser_fid(User user_fid) {
 		this.user_fid = user_fid;
 	}
+	@PrePersist
+    @PreUpdate
+    public void prePersist() {
+        this._customer_fid = (customer_fid != null) ? customer_fid.getCustomer_pid()+"" : null;
+    }
 
 }

@@ -12,6 +12,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +29,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -37,6 +39,7 @@ import com.sbs.SmartBillingSystem.Entity.Bill;
 import com.sbs.SmartBillingSystem.Entity.Brand;
 import com.sbs.SmartBillingSystem.Entity.Category;
 import com.sbs.SmartBillingSystem.Entity.Challan;
+import com.sbs.SmartBillingSystem.Entity.Customer;
 import com.sbs.SmartBillingSystem.Entity.Product;
 import com.sbs.SmartBillingSystem.Entity.PurchaseOrder;
 import com.sbs.SmartBillingSystem.Entity.Suppiler;
@@ -48,6 +51,7 @@ import com.sbs.SmartBillingSystem.Entity.User;
 import com.sbs.SmartBillingSystem.Repository.BrandRepo;
 import com.sbs.SmartBillingSystem.Repository.CategoryRepo;
 import com.sbs.SmartBillingSystem.Repository.ChallanRepo;
+import com.sbs.SmartBillingSystem.Repository.CustomerRepo;
 import com.sbs.SmartBillingSystem.Repository.ProductRepo;
 import com.sbs.SmartBillingSystem.Repository.PurchaseOrderRepo;
 import com.sbs.SmartBillingSystem.Repository.SupplierRepo;
@@ -57,7 +61,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 import com.sbs.SmartBillingSystem.Entity.serializedObject.*;
-
+import com.sbs.SmartBillingSystem.Helper.EmailHelper;
 import com.sbs.SmartBillingSystem.Helper.InvoiveHelper;
 
 import org.springframework.web.context.ServletContextAware;
@@ -83,10 +87,14 @@ public class ctr_master {
     BillRepo billRepo;
     @Autowired
     PurchaseOrderRepo purchaseOrderRepo;
-
+    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
     @Autowired
     private UserRepo userrepository;
+    @Autowired
+    private CustomerRepo customerRepo;
+    @Autowired 
+    UserRepo userRepo;
 
     private final ObjectMapper objectMapper;
 
@@ -265,33 +273,39 @@ public class ctr_master {
     }
 
     @PostMapping("/generateinvoice")
-    public ResponseEntity<?> generateInvoice(@RequestBody List<Product> p) {
+    //public ResponseEntity<?> generateInvoice(@RequestBody List<Product> p) {
+        public ResponseEntity<?> generateInvoice(@RequestBody DesObjBillProduct billProduct,Principal principal) {
+        try{
 
-        List<Product> productList = p;
-
-
-//        List <Product> listProduct=new ArrayList<>();
-//        for (DesObjProduct dp:p) {
-//            Product product=new Product();
-//            product.setProduct_pid(dp.getProduct_pid();
-//            prod
-//
-//
-//        }
-
-
+        List<Product> productList = billProduct.getProduct();
 
         List<String> errorList = invoiveHelper.validateinvoice(productList);
 
         if (errorList.size() > 0) {
             return new ResponseEntity<>(errorList, HttpStatus.NOT_FOUND);
         }
-        Bill bill = new Bill();
+        Bill bill = billProduct.getBill();
+        try {
+            Customer customer=customerRepo.findById(Integer.parseInt(bill.get_customer_fid())).orElseThrow();
+        bill.setCustomer_fid(customer);
+        } catch (Exception e) {
+            
+        }
+        //User user=this.userRepo.getUserByUserName(principal.getName());
+       
+       
         Bill bill2 = billRepo.save(bill);
 
         boolean updateStatus = invoiveHelper.updateProduct(productList, bill2);
+        if(updateStatus)
+        return new ResponseEntity<>("Invoice Generated successfully",HttpStatus.OK);
 
-        return null;
+    }catch (Exception e) {
+       return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
+        
+    }
+    return new ResponseEntity<>("Something Went Wrong....",HttpStatus.CONFLICT);
+        
     }
 
     @PostMapping("/master/registerUser")
@@ -354,6 +368,7 @@ public class ctr_master {
             @RequestParam String amt,
             @RequestParam String qty, @RequestParam String note) {
         try {
+            byte[] attchment=file.getInputStream().readAllBytes();
         PurchaseOrder order = new PurchaseOrder();
         Suppiler suppiler = supplierRepo.findById(Integer.parseInt(supplier_fid)).orElseThrow();
         order.setSuppiler_fid(suppiler);
@@ -363,15 +378,49 @@ public class ctr_master {
         order.setCreatedDate(poDate);
         order.setDueDate(podueDate);
         order.setReceivedDate(poreceivedDate);
-        order.setAttchmentByte(file.getInputStream().readAllBytes());
+        order.setAttchmentByte(attchment);
+        order.setFileName(file.getOriginalFilename());
         purchaseOrderRepo.save(order);
-            var email=suppiler.getEmail();
+            var receiver=suppiler.getEmail();
+            var subject="Purchase Order - [Your Company Name]";
+            var filename=file.getOriginalFilename();
+            //StringBuilder body_Builder=new StringBuilder();
+
+            // body_Builder.append("Dear "+suppiler.getName()+",\r\n" + //
+            //         "\r\n" + //
+            //         "I trust this email finds you well. We are excited to place a purchase order with your company for the following items:\r\n" + //
+                  
+            //         "Total Estimated Purchase Order Cost: [Sum of all estimated costs]\r\n" + //
+            //         "\r\n" + //
+            //         "Please find attached the detailed Purchase Order document containing specifications, terms, and conditions. Kindly review the document thoroughly, and confirm your acceptance at your earliest convenience.\r\n" + //
+            //         "\r\n" + //
+            //         "Attachment: [Attach the Purchase Order document]\r\n" + //
+            //         "\r\n" + //
+            //        "Delevery Note : "+order.getNotes()+
+            //         "\r\n" + //
+                    
+            //         "Delivery Date : "+order.getDueDate()+"\r\n" + //
+            //         "Delivery Location: [Provide the delivery address]\r\n" + //
+            //         "Should there be any discrepancies or if you require further details, please do not hesitate to contact us promptly.\r\n" + //
+            //         "\r\n" + //
+            //         "Your swift attention to this matter is highly appreciated. We anticipate a successful collaboration and thank you for your cooperation.\r\n" + //
+            //         "\r\n" + //
+            //         "Best regards,\r\n" + //
+            //         "\r\n" + //
+            //         "[Your Full Name]\r\n" + //
+            //         "[Your Position]\r\n" + //
+            //         "[Your Company Name]\r\n" + //
+            //         "[Your Contact Information]");
+                    var isSendmail= EmailHelper.sendMail(subject, "body_Builder".toString(), attchment, receiver,filename );
+                    if(isSendmail)
+                    return new ResponseEntity<>("Purchase Order Generated Succesfull...",HttpStatus.OK);
             
 
 
 
         }catch (Exception e)
         {
+            return new ResponseEntity<>("Something Went Wrong...",HttpStatus.BAD_REQUEST);
 
         }
 
@@ -379,7 +428,7 @@ public class ctr_master {
 
 
 
-        return null;
+         return new ResponseEntity<>("Something Went Wrong...",HttpStatus.BAD_REQUEST);
     }
 
 }

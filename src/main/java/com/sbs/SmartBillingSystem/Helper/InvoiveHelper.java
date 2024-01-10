@@ -4,8 +4,11 @@ import com.sbs.SmartBillingSystem.Entity.Bill;
 import com.sbs.SmartBillingSystem.Entity.BillDetails;
 import com.sbs.SmartBillingSystem.Entity.Product;
 import com.sbs.SmartBillingSystem.Repository.BillDetailRepo;
+import com.sbs.SmartBillingSystem.Repository.BillRepo;
 import com.sbs.SmartBillingSystem.Repository.ProductRepo;
+import com.sbs.SmartBillingSystem.Repository.UserRepo;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -18,6 +21,8 @@ public class InvoiveHelper {
     ProductRepo productRepo;
     @Autowired
     BillDetailRepo billDetailRepo;
+    @Autowired
+    BillRepo billRepo;
 
     public List<String> validateinvoice(List<Product> products) {
         List<Product> valid_productList = new ArrayList<>();
@@ -29,7 +34,8 @@ public class InvoiveHelper {
             float invoiceQTY = product.getQuantity();
             float availableQTY = productRepo.findById(product.getProduct_pid()).orElseThrow().getQuantity();
             if (invoiceQTY > availableQTY)
-                errorList.add(product.getQuantity() + " is not available in " + product.getProduct_pid() + " product");
+                errorList.add(product.getQuantity() + " Quantity is not available in " + product.getProduct_pid()
+                        + " product");
 
         }
 
@@ -40,27 +46,17 @@ public class InvoiveHelper {
     public boolean updateProduct(List<Product> p, Bill b) {
         try {
 
-            float amount = 0;
-            float Quantity = 0;
-            float discount_amount = 0;
-            float net_amount = 0;
+            boolean detailstatus = insertInvoiceDetails(p, b);
+            if (!detailstatus)
+                return detailstatus;
+
             for (Product product : p) {
                 Product pr = productRepo.findById(product.getProduct_pid()).orElseThrow();
                 pr.setQuantity(pr.getQuantity() - product.getQuantity());
                 productRepo.save(pr);
 
-                Quantity += pr.getQuantity();
-                discount_amount += pr.getDiscountamt();
-                net_amount += pr.getNetamount();
-                amount += pr.getTotal_amount();
-
             }
 
-            b.setDate(java.sql.Date.valueOf(LocalDate.now()));
-            b.setDiscount_amount(discount_amount);
-            b.setQuantity(Quantity);
-            b.setNet_amount(net_amount);
-            b.setAmount(amount);
             return true;
         } catch (Exception e) {
             return false;
@@ -71,6 +67,10 @@ public class InvoiveHelper {
 
     public boolean insertInvoiceDetails(List<Product> p, Bill bill) {
         try {
+            float amount = 0;
+            float Quantity = 0;
+            float discount_amount = 0;
+            float net_amount = 0;
             for (Product product : p) {
 
                 BillDetails billDetails = new BillDetails();
@@ -82,7 +82,19 @@ public class InvoiveHelper {
                 billDetails.setQuantity(product.getQuantity());
                 billDetailRepo.save(billDetails);
 
+                Quantity += product.getQuantity();
+                discount_amount += product.getDiscountamt();
+                net_amount += product.getNetamount();
+                amount += product.getTotal_amount();
             }
+            bill.setDate(java.sql.Date.valueOf(LocalDate.now()));
+            bill.setAmount(amount);
+            bill.setDiscount_amount(discount_amount);
+            bill.setNet_amount(net_amount);
+            bill.setQuantity(Quantity);
+
+            billRepo.save(bill);
+
             return true;
         } catch (Exception e) {
             return false;
