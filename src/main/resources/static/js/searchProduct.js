@@ -1,7 +1,4 @@
-$(document).ready(() => {
-debugger;
-alert(1)
-});
+
 // var data = [
 // 	{
 // 		"make": "Gibson",

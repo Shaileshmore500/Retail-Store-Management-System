@@ -1,6 +1,8 @@
 
 function showToasty(icon, bgclass, message, stat) {
   debugger;
+  $(".loader").hide();
+
   $("#toast").hide();
   $("#toast div i").remove();
   $("#toast div strong").before(icon);

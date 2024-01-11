@@ -1,11 +1,13 @@
 var obj_product = {};
 $(document).ready(() => {
   // $('input[data-field="quantity"]').on("change", function () {
-  //   debugger;
+  
   //   alert(1);
   // });
 
   $("#btn_generateInvoice").click(() => {
+    $(".loader").show();
+
     debugger;
     var rowcount = $("#tbl_product tbody tr");
     if (rowcount == null || rowcount.length <= 0) {
@@ -18,22 +20,48 @@ $(document).ready(() => {
       return;
     }
 
-  
+    
+    
+    // var a=[];
+    // for (let index = 0; index < Object.keys(obj_product).length; index++)
+    // {
+    // a.push(obj_product[index])  ;
+    // }
+    var a = [];
+Object.keys(obj_product).forEach(function(index) {
+    a.push(obj_product[index]);
+});
+
+    var obj={product:a,
+      bill:{payment_type:"cash",_customer_fid:'0'}
+    }
     
 
     $.ajax({
       type: "POST",
       contentType: "application/json",
       url: "/generateinvoice",
-      data: JSON.stringify({"list":obj_product}),
-      success: function (res) {
+      //dataType: 'json',
+      data: JSON.stringify(obj),
+      success: function(data, textStatus, xhr) {
 
-        console.log("suc");
-        console.log(res);
+        showToasty(
+          "<i class='fa-solid fa-square-check fa-shake fa-xl text-white'>&nbsp;&nbsp</i>",
+          "bg-success",
+          "Invoice Generated Successfully...",
+          "Success"
+        );
+        setTimeout(function() {
+          location.reload();
+      }, 2000);
       },
-      error: (res) => {
-        console.log("err");
-        console.log(res);
+      error: function(xhr, textStatus, errorThrown) {
+        showToasty(
+          "<i class='fa-solid fa-triangle-exclamation fa-shake fa-xl text-white'>&nbsp;&nbsp;</i>",
+          "bg-danger",
+          "Something Went Wrong! Please Try Again...",
+          "Error"
+        );
       },
     });
   });
@@ -132,12 +160,14 @@ function buildTable(obj_product) {
   var total_qty = 0;
   var total_disamount = 0;
   var total_amount = 0;
+  var net_amount=0;
   Object.keys(obj_product).forEach((key, i) => {
     var element = obj_product[key];
 
     total_qty += element["quantity"];
     total_disamount += 0;
     total_amount += element["total_amount"];
+    net_amount+=element["total_amount"];
 
     $("#tbl_product tbody").append(` <tr id="addr0" data-id="0">
     <td data-name="mail">
@@ -149,13 +179,14 @@ function buildTable(obj_product) {
         <span class="_error"></span>
       </div>
     </td>
+    <!--
     <td data-name="mail">
       <div class="form-floating mb-3 ">
         <input type="text" class="form-control" value=${element["style"]} id="html_style-${i}" data-field="name" />
         <label for="floatingInput mr-5" class="ml-15 md_lbl">Product Style</label>
         <span class="_error"></span>
       </div>
-    </td>
+    </td>-->
     <td data-name="mail">
       <div class="form-floating mb-3 mandatory">
         <input type="number" class="form-control" value=${element["mrp"]} id="html_size-${i}" data-field="size" />
@@ -180,15 +211,22 @@ function buildTable(obj_product) {
       </div>
     </td>
     <td data-name="mail">
+    <div class="form-floating mb-3 mandatory">
+      <input type="number" class="form-control" id="html_MRP-${i}" value=${element["discountamt"]} data-field="purchase_rate" />
+      <label for="floatingInput mr-5" class="ml-15 md_lbl">Discount(₹)</label>
+      <span class="_error"></span>
+    </div>
+  </td>
+    <td data-name="mail">
       <div class="form-floating mb-3 mandatory">
-        <input type="number" class="form-control" id="html_MRP-${i}" value=${element["discountamt"]} data-field="purchase_rate" />
-        <label for="floatingInput mr-5" class="ml-15 md_lbl">Discount(₹)</label>
+        <input type="number" class="form-control" id="html_net_amount-${i}" value=${element["net_amount"]} data-field="net_amount" />
+        <label for="floatingInput mr-5" class="ml-15 md_lbl">Net Amount(₹)</label>
         <span class="_error"></span>
       </div>
     </td>
     <td data-name="mail">
       <div class="form-floating mb-3 mandatory">
-        <input type="number" class="form-control" id="html_MRP-${i}" value=${element["total_amount"]} data-field="total_amount" />
+        <input type="number" class="form-control" id="html_Total-${i}" value=${element["total_amount"]} data-field="total_amount" />
         <label for="floatingInput mr-5" class="ml-15 md_lbl">Total</label>
         <span class="_error"></span>
       </div>
@@ -197,5 +235,5 @@ function buildTable(obj_product) {
   });
   $("#tbl_product tfoot tr td:nth-child(2) label").text(total_qty);
   $("#tbl_product tfoot tr td:nth-child(4) label").text(total_disamount);
-  $("#tbl_product tfoot tr td:nth-child(5) label").text(total_amount);
+  $("#tbl_product tfoot tr td:nth-child(6) label").text(total_amount);
 }

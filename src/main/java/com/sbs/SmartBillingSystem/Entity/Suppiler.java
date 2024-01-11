@@ -8,9 +8,20 @@ public class Suppiler {
 	private int supplier_pid;
 	String code;
 	private String name;
+	private  String email;
 	private String mobile_no;
 	private String address;
 	private String GST_no;
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
 
 	public String getCode() {
 		return code;

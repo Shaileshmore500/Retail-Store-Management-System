@@ -21,171 +21,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <style>
-        /* /----- Json Table Wrapper Styling-----/ */
-        #jsonTable_wrapper .row{
-          flex-wrap:nowrap;
-          width: 100%;
-          margin: 0 auto;
-        }
-        #jsonTable_wrapper div.row:nth-child(1) {
-          align-items: flex-end;
-        }
-        #jsonTable_wrapper div.row:nth-child(1) div{
-          padding:0;
-        }
-        #jsonTable_wrapper div.row:nth-child(2){
-          width:98%;
-          overflow: auto;
-        }
-        #jsonTable_wrapper div.row:nth-child(2) div{
-          padding: 0;
-        }
-        /* Table Record Limit */
-        #jsonTable_wrapper div.row:nth-child(1) div:nth-child(1){
-          flex: 0 1 ;
-        }
-        /* Button Group */
-        #jsonTable_wrapper div.row:nth-child(1) div:nth-child(2){
-          flex: 1 ;
-          padding-left:30px;
-        }
-        div.dataTables_wrapper div.dataTables_filter label, div.dataTables_wrapper div.dataTables_length label {
-          padding: 5px;
-        }
-        table.dataTable.table-sm .sorting:after, table.dataTable.table-sm .sorting_asc:after, table.dataTable.table-sm .sorting_desc:after,table.dataTable.table-sm .sorting:before, table.dataTable.table-sm .sorting_asc:before, table.dataTable.table-sm .sorting_desc:before
-        {
-          top: 16px;
-        }
-        /* /----- Table Length Selector Styling-----/ */
-        #jsonTable_length label{
-          /* border: solid 3px gray; */
-          border-radius: 25px;
-          padding: 6px 25px;
-          background-color: gray;
-          font-weight: bold;
-          color: #ffffff;
-        }
-        /* /----- Filter Search Bar Styling-----/ */
-        #jsonTable_filter label{
-          /* border: solid 3px gray; */
-          border-radius: 25px;
-          padding: 6px 25px;
-          background-color: gray;
-          font-weight: bold;
-          color: #ffffff;
-        }
-
-        /* /----- Json Table Styling-----/ */
-        #jsonTable thead tr th{
-          font-size: 19px;
-        }
-        #jsonTable thead tr:nth-child(1) th, #jsonTable{
-          border : none;
-        }
-        #jsonTable thead tr:nth-child(2) th:nth-child(1), #jsonTable tbody tr td:nth-child(1){
-          border-left: solid 3px gray;
-        }
-        #jsonTable thead tr:nth-child(2) th:nth-last-child(1), #jsonTable tbody tr td:nth-last-child(1){
-          border-right: solid 3px gray;
-        }
-        #jsonTable tbody tr:nth-child(even){
-          background-color: rgb(243, 241, 241);
-        }
-        #jsonTable tbody tr:nth-child(odd){
-          background-color:         #ffffff;
-        }
-        #jsonTable tbody tr:hover{
-          background-color: rgb(219, 217, 217);
-        }
-        #jsonTable tbody tr td{
-          min-width: 200px;
-        }
-        #jsonTable tbody tr td:nth-child(1){
-          max-width: 100px;
-          text-align: center;
-        }
-        input[type]:after {
-          visibility: hidden;
-          width: 10px;
-          display: block;
-          position: absolute;
-          top: initial !important;
-          bottom: 8px;
-          left: 45% !important;
-          height: 1px;
-          content: '';
-          transition: 0.2s !important;
-          transition-duration: .2s;
-          transition-timing-function: cubic-bezier(.4,0,.2,1);
-          opacity: 1 !important;
-          background-color: var(--input-border-color);
-
-        }
-
-        /* /----- Button Styling-----/ */
-        .btn{
-          border-radius: 20px;
-          width:100px
-        }
-        td .btn{
-          width:50px;
-          padding:0;
-          padding-left: 5px;
-          background-color: transparent;
-        }
-        .btn-add{
-          font-style: normal;
-          font-family: 'fontawesome';
-        }
-        .btn-add:before{
-          content: '\f067';
-          padding-right: 5px;
-        }
-        .btn-delete{
-          font-style: normal;
-          font-family: 'fontawesome';
-          color: black;
-        }
-        .btn:hover .btn-delete{
-          color: white;
-        }
-        .btn-delete:before{
-          content: '\f014';
-          padding-right: 5px;
-        }
-        .btn-view{
-          font-style: normal;
-          font-family: 'fontawesome';
-          color: black;
-        }
-        .btn:hover .btn-view{
-          color: white;
-        }
-        .btn-view:before{
-          content: '\f06e';
-          padding-right: 5px;
-        }
-        .btn-edit{
-          font-style: normal;
-          font-family: 'fontawesome';
-          color: black;
-        }
-        .btn:hover .btn-edit{
-          color: white;
-        }
-        .btn-edit:before{
-          content: '\f044';
-        }
-        .icon-search{
-          font-style: normal;
-          font-family: 'fontawesome';
-          padding-right: 10px;
-        }
-        .icon-search:before{
-          content: '\f002';
-        }
-    </style>
+    <link rel="stylesheet" href="" th:href="@{/css/grid.css}">
 
 
 
@@ -202,85 +38,87 @@
     <tbody>
     </tbody>
 </table>
+<script src="" th:src=@{/js/grid.js}></script>
 <script th:inline="javascript">
     // JSON data
+    
     var username = /*[[${user}]]*/ '';
         console.log('Username:', username);
     var jsonData=username;
 
 
     // Function to convert JSON to DataTable
-    function jsonToDataTable(jsonData) {
-      // Extract column headers from the first object in the array
-      var columns = Object.keys(jsonData[0]);
+    // function jsonToDataTable(jsonData) {
+    //   // Extract column headers from the first object in the array
+    //   var columns = Object.keys(jsonData[0]);
 
-      // Initialize DataTable
-      var table = $('#jsonTable').DataTable({
-        data: jsonData,
-        columns: columns.map(function(column) {
-          return { data: column };
-        }),
-        paging: true, // Enable pagination
-        searching: true, // Enable search box
-        order: [] // Disable initial sorting
-      });
+    //   // Initialize DataTable
+    //   var table = $('#jsonTable').DataTable({
+    //     data: jsonData,
+    //     columns: columns.map(function(column) {
+    //       return { data: column };
+    //     }),
+    //     paging: true, // Enable pagination
+    //     searching: true, // Enable search box
+    //     order: [] // Disable initial sorting
+    //   });
 
-      // Add column headers to the table
-      $('#jsonTable thead').append('<tr>' +
-        columns.map(function(column) {
-          return '<th>' + column + '</th>';
-        }).join('') +
-        '</tr>');
-    }
+    //   // Add column headers to the table
+    //   $('#jsonTable thead').append('<tr>' +
+    //     columns.map(function(column) {
+    //       return '<th>' + column + '</th>';
+    //     }).join('') +
+    //     '</tr>');
+    // }
 
     // Call the function with your JSON data
     jsonToDataTable(jsonData);
 
-    window.onload = function(){
-      //----- Insert 'ButtonGroup' between 'Record limit selector' and 'Search Bar' -----//
-      let buttonList = document.getElementById('tableButtonGroup');
-      let table_wrapper = document.getElementById('jsonTable_wrapper').children;
-      let table_entryLimit = table_wrapper[0].children[0];
-      table_entryLimit.after(buttonList);
+    // window.onload = function(){
+    //   //----- Insert 'ButtonGroup' between 'Record limit selector' and 'Search Bar' -----//
+    //   let buttonList = document.getElementById('tableButtonGroup');
+    //   let table_wrapper = document.getElementById('jsonTable_wrapper').children;
+    //   let table_entryLimit = table_wrapper[0].children[0];
+    //   table_entryLimit.after(buttonList);
 
-      //----- Adding View and Edit buttons to DataTable -----//
-      let tableHead = document.getElementById('jsonTable').children[0];
-      let tableHeadRow = tableHead.children[1];
-      let actionColumn = document.createElement('th');
-      actionColumn.innerText = "Action";
-      tableHeadRow.prepend(actionColumn);
-      //--Selecting rows from table body
-      let tableBody = document.getElementById('jsonTable').children[1];
-      let tableBodyRows = tableBody.children;
+    //   //----- Adding View and Edit buttons to DataTable -----//
+    //   let tableHead = document.getElementById('jsonTable').children[0];
+    //   let tableHeadRow = tableHead.children[1];
+    //   let actionColumn = document.createElement('th');
+    //   actionColumn.innerText = "Action";
+    //   tableHeadRow.prepend(actionColumn);
+    //   //--Selecting rows from table body
+    //   let tableBody = document.getElementById('jsonTable').children[1];
+    //   let tableBodyRows = tableBody.children;
 
-      //----- Adding Checkbox column to DataTable
-      let checkboxColumn = document.createElement('th');
-      let headerCheckbox = document.createElement('input');
-      headerCheckbox.type = "checkbox";
-      console.log(headerCheckbox);
-      checkboxColumn.append(headerCheckbox);
-      tableHeadRow.prepend(checkboxColumn);
+    //   //----- Adding Checkbox column to DataTable
+    //   let checkboxColumn = document.createElement('th');
+    //   let headerCheckbox = document.createElement('input');
+    //   headerCheckbox.type = "checkbox";
+    //   console.log(headerCheckbox);
+    //   //checkboxColumn.append(headerCheckbox);
+    //  // tableHeadRow.prepend(checkboxColumn);
 
-      for(let loop = 0; loop < tableBodyRows.length; loop++){
-        //-----
-        let multiButtonColumn = document.createElement('td');
-        multiButtonColumn.innerHTML = '<a href="" class="btn btn-primary m-1"><i class="btn-view"></i></a><a href="" class="btn btn-primary m-1"><i class="btn-edit"></i></a><a href="" class="btn btn-danger  m-1"><i class="btn-delete"></i> </a>';
+    //   for(let loop = 0; loop <= tableBodyRows.length; loop++){
+    //     //-----
+    //     let multiButtonColumn = document.createElement('td');
+    //     multiButtonColumn.innerHTML = '<a href="" class="btn btn-primary m-1"><i class="btn-view"></i></a><a href="" class="btn btn-primary m-1"><i class="btn-edit"></i></a><a href="" class="btn btn-danger  m-1"><i class="btn-delete"></i> </a>';
 
-        let checkboxBodyColumn = document.createElement('td');
-        let bodyCheckbox = document.createElement('input');
-        bodyCheckbox.type = "checkbox";
-        checkboxBodyColumn.append(bodyCheckbox);
+    //     let checkboxBodyColumn = document.createElement('td');
+    //     let bodyCheckbox = document.createElement('input');
+    //     bodyCheckbox.type = "checkbox";
+    //     checkboxBodyColumn.append(bodyCheckbox);
 
-        tableBodyRows[loop].prepend(multiButtonColumn);
-        tableBodyRows[loop].prepend(checkboxBodyColumn);
-      }
+    //     tableBodyRows[loop].prepend(multiButtonColumn);
+    //   // tableBodyRows[loop].prepend(checkboxBodyColumn);
+    //   }
 
-      //----- Search bar styling -----//
-      let searchIcon = document.createElement('i');
-      searchIcon.className = "icon-search";
-      let filterLabel = document.getElementById('jsonTable_filter').children[0]
-      filterLabel.prepend(searchIcon);
-    }
+    //   //----- Search bar styling -----//
+    //   let searchIcon = document.createElement('i');
+    //   searchIcon.className = "icon-search";
+    //   let filterLabel = document.getElementById('jsonTable_filter').children[0]
+    //   filterLabel.prepend(searchIcon);
+    // }
 </script>
 
     </section>

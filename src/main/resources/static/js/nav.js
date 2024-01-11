@@ -1,9 +1,9 @@
-const aside = document.getElementById("aside_bar");
-aside.addEventListener("click", () => {
+// const aside = document.getElementById("aside_bar");
+// aside.addEventListener("click", () => {
   
-  const aside_bar = document.getElementById("aside");
-  aside_bar.classList.toggle("active");
-});
+//   const aside_bar = document.getElementById("aside");
+//   aside_bar.classList.toggle("active");
+// });
 //errorToast();
 function errorToast(msg) {
   debugger;

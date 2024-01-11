@@ -7,7 +7,7 @@ import com.sbs.SmartBillingSystem.Entity.Product;
 
 public class DesObjBillProduct {
     private List<Product> product;
-    private DesObjBill desObjBill;
+    private Bill bill;
 
     public DesObjBillProduct() {
     }
@@ -20,12 +20,12 @@ public class DesObjBillProduct {
         this.product = product;
     }
 
-    public DesObjBill getDesObjBill() {
-        return desObjBill;
+    public Bill getBill() {
+        return bill;
     }
 
-    public void setDesObjBill(DesObjBill desObjBill) {
-        this.desObjBill = desObjBill;
+    public void setBill(Bill bill) {
+        this.bill = bill;
     }
 
 }
