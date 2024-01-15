@@ -15,7 +15,6 @@ import com.sbs.SmartBillingSystem.Entity.Category;
 import com.sbs.SmartBillingSystem.Entity.Suppiler;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 @Controller
 
 // if u want to use method base authorization then use this anotation
@@ -49,9 +48,9 @@ public class ctr {
     public String home() {
         return "home";
     }
+
     @GetMapping("/customer")
-    public String customer()
-    {
+    public String customer() {
         return "forms/Customer";
     }
 
@@ -124,39 +123,46 @@ public class ctr {
     public String invoice() {
         return "forms/invoice";
     }
-     @GetMapping("/signup")
+
+    @GetMapping("/signup")
     public String signup(Model model) {
 
         model.addAttribute("user", null);
 
         return "register";
     }
-     @GetMapping("/po")
+
+    @GetMapping("/po")
     public String po(Model model) {
 
         List<Suppiler> suppilers = supplierRepo.findAll();
- model.addAttribute("suppliers", suppilers);
+        model.addAttribute("suppliers", suppilers);
 
         return "forms/po";
     }
+
     @GetMapping("/attendance")
     public String attendance() {
         return "forms/attendance";
     }
-     @GetMapping("/searchProduct")
+
+    @GetMapping("/searchProduct")
     public String searchProduct() {
         return "forms/searchProduct";
     }
 
     @GetMapping("/grid")
-    public String grid1(Model model){
+    public String grid1(Model model) {
 
-        List<User> users=userRepo.findAll();
-model.addAttribute("user",users);
-
+        List<User> users = userRepo.findAll();
+        model.addAttribute("user", users);
 
         return "/Grid/gid1";
     }
-  
+
+    @GetMapping("/oldnav")
+    public String old() {
+        return "navbar copy";
+    }
 
 }

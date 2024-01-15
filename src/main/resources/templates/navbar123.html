@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content)">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" th:href="@{/css/nav.css}" />
+  <link rel="stylesheet" th:href="@{/css/form.css}" />
+  <!-- <link rel="stylesheet" th:href="@{/css/Erp.css}" />
+<link rel="stylesheet" th:href="@{/css/Base.css}" /> -->
+  <!-- <link rel="stylesheet" th:href="@{/css/ErpNewHome.css}" /> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <!-- <script th:src=@{/js/script.js}></script> -->
+
+    <!--navbar css-->
+    <link rel="stylesheet" th:href="@{/css/navbarcss/azzara.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/navbarcss/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/navbarcss/fonts.css}" />
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css}">
+   
+
+</head>
+
+<body>
+  <form name="aspnetForm" method="post" action="" id="aspnetForm">
+
+    <div class="wrapper">
+        <div class="main-header" data-background-color="purple">
+            <div class="logo-header">
+                <a href="Default.aspx" class="logo" style="padding-top: 15px;">
+                    <h2>Company</h2>
+                </a>
+                <a class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
+                    data-target="collapse" aria-expanded="false" aria-label="Toggle navigation"><span
+                        class="navbar-toggler-icon"><i class="fa fa-bars">M</i></span></a>
+
+                <a class="topbar-toggler more">
+                    <i class="fa fa-ellipsis-v">::</i></a>
+                <div class="navbar-minimize">
+                    <a class="btn btn-minimize btn-rounded"><i class="fa fa-bars">D</i></a>
+                </div>
+            </div>
+            <nav class="navbar navbar-header navbar-expand-lg">
+                <div class="container-fluid">
+                    <div class="collapse" id="search-nav">
+                    </div>
+                    <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+                        <li class="nav-item dropdown hidden-caret">
+                            <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"
+                                aria-expanded="false">
+                                <div class="avatar-sm">
+                                    <a id="ctl00_LoginStatus1" title="Log Out"
+                                        href="javascript:__doPostBack(&#39;ctl00$LoginStatus1$ctl00&#39;,&#39;&#39;)"
+                                        style="color:White;font-weight:bold;">
+                                        <:>
+                                    </a>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="sidebar">
+            <div class="sidebar-background">
+            </div>
+            <div class="sidebar-wrapper scrollbar-inner">
+                <div class="sidebar-content">
+                    <div class="user">
+                        <table width="100%">
+                            <tr>
+                                <td height="10">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <img id="ctl00_ImgUser2" class="rounded-circle"
+                                        src="../Profile/Small/AM214490dec5120c-2a4d-44e5-b9a7-37c8bef98c66adhira02.jpg"
+                                        style="width:80px;border-width:0px;" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td height="5">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="color: #001940; font-size: 12px;">
+                                    <span id="ctl00_LblMemberName2" style="font-weight:bold;">Your Name</span>
+                                    (<span id="ctl00_LoginName1" style="font-weight:bold;">AM214490</span>)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td height="5">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="color: #001940; font-size: 12px;">
+                                    <span id="ctl00_LblPackagename" style="font-weight:bold;">Silver</span>
+                                    (<span id="ctl00_LblPackage" style="font-weight:bold;">249.00</span>)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td height="5">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="color: #001940;">
+                                    <a id="ctl00_LoginStatus2" title="Log Out"
+                                        href="javascript:__doPostBack(&#39;ctl00$LoginStatus2$ctl00&#39;,&#39;&#39;)"
+                                        style="color:#001940;font-weight:bold;">Logout</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td height="10">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <ul class="nav">
+                        <li class="nav-item"><a href="Default.aspx"><i class="fa fa-home"></i>
+                                <p>
+                                    Dash Board</p>
+                            </a></li>
+                        <li class="nav-item"><a data-toggle="collapse" href="#Create"><i class="fa fa-pen-square">
+                                </i>
+                                <p>
+                                    Create</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="Create">
+                                <ul class="nav nav-collapse">
+                                    <li><a href="CreateMember.aspx"><i class="fa fa-arrow-right"></i>Create Member
+                                        </a>
+                                    </li>
+                                    <li><a href="FreeJoining.aspx"><i class="fa fa-arrow-right"></i>Joining </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item"><a data-toggle="collapse" href="#Downline"><i class="fa fa-pen-square">
+                                </i>
+                                <p>
+                                    Downline</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="Downline">
+                                <ul class="nav nav-collapse">
+                                    <li><a href="GenerationTreeView.aspx"><i
+                                                class="fa fa-arrow-right"></i>Generation Tree
+                                            View </a></li>
+
+                                    <li><a href="DirectSponsor.aspx"><i class="fa fa-arrow-right"></i>Direct Sponsor
+                                        </a>
+                                    </li>
+                                    <li><a href="DirectSponsorActive.aspx"><i class="fa fa-arrow-right"></i>Direct
+                                            Sponsor
+                                            Active </a></li>
+                                    <li><a href="DirectSponsorInActive.aspx"><i class="fa fa-arrow-right"></i>Direct
+                                            Sponsor
+                                            InActive </a></li>
+                                    <li><a href="TotalDownlineMember.aspx"><i class="fa fa-arrow-right"></i>Total
+                                            Downline
+                                            Member </a></li>
+                                    <li><a href="TotalDownlineMember.aspx?Status=True"><i
+                                                class="fa fa-arrow-right"></i>
+                                            Total Downline Member Active </a></li>
+                                    <li><a href="TotalDownlineMember.aspx?Status=False"><i
+                                                class="fa fa-arrow-right"></i>
+                                            Total Downline Member InActive </a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item"><a href="MemberInActive.aspx"><i class="fa fa-pen-square"></i>
+                                <p>
+                                    Activate Now</p>
+                            </a></li>
+                        <li class="nav-item"><a data-toggle="collapse" href="#Profile"><i class="fa fa-pen-square">
+                                </i>
+                                <p>
+                                    Profile</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="Profile">
+                                <ul class="nav nav-collapse">
+                                    <li><a href="MyProfile.aspx"><i class="fa fa-arrow-right"></i>My Profile </a>
+                                    </li>
+
+                                    <li><a href="ProfileImage.aspx"><i class="fa fa-arrow-right"></i>Update Profile
+                                            Image
+                                        </a></li>
+                                    <li style="display: none;"><a href="KYCUpdate.aspx"><i
+                                                class="fa fa-arrow-right"></i>
+                                            KYC Update </a></li>
+                                    <li><a href="ChangePassword.aspx"><i class="fa fa-arrow-right"></i>Change
+                                            Password
+                                        </a></li>
+                                    <li><a href="ChangeTransactionalPassword.aspx"><i
+                                                class="fa fa-arrow-right"></i>Change
+                                            Tran Password </a></li>
+                                    <li><a href="ForgotTransactionalPassword.aspx"><i
+                                                class="fa fa-arrow-right"></i>Forgot
+                                            Tran Password </a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item"><a data-toggle="collapse" href="#MyWallet"><i class="fa fa-pen-square">
+                                </i>
+                                <p>
+                                    My Wallet</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="MyWallet">
+                                <ul class="nav nav-collapse">
+                                    <li><a href="AddFund.aspx"><i class="fa fa-arrow-right"></i>Add Fund </a></li>
+
+                                    <li><a href="WalletStatement.aspx?WalletType=Fund Wallet"><i
+                                                class="fa fa-arrow-right">
+                                            </i>Fund Wallet Statement </a></li>
+                                    <li><a href="WalletStatement.aspx?WalletType=Commission Wallet"><i
+                                                class="fa fa-arrow-right">
+                                            </i>Commission Wallet Statement </a></li>
+                                    <li style="display: none;"><a
+                                            href="WalletStatement.aspx?WalletType=Reward Point"><i
+                                                class="fa fa-arrow-right"></i>Reward Point Statement </a></li>
+                                    <li><a href="FundDetails.aspx"><i class="fa fa-arrow-right"></i>Fund Request
+                                            Details
+                                        </a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item"><a data-toggle="collapse" href="#MyPayoutDetails"><i
+                                    class="fa fa-pen-square">
+                                </i>
+                                <p>
+                                    Withdrawal</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="MyPayoutDetails">
+                                <ul class="nav nav-collapse">
+                                    <li><a href="WithdrawalRequest.aspx"><i class="fa fa-arrow-right"></i>Withdrawal
+                                            Request
+                                        </a></li>
+                                    <li><a href="PendingRequest.aspx"><i class="fa fa-arrow-right"></i>Pending
+                                            Request
+                                        </a></li>
+                                    <li><a href="CompletedRequest.aspx"><i class="fa fa-arrow-right"></i>Completed
+                                            Request
+                                        </a></li>
+                                    <li><a href="RefundWalletAmountRequest.aspx"><i
+                                                class="fa fa-arrow-right"></i>Refund
+                                            Amount Request </a></li>
+                                    <li style="display: none;"><a href="TotalAmount.aspx"><i
+                                                class="fa fa-arrow-right">
+                                            </i>Total Income </a></li>
+                                    <li style="display: none;"><a href="UnPaidAmount.aspx"><i
+                                                class="fa fa-arrow-right">
+                                            </i>UnPaid Income </a></li>
+                                    <li style="display: none;"><a href="ReceivedAmount.aspx"><i
+                                                class="fa fa-arrow-right">
+                                            </i>Received Income </a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item" style="display: none;"><a data-toggle="collapse" href="#Pin"><i
+                                    class="fa fa-pen-square"></i>
+                                <p>
+                                    E-Pin Account</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse" id="Pin">
+                                <ul class="nav nav-collapse">
+                                    <li><a href="GeneratePin.aspx"><i class="fa fa-arrow-right"></i>Generate E-Pins
+                                        </a>
+                                    </li>
+                                    <li><a href="PinTransfer.aspx"><i class="fa fa-arrow-right"></i>E-Pin Transfer
+                                        </a>
+                                    </li>
+                                    <li><a href="PinTransferHistory.aspx"><i class="fa fa-arrow-right"></i>E-Pin
+                                            Transfer
+                                            History </a></li>
+                                    <li><a href="ReceivedPinHistory.aspx"><i class="fa fa-arrow-right"></i>Received
+                                            E-Pin
+                                            History </a></li>
+                                    <li><a href="UsedPinHistory.aspx"><i class="fa fa-arrow-right"></i>Used E-Pin
+                                            History
+                                        </a></li>
+                                    <li><a href="UnUsedPinsHistory.aspx"><i class="fa fa-arrow-right"></i>UnUsed
+                                            E-Pins
+                                            History </a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-item" style="display: none;"><a href="FranchiseList.aspx"><i
+                                    class="fa fa-pen-square">
+                                </i>
+                                <p>
+                                    Franchise List</p>
+                            </a></li>
+
+
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered" style="display: none;">
+
+        </table>
+
+        <div class="main-panel">
+            <div class="content">
+                <div class="page-inner">
+                    <h1>new Side bars</h1>
+                    
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-bordered" style="display: none;">
+
+        </table>
+
+    </div>
+
+    <!-- 
+<script src="js/popper.min.js"></script>
+<script src="js/jquery.ui.touch-punch.min.js"></script>
+<script src="js/bootstrap-toggle.min.js"></script> -->
+</form>
+
+<!-- toast -->
+
+  <div class="toast align-items-center text-white   border-0" role="alert" aria-live="assertive"  aria-atomic="true" id="toast">
+    <div class="toast-header" id="toast-header">
+      <!-- <img src="..." class="rounded mr-2" alt="..."> -->
+      
+      <strong class="mr-auto text-white"></strong>
+      <small></small>
+      <button id="btn_toastclose" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="toast-body text-dark">
+      Hello, world! This is a toast message.
+    </div>
+  </div>
+  <!-- ------------------------ -->
+
+ 
+
+
+
+
+
+
+
+
+   <!-- loader -->
+   <div class="loader2">
+    <div style="top: 25vw;
+    position: fixed;left: 40vw;">
+    <div class="spinner-grow text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-secondary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-success" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-danger" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-warning" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-info" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-light" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-dark" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    </div>
+  </div>
+  <!--  -->
+
+
+  <footer class="footer"></footer>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"></script>
+  
+
+  <script th:src=@{/js/nav.js}></script>
+
+
+
+  <script th:src=@{js/navbarjs/jquery.3.2.1.min.js}></script>
+  <script th:src=@{js/navbarjs/jquery-ui.min.js}></script>
+  <script th:src=@{js/navbarjs/jquery.scrollbar.min.js}></script>
+  <script th:src=@{js/navbarjs/ready.min.js}></script>
+  <script th:src=@{js/navbarjs/bootstrap.min.js}></script>
+  
+
+<script>
+
+
+$(document).ready(() => {
+
+  
+  
+
+
+});
+
+
+      </script>
+      
+    
+   
+
+
+
+      <script th:src=@{/js/script.js}></script>
+        </body>
+
+</html>
