@@ -94,6 +94,8 @@ public class ctr {
         // model.addAttribute("errormessage", null);
         // model.addAttribute("sucmessage", null);
 
+        List<Category> categories= categoryRepo.findAll();
+        model.addAttribute("data", categories);
         return "forms/CategoryForm";
     }
 

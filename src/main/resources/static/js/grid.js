@@ -17,17 +17,17 @@ window.onload = function(){
     let tableBodyRows = tableBody.children;
 
     //----- Adding Checkbox column to DataTable
-    let checkboxColumn = document.createElement('th');
-    let headerCheckbox = document.createElement('input');
-    headerCheckbox.type = "checkbox";
-    console.log(headerCheckbox);
+    // let checkboxColumn = document.createElement('th');
+    // let headerCheckbox = document.createElement('input');
+    // headerCheckbox.type = "checkbox";
+    // console.log(headerCheckbox);
     //checkboxColumn.append(headerCheckbox);
    // tableHeadRow.prepend(checkboxColumn);
 
-    for(let loop = 0; loop <= tableBodyRows.length; loop++){
+    for(let loop = 0; loop < tableBodyRows.length; loop++){
       //-----
       let multiButtonColumn = document.createElement('td');
-      multiButtonColumn.innerHTML = '<a href="" class="btn btn-primary m-1"><i class="btn-view"></i></a><a href="" class="btn btn-primary m-1"><i class="btn-edit"></i></a><a href="" class="btn btn-danger  m-1"><i class="btn-delete"></i> </a>';
+      multiButtonColumn.innerHTML = '<a  class="btn btn-primary m-1 view"><i class="btn-view"></i></a><a  class="btn btn-primary m-1 edit"><i class="btn-edit "></i></a><a  class="btn btn-danger  m-1 delete"><i class="btn-delete"></i> </a>';
 
       let checkboxBodyColumn = document.createElement('td');
       let bodyCheckbox = document.createElement('input');
@@ -67,3 +67,22 @@ window.onload = function(){
       }).join('') +
       '</tr>');
   }
+
+
+  $(document).ready(()=>{
+$(".edit").click(()=>{
+  
+  $("#myModal").css("display","block");
+})
+$("#closeModalBtn").click(()=>{
+  
+  $("#myModal").css("display","none");
+})
+$(window).click(function(e){
+debugger
+  //if(e.target==$("#myModal"))
+  //$("#myModal").css("display","none");
+
+})
+
+  })

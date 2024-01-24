@@ -1,4 +1,326 @@
- /* /----- Json Table Wrapper Styling-----/ */
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+    /* /----- Json Table Wrapper Styling-----/ */
+    #jsonTable_wrapper .row{
+      flex-wrap:nowrap;
+      /* width: 100%; */
+      margin: 0 15px;
+      margin-top:10px;
+    }
+    #jsonTable_wrapper div.row:nth-child(1) {
+      align-items: center;
+    }
+     /* Table Record Limit */
+    #jsonTable_wrapper div.row:nth-child(1) div:nth-child(1){
+      flex: 0 1 ;
+    }
+    /* Button Group */
+    #jsonTable_wrapper div.row:nth-child(1) div:nth-child(2){
+      flex: 1 ;
+      padding-left:30px;
+    }
+    #jsonTable_wrapper div.row:nth-child(1) div{
+      padding:0;
+    }
+    #jsonTable_wrapper div.row:nth-child(2){
+      width:98%;
+      overflow: auto;
+      border: 2px solid #dee2e6;
+      border-radius: 8px;
+      background-color: #eff6ff;
+      /* overflow-x: hidden; */
+    }
+    /* /ScrollBar Styling/ */
+    #jsonTable_wrapper div.row:nth-child(2)::-webkit-scrollbar {
+      height: 6px;
+      scrollbar-width: 5px;
+    }
+    /* Track */
+    #jsonTable_wrapper div.row:nth-child(2)::-webkit-scrollbar-track {
+      /* background: #f1f1f1;  */
+      background: #fff; 
+    }
+    /* Handle */
+    #jsonTable_wrapper div.row:nth-child(2)::-webkit-scrollbar-thumb {
+      border-radius: 12px;
+      /* height: 3px; */
+      /* width: 6px; */
+      background-color: #3b82f6;
+      /* border:#3b82f6 solid 2px; */
+    }
+    /* Handle on hover */
+    #jsonTable_wrapper div.row:nth-child(2)::-webkit-scrollbar-thumb:active {
+      background: gray; 
+    }
+
+    #jsonTable_wrapper div.row:nth-child(2) div{
+      padding: 0;
+    }
+
+    /* #jsonTable_wrapper div.row:nth-child(3) {
+      border:solid 2px lightgray;
+      border-radius: 8px;
+    } */
+
+    #jsonTable_wrapper div.row:nth-child(3)>div{
+      /* border-right: solid 3px gray; */
+      font-weight: 600;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      border:solid 3px lightgray;
+      border-radius: 8px;
+    }
+    #jsonTable_info{
+      padding:0;
+      text-align: center;
+      height: fit-content;
+      align-self: center;
+    }
+   
+    div.dataTables_wrapper div.dataTables_filter label, div.dataTables_wrapper div.dataTables_length label {
+      padding: 5px;
+    }
+    table.dataTable.table-sm .sorting:after, table.dataTable.table-sm .sorting_asc:after, table.dataTable.table-sm .sorting_desc:after,table.dataTable.table-sm .sorting:before, table.dataTable.table-sm .sorting_asc:before, table.dataTable.table-sm .sorting_desc:before
+    {
+      top: 16px;
+    }
+    /* /----- Table Length Selector Styling-----/ */
+    #jsonTable_length{
+      position: relative;
+      font-family: 'Roboto';
+    }
+    #jsonTable_length label{
+      position: absolute;
+      right: 22px;
+      top:4px;
+      font-size: 14px;
+      font-weight: 600;
+      color: gray;
+      
+    }
+
+    #jsonTable_length select{
+      border-radius: 8px;
+      padding: 3px 0px;
+      padding-left: 10px;
+      padding-right: 130px;
+      background-color: #eff6ff;
+      font-weight: 600;
+      color: gray;
+      border: solid;
+      border-color: #80bdff;
+      min-width: 130px;
+      min-height: 38px;
+    }
+
+    #jsonTable_length select:focus + label{
+      visibility: hidden;
+    }
+
+    /* /----- Filter Search Bar Styling-----/ */
+    #jsonTable_filter{
+      position: relative;
+    }
+    #jsonTable_filter label{
+      /* 
+      
+      */
+      position: absolute;
+      right: 205px;
+      margin-bottom: 0;
+      font-weight: 600;
+      color: gray;
+      transition:all .125s ease-in-out; 
+    }
+    #jsonTable_searchInput{
+      min-width: 250px;
+      min-height: 38px;
+      position: relative;
+    }
+    
+    /* /----- Json Table Styling-----/ */
+    #jsonTable{
+      /* width: unset !important; */
+      font-family: 'Roboto', sans-serif;
+      margin:0 auto !important;
+    }
+    /* /Table Heading Column Styling/ */
+    #jsonTable thead tr:nth-child(1) th{
+      display:none
+    }
+    #jsonTable thead tr:nth-child(2) th{
+      font-size: 15px;
+      background-color: #eff6ff;
+    }
+    /* /Default Styling/ */
+    #jsonTable thead tr:nth-child(1) th, #jsonTable{
+      border : none;
+    }
+    .table-bordered td, .table-bordered th {
+      border: unset;
+    }
+    .table thead th {
+      vertical-align: bottom;
+      border-bottom: 2px solid #dee2e6;
+      /* 
+      border-top: 2px solid #dee2e6;
+      */
+    }
+    #jsonTable tbody tr:nth-child(even){
+      background-color: #fff;
+    }
+    #jsonTable tbody tr:nth-child(odd){
+      background-color: #fff;
+    }
+    #jsonTable tbody tr:hover{
+      background-color: rgb(219, 217, 217);
+    } 
+    #jsonTable tbody tr td{
+      border-bottom: solid 1px lightgray;
+      font-size: 15px;
+    }
+    #jsonTable tbody tr td:nth-child(1){
+      /* max-width: 100px; */
+      text-align: left;
+      min-width: 193px;
+    }
+
+    /* /Column width manual width/ */
+    #jsonTable thead tr th:nth-child(1), #jsonTable tbody tr:nth-child(1){
+      width:100px !important;
+    }
+    #jsonTable thead tr th:nth-child(2), #jsonTable tbody tr:nth-child(2){
+      width:30px !important;
+    }
+    #jsonTable thead tr th:nth-child(3), #jsonTable tbody tr:nth-child(3){
+      width:30px !important;
+    }
+    #jsonTable thead tr th:nth-child(4), #jsonTable tbody tr:nth-child(4){
+      width:30px !important;
+    }
+    #jsonTable thead tr th:nth-child(5), #jsonTable tbody tr:nth-child(5){
+      width:30px !important;
+    }
+    #jsonTable thead tr th:nth-child(6), #jsonTable tbody tr:nth-child(6){
+      width:30px !important;
+    }
+    #jsonTable thead tr th:nth-child(7), #jsonTable tbody tr:nth-child(7){
+      width:30px !important;
+    }
+
+    input[type]:after {
+      visibility: hidden;
+      width: 10px;
+      display: block;
+      position: absolute;
+      top: initial !important;
+      bottom: 8px;
+      left: 45% !important;
+      height: 1px;
+      content: '';
+      transition: 0.2s !important;
+      transition-duration: .2s;
+      transition-timing-function: cubic-bezier(.4,0,.2,1);
+      opacity: 1 !important;
+      background-color: var(--input-border-color);
+
+    }
+    
+    /* /----- Button Styling-----/ */
+    i{
+      transition: all .125s ease-in-out;
+    }
+    .btn{
+      border-radius: 8px;
+      width:100px;
+    }
+    .btn:hover i{
+      display: inline-block;
+      transform: translateY(-2px);
+    }
+    td .btn{
+      width:50px;
+      padding:0;
+      padding-left: 5px;
+      background-color: transparent;
+    }
+    .btn-add{
+      padding: 4px 6px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      width:fit-content;
+    }
+    .btn-add i{
+      font-style: normal;
+      font-family: 'fontawesome';
+    }
+    .btn-add i:before{
+      content: '\f067';
+      padding-right: 5px;
+    }
+    .btn-delete{
+      font-style: normal;
+      font-family: 'fontawesome';
+      color: black;
+    }
+    .btn:hover .btn-delete{
+      color: white;
+    }
+    .btn-delete:before{
+      content: '\f014';
+      padding-right: 5px;
+    }
+    .btn-view{
+      font-style: normal;
+      font-family: 'fontawesome';
+      color: black;
+    }
+    .btn:hover .btn-view{
+      color: white;
+    }
+    .btn-view:before{
+      content: '\f06e';
+      padding-right: 5px;
+    }
+    .btn-edit{
+      font-style: normal;
+      font-family: 'fontawesome';
+      color: black;
+    }
+    .btn:hover .btn-edit{
+      color: white;
+    }
+    .btn-edit:before{
+      content: '\f044';
+    }
+    .icon-search{
+      font-style: normal;
+      font-family: 'fontawesome';
+      padding-right: 10px;
+    }
+    .icon-search:before{
+      content: '\f002';
+    }
+    #jsonTable_searchInput{
+      border: solid 3px gray; 
+      border-radius: 8px;
+      /* padding: 3px 25px; */
+      background-color: #eff6ff;
+      border:solid;
+      border-color: #80bdff;
+      padding-left: 38px;
+      transition: all .125s ease-in-out;
+    }
+    #jsonTable_searchInput:focus{
+      padding-left: 10px;
+    }
+    #jsonTable_searchInput:focus + label{
+      transform: translateX(-40px);
+    } 
+ 
+ 
+ /* /----- Json Table Wrapper Styling-----/
  #jsonTable_wrapper .row{
     flex-wrap:nowrap;
     width: 100%;
@@ -18,11 +340,11 @@
     padding: 0;
   }
   /* Table Record Limit */
-  #jsonTable_wrapper div.row:nth-child(1) div:nth-child(1){
+  /* #jsonTable_wrapper div.row:nth-child(1) div:nth-child(1){
     flex: 0 1 ;
-  }
+  } */
   /* Button Group */
-  #jsonTable_wrapper div.row:nth-child(1) div:nth-child(2){
+  /* #jsonTable_wrapper div.row:nth-child(1) div:nth-child(2){
     flex: 1 ;
     padding-left:30px;
   }
@@ -32,27 +354,29 @@
   table.dataTable.table-sm .sorting:after, table.dataTable.table-sm .sorting_asc:after, table.dataTable.table-sm .sorting_desc:after,table.dataTable.table-sm .sorting:before, table.dataTable.table-sm .sorting_asc:before, table.dataTable.table-sm .sorting_desc:before
   {
     top: 16px;
-  }
+  } */
   /* /----- Table Length Selector Styling-----/ */
-  #jsonTable_length label{
-    /* border: solid 3px gray; */
+  /*#jsonTable_length label{
+    
     border-radius: 25px;
     padding: 6px 25px;
     background-color: gray;
     font-weight: bold;
     color: #ffffff;
-  }
+  }*/
   /* /----- Filter Search Bar Styling-----/ */
+  /*
   #jsonTable_filter label{
-    /* border: solid 3px gray; */
+  
     border-radius: 25px;
     padding: 6px 25px;
     background-color: gray;
     font-weight: bold;
     color: #ffffff;
   }
-
+*/
   /* /----- Json Table Styling-----/ */
+  /*
   #jsonTable thead tr th{
     font-size: 19px;
   }
@@ -97,9 +421,10 @@
     opacity: 1 !important;
     background-color: var(--input-border-color);
 
-  }
+  }*/
 
   /* /----- Button Styling-----/ */
+  /*
   .btn{
     border-radius: 20px;
     width:100px
@@ -164,4 +489,4 @@
   #jsonTable thead tr th {
 font-size: 19px;
 text-align: center;
-}
+} */
