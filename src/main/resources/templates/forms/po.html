@@ -146,11 +146,41 @@
 
                     if (validPanel("pnl_po")) {
                         $("form").submit();
-
-
-
                     }
+
                 })
+
+                $('form').submit(function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Create FormData object to send file and other data
+            var formData = new FormData($(this)[0]);
+            $(".customloader").show();
+            // Send AJAX request
+            $.ajax({
+                url: '/savePO',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+
+                    debugger;
+                    //console.log('Success:', data);
+                    showToasty("<i class='fa-solid fa-square-check fa-shake fa-xl text-white'>&nbsp;&nbsp</i>", "bg-success", data, "Success")
+                    $('form')[0].reset()
+                    $(".customloader").hide();
+                },
+                error: function (xhr, status, error) {
+                    debugger;
+                    showToasty("<i class='fa-solid fa-triangle-exclamation fa-shake fa-xl text-white'>&nbsp;&nbsp;</i>", "bg-danger", "Something Went Wrong! Please Try Again...", "Error")
+           
+                    $(".customloader").hide();
+                    console.error('Error:', error);
+                    // Handle error response
+                }
+            });
+        });
 
 
 

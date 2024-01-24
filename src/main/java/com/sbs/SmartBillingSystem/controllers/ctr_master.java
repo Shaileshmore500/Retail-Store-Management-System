@@ -1,7 +1,7 @@
 package com.sbs.SmartBillingSystem.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -46,7 +46,7 @@ import com.sbs.SmartBillingSystem.Repository.ProductRepo;
 import com.sbs.SmartBillingSystem.Repository.PurchaseOrderRepo;
 import com.sbs.SmartBillingSystem.Repository.SupplierRepo;
 import com.sbs.SmartBillingSystem.Repository.UserRepo;
-
+import com.sbs.SmartBillingSystem.Services.EmailService;
 import com.sbs.SmartBillingSystem.Entity.serializedObject.*;
 //<<<<<<< HEAD
 import com.sbs.SmartBillingSystem.Helper.InvoiveHelper;
@@ -84,12 +84,20 @@ public class ctr_master {
     private CustomerRepo customerRepo;
     @Autowired
     UserRepo userRepo;
+    
+   private EmailService emailService;
+   
+   public ctr_master(EmailService emailService) {
+    this.emailService = emailService;
+}
 
-    private final ObjectMapper objectMapper;
 
-    public ctr_master(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
-    }
+    
+// private final ObjectMapper objectMapper;
+    // @Autowired
+    // public ctr_master( ObjectMapper objectMapper) {
+    //     this.objectMapper = objectMapper;
+    // }
 
     @PostMapping("/master/savecat")
     public String saveString(@RequestParam("name") String name, @RequestParam("code") String code, Model model) {
@@ -326,7 +334,7 @@ public class ctr_master {
                 if (resourcesPath == null)
                     user.setImageUrl("default.png");
                 else
-                    user.setImageUrl(timestamp + file.getOriginalFilename());
+                    user.setImageUrl("/images/"+timestamp + file.getOriginalFilename());
                 ;
 
             }
@@ -347,6 +355,8 @@ public class ctr_master {
 
     }
 
+    
+
     @PostMapping("/savePO")
     public ResponseEntity<?> savePO(@RequestParam("file") MultipartFile file, @RequestParam String ponumber,
             @RequestParam String supplier_fid,
@@ -357,7 +367,10 @@ public class ctr_master {
             @RequestParam String amt,
             @RequestParam String qty, @RequestParam String note) {
         try {
-            byte[] attchment = file.getInputStream().readAllBytes();
+
+
+
+         byte[] attchment = file.getInputStream().readAllBytes();
             PurchaseOrder order = new PurchaseOrder();
             Suppiler suppiler = supplierRepo.findById(Integer.parseInt(supplier_fid)).orElseThrow();
             order.setSuppiler_fid(suppiler);
@@ -371,42 +384,55 @@ public class ctr_master {
             order.setFileName(file.getOriginalFilename());
             purchaseOrderRepo.save(order);
             var receiver = suppiler.getEmail();
-            var subject = "Purchase Order - [Your Company Name]";
+            var subject = "Purchase Order ";
             var filename = file.getOriginalFilename();
-            // StringBuilder body_Builder=new StringBuilder();
+            StringBuilder body_Builder=new StringBuilder();
+            SimpleDateFormat format=new SimpleDateFormat("dd/MM/yyyy");
 
-            // body_Builder.append("Dear "+suppiler.getName()+",\r\n" + //
-            // "\r\n" + //
-            // "I trust this email finds you well. We are excited to place a purchase order
-            // with your company for the following items:\r\n" + //
+            body_Builder.append("Dear "+suppiler.getName()+",\r\n" + //
+            "\r\n" + 
+            "I trust this email finds you well. We are excited to place a purchase order with your company for the following items:\r\n" + //
+"Total Estimated Purchase Order Quantity : "+order.getQuantity()+
+            "Total Estimated Purchase Order Cost: " + order.getAmount()+ //
+            "\r\n" + //
+            "Please find attached the detailed Purchase Order document containing specifications, terms, and conditions. Kindly review the document thoroughly, and confirm your acceptance at your earliest convenience.\r\n" + //
+            "\r\n" + //
+            "Attachment: [Attach the Purchase Order document]\r\n" + 
+            "\r\n" + 
+            "Delevery Note : "+order.getNotes()+
+            "\r\n" + //
 
-            // "Total Estimated Purchase Order Cost: [Sum of all estimated costs]\r\n" + //
-            // "\r\n" + //
-            // "Please find attached the detailed Purchase Order document containing
-            // specifications, terms, and conditions. Kindly review the document thoroughly,
-            // and confirm your acceptance at your earliest convenience.\r\n" + //
-            // "\r\n" + //
-            // "Attachment: [Attach the Purchase Order document]\r\n" + //
-            // "\r\n" + //
-            // "Delevery Note : "+order.getNotes()+
-            // "\r\n" + //
+            "Delivery Date : "+format.format(order.getDueDate())+"\r\n" + //
+            "Delivery Location: [Provide the delivery address]\r\n" + //
+            "Should there be any discrepancies or if you require further details, please do not hesitate to contact us promptly.\r\n" + //
+            "\r\n" + //
+            "Your swift attention to this matter is highly appreciated. We anticipate a successful collaboration and thank you for your cooperation.\r\n" + //
+            "\r\n" + //
+            "Best regards,\r\n" + //
+            "\r\n" + //
+            "[Your Full Name]\r\n" + //
+            "[Your Position]\r\n" + //
+            "[Your Company Name]\r\n" + //
+            "[Your Contact Information]");
+// body_Builder.append("<p>Dear "+suppiler.getName()+",\r\n </p>"+
+// "<p>I trust this email finds you well. We are delighted to inform you that we have decided to proceed with a purchase order from your esteemed company. The details are as follows:</p>"
+// +"<p><strong>Total Estimated Purchase Order Quantity:</strong> "+order.getQuantity()+"</p>"
+// +"<p><strong>Total Estimated Purchase Order Cost:</strong> "+order.getAmount()+"</p>"
+// +"<p>Please refer to the attached Purchase Order document for a comprehensive overview of the specifications, terms, and conditions associated with this order.</p>"
 
-            // "Delivery Date : "+order.getDueDate()+"\r\n" + //
-            // "Delivery Location: [Provide the delivery address]\r\n" + //
-            // "Should there be any discrepancies or if you require further details, please
-            // do not hesitate to contact us promptly.\r\n" + //
-            // "\r\n" + //
-            // "Your swift attention to this matter is highly appreciated. We anticipate a
-            // successful collaboration and thank you for your cooperation.\r\n" + //
-            // "\r\n" + //
-            // "Best regards,\r\n" + //
-            // "\r\n" + //
-            // "[Your Full Name]\r\n" + //
-            // "[Your Position]\r\n" + //
-            // "[Your Company Name]\r\n" + //
-            // "[Your Contact Information]");
-            var isSendmail = EmailHelper.sendMail(subject, "body_Builder".toString(), attchment, receiver, filename);
-            if (isSendmail)
+
+// +"<p><strong>Delivery Note:</strong> "+order.getNotes()+"</p>"
+// +"<p><strong>Delivery Date:</strong>"+order.getDueDate()+"</p>"
+// +"<p>We kindly request you to review the attached document thoroughly and confirm your acceptance at your earliest convenience.</p><p>Should there be any discrepancies or if you require further clarification on any aspect of the purchase order, please do not hesitate to reach out to us promptly. Your prompt attention to this matter is highly appreciated.</p><p>We look forward to a successful collaboration and express our gratitude for your cooperation in advance.</p><p><strong>Best regards,</strong></p><p>[Your Full Name]<br>[Your Position]<br>[Your Company Name]<br>[Your Contact Information]</p>");
+            EmailHelper emailHelper=new EmailHelper();
+           
+            //var isSendmail = emailHelper.sendMail(subject, "body_Builder".toString(), attchment, receiver, filename);
+            String result= emailService.sendMail(file, suppiler.getEmail(), null, subject, body_Builder.toString());
+
+
+            //public String sendMail(MultipartFile[] file, String to, String[] cc, String subject, String body) {
+
+            if (result.equals("mail send"))
                 return new ResponseEntity<>("Purchase Order Generated Succesfull...", HttpStatus.OK);
 
         } catch (Exception e) {

@@ -34,7 +34,8 @@ public class CustomUserDetails implements UserDetails{
     public String getUsername() {
          
         // throw new UnsupportedOperationException("Unimplemented method 'getUsername'");
-        return user.getName();
+        //return user.getName();
+        return user.getEmail();
     }
 
     @Override

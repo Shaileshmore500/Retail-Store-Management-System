@@ -2,6 +2,8 @@ package com.sbs.SmartBillingSystem.SecurityConfiguration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
@@ -24,6 +26,8 @@ public class MyConfigSetting extends WebSecurityConfiguration
     public static BCryptPasswordEncoder bCryptPasswordEncoder() {
     return new BCryptPasswordEncoder();
     }
+
+   
 
 //    @Bean
 //    public DaoAuthenticationProvider daoauthenticationProvider() {

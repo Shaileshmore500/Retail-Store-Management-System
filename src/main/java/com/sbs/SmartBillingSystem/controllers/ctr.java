@@ -1,9 +1,13 @@
 package com.sbs.SmartBillingSystem.controllers;
 
+import java.security.Principal;
 import java.util.*;
 
 import com.sbs.SmartBillingSystem.Entity.User;
 import com.sbs.SmartBillingSystem.Repository.*;
+
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,7 +49,11 @@ public class ctr {
     }
 
     @GetMapping("/")
-    public String home() {
+    public String home(Principal principal,HttpServletRequest request) {
+
+        var a= principal.getName();
+        request.getSession().removeAttribute("currentUser");
+        request.getSession().setAttribute("currentUser", userRepo.getUserByUserName(a));
         return "home";
     }
 

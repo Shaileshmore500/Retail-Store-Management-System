@@ -265,7 +265,7 @@ i.fa-2xl:hover {
 i.fa-xl:hover {
   font-size: 1.7rem; /* Increase the font size when hovering */
 }
-.loader2{
+.customloader{
   display: none;
   position: fixed;
   top: 0;

@@ -1,7 +1,7 @@
 
 function showToasty(icon, bgclass, message, stat) {
   debugger;
-  $(".loader").hide();
+  $(".customloader").hide();
 
   $("#toast").hide();
   $("#toast div i").remove();
@@ -129,7 +129,7 @@ $(document).ready(() => {
 
   // this function create object of table data  and send to server side
   $("#tbl_addProduct").click(() => {
-    $(".loader").show();
+    $(".customloader").show();
 
 
     if (!validPanel("pnl_challan") || !validateTable("tab_logic")) {
@@ -139,7 +139,7 @@ $(document).ready(() => {
         "Please Fix All Errors",
         "Error"
       );
-      $(".loader").hide();
+      $(".customloader").hide();
       return false;
     }
 
@@ -197,11 +197,11 @@ $(document).ready(() => {
         success: function (response) {
           // Handle the response from the server
           console.log("Data sent successfully:", response);
-          window.setTimeout(() => $(".loader").hide(), 2000);
+          window.setTimeout(() => $(".customloader").hide(), 2000);
         },
         error: function (error) {
           console.error("Error sending data:", error);
-          window.setTimeout(() => $(".loader").hide(), 2000);
+          window.setTimeout(() => $(".customloader").hide(), 2000);
         },
       });
     }
