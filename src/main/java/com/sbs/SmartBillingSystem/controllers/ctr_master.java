@@ -218,10 +218,12 @@ public class ctr_master {
     }
 
     @PostMapping("/master/savebrand")
-    public String saveBrand(@RequestParam String name, @RequestParam String code, Model model) {
+    public String saveBrand(@RequestParam String brand_pid, @RequestParam String name, @RequestParam String code, Model model) {
         Brand brand = new Brand();
         brand.setCode(code);
         brand.setName(name);
+        if(!brand_pid.isEmpty())
+        brand.setBrand_pid(Integer.parseInt(brand_pid));
         try {
             brandRepo.save(brand);
             model.addAttribute("sucmessage", "Brand Added...");
@@ -233,8 +235,10 @@ public class ctr_master {
             // model.addAttribute("data", brand);
 
         }
-
-        return "forms/Brand";
+        List<Brand> brands=brandRepo.findAll();
+        model.addAttribute("data", brands);
+        model.addAttribute("name", "brannd");
+         return "/Grid/gid1";
     }
 
     @PostMapping("/master/savesupplier")

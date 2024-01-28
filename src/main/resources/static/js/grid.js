@@ -1,88 +1,227 @@
-window.onload = function(){
-    debugger
-    //----- Insert 'ButtonGroup' between 'Record limit selector' and 'Search Bar' -----//
-    let buttonList = document.getElementById('tableButtonGroup');
-    let table_wrapper = document.getElementById('jsonTable_wrapper').children;
-    let table_entryLimit = table_wrapper[0].children[0];
-    table_entryLimit.after(buttonList);
+window.onload = function () {
+  debugger
+  //----- Insert 'ButtonGroup' between 'Record limit selector' and 'Search Bar' -----//
+  let buttonList = document.getElementById('tableButtonGroup');
+  let table_wrapper = document.getElementById('jsonTable_wrapper').children;
+  let table_entryLimit = table_wrapper[0].children[0];
+  table_entryLimit.after(buttonList);
 
-    //----- Adding View and Edit buttons to DataTable -----//
-    let tableHead = document.getElementById('jsonTable').children[0];
-    let tableHeadRow = tableHead.children[1];
-    let actionColumn = document.createElement('th');
-    actionColumn.innerText = "Action";
-    tableHeadRow.prepend(actionColumn);
-    //--Selecting rows from table body
-    let tableBody = document.getElementById('jsonTable').children[1];
-    let tableBodyRows = tableBody.children;
+  //----- Adding View and Edit buttons to DataTable -----//
+  let tableHead = document.getElementById('jsonTable').children[0];
+  let tableHeadRow = tableHead.children[1];
+  let actionColumn = document.createElement('th');
+  actionColumn.innerText = "Action";
+  tableHeadRow.prepend(actionColumn);
+  //--Selecting rows from table body
+  let tableBody = document.getElementById('jsonTable').children[1];
+  let tableBodyRows = tableBody.children;
 
-    //----- Adding Checkbox column to DataTable
-    // let checkboxColumn = document.createElement('th');
-    // let headerCheckbox = document.createElement('input');
-    // headerCheckbox.type = "checkbox";
-    // console.log(headerCheckbox);
-    //checkboxColumn.append(headerCheckbox);
-   // tableHeadRow.prepend(checkboxColumn);
+  //----- Adding Checkbox column to DataTable
+  // let checkboxColumn = document.createElement('th');
+  // let headerCheckbox = document.createElement('input');
+  // headerCheckbox.type = "checkbox";
+  // console.log(headerCheckbox);
+  //checkboxColumn.append(headerCheckbox);
+  // tableHeadRow.prepend(checkboxColumn);
 
-    for(let loop = 0; loop < tableBodyRows.length; loop++){
-      //-----
-      let multiButtonColumn = document.createElement('td');
-      multiButtonColumn.innerHTML = '<a  class="btn btn-primary m-1 view"><i class="btn-view"></i></a><a  class="btn btn-primary m-1 edit"><i class="btn-edit "></i></a><a  class="btn btn-danger  m-1 delete"><i class="btn-delete"></i> </a>';
+  for (let loop = 0; loop < tableBodyRows.length; loop++) {
+    //-----
+    let multiButtonColumn = document.createElement('td');
+    multiButtonColumn.innerHTML = '<a  class="btn btn-primary m-1 view"><i class="btn-view"></i></a><a  class="btn btn-primary m-1 edit"><i class="btn-edit "></i></a><a  class="btn btn-danger  m-1 delete"><i class="btn-delete"></i> </a>';
 
-      let checkboxBodyColumn = document.createElement('td');
-      let bodyCheckbox = document.createElement('input');
-      bodyCheckbox.type = "checkbox";
-      checkboxBodyColumn.append(bodyCheckbox);
+    let checkboxBodyColumn = document.createElement('td');
+    let bodyCheckbox = document.createElement('input');
+    bodyCheckbox.type = "checkbox";
+    checkboxBodyColumn.append(bodyCheckbox);
 
-      tableBodyRows[loop].prepend(multiButtonColumn);
+    tableBodyRows[loop].prepend(multiButtonColumn);
     // tableBodyRows[loop].prepend(checkboxBodyColumn);
+  }
+
+  //----- Search bar styling -----//
+  let searchIcon = document.createElement('i');
+  searchIcon.className = "icon-search";
+  let filterLabel = document.getElementById('jsonTable_filter').children[0]
+  filterLabel.prepend(searchIcon);
+}
+
+function jsonToDataTable(jsonData) {
+  // Extract column headers from the first object in the array
+  var columns = Object.keys(jsonData[0]);
+
+  // Initialize DataTable
+  var table = $('#jsonTable').DataTable({
+    data: jsonData,
+    columns: columns.map(function (column) {
+      return { data: column };
+    }),
+    paging: true, // Enable pagination
+    searching: true, // Enable search box
+    order: [] // Disable initial sorting
+  });
+
+  // Add column headers to the table
+  $('#jsonTable thead').append('<tr>' +
+    columns.map(function (column) {
+      return '<th>' + column + '</th>';
+    }).join('') +
+    '</tr>');
+}
+
+function displayStatus(status)
+{
+  if (status != null && status != '') {
+      
+    if (status == "error") {
+         showToasty("<i class='fa-solid fa-square-check fa-shake fa-xl text-white'>&nbsp;&nbsp</i>", "bg-success", "Success...", "Success")
+
+
+     }else if (status == "sucess") {
+         showToasty("<i class='fa-solid fa-triangle-exclamation fa-shake fa-xl text-white'>&nbsp;&nbsp;</i>", "bg-danger", "Something Went Wrong! Pleae Try Again Later...", "Error")
+
+     }
+ }
+}
+
+$(document).ready(() => {
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+ 
+  $(".edit,.view,.add").on('click', function () {
+
+    debugger
+    let currentelement = this;
+    $("#save").show();
+
+    if (!currentelement.classList.contains("add")) {
+      let urlParams = new URLSearchParams(window.location.search);
+
+
+      $.ajax({
+        type: 'GET',
+        url: `/getFormData?FormName=${new URLSearchParams(window.location.search).get("form")}&Pid=${$(currentelement).closest('tr').find('td:nth-child(2)').text()}`,
+        success: function (data) {
+          console.log(data);
+          debugger;
+          if (data != null) {
+            for (let key in data) {
+              if (data.hasOwnProperty(key)) {
+                $(`[name=${key}]`).val(data[key]);
+              }
+            }
+            if (currentelement.classList.contains("view"))
+              $("#save").hide()
+            $("#myModal").css("display", "block");
+
+
+
+          }
+
+
+
+
+        }, error: function (err) {
+          alert(2)
+          console.log(err)
+        }
+
+      });
+
+
+
+    } else {
+      $("#myModal").css("display", "block");
     }
 
-    //----- Search bar styling -----//
-    let searchIcon = document.createElement('i');
-    searchIcon.className = "icon-search";
-    let filterLabel = document.getElementById('jsonTable_filter').children[0]
-    filterLabel.prepend(searchIcon);
-  }
-
-  function jsonToDataTable(jsonData) {
-    // Extract column headers from the first object in the array
-    var columns = Object.keys(jsonData[0]);
-
-    // Initialize DataTable
-    var table = $('#jsonTable').DataTable({
-      data: jsonData,
-      columns: columns.map(function(column) {
-        return { data: column };
-      }),
-      paging: true, // Enable pagination
-      searching: true, // Enable search box
-      order: [] // Disable initial sorting
-    });
-
-    // Add column headers to the table
-    $('#jsonTable thead').append('<tr>' +
-      columns.map(function(column) {
-        return '<th>' + column + '</th>';
-      }).join('') +
-      '</tr>');
-  }
-
-
-  $(document).ready(()=>{
-$(".edit").click(()=>{
-  
-  $("#myModal").css("display","block");
-})
-$("#closeModalBtn").click(()=>{
-  
-  $("#myModal").css("display","none");
-})
-$(window).click(function(e){
-debugger
-  //if(e.target==$("#myModal"))
-  //$("#myModal").css("display","none");
-
-})
 
   })
+  $("#closeModalBtn").click(() => {
+
+    $("#myModal").css("display", "none");
+  })
+  $(window).click(function (e) {
+    //debugger
+    // if(e.target==$("#myModal"))
+    // $("#myModal").css("display","none");
+
+  })
+  $(".btn-form-cancle").click(() => {
+    $("input , textarea").val("");
+    $("#myModal").css("display", "none")
+
+  });
+
+  $("#save12").click(() => {
+    debugger;
+    var inputval = $("form").find('[name]');
+    // var details    ={};
+    var paramurl = "";
+    inputval.each(function () {
+      var elem = $(this);
+      // details[elem.attr("name")] = elem.val();
+      paramurl += `${elem.attr("name")}=${elem.val()}&`
+    });
+
+
+ 
+  
+
+
+    $.ajax({
+      type: "POST",
+      url: `/savebrand`,
+      // ?${paramurl}`,
+      data: {
+        brand_pid: '',
+        name: 'yourNameValue',
+        code: 'yourCodeValue'
+        // Add other parameters as needed
+    },
+      success: function (data) {
+        console.log(data);
+        alert(1)
+
+      }, error: function (err) {
+        alert(2)
+        console.log(err)
+      }
+
+
+    });
+  })
+
+
+  // $("form").submit((e) => {
+  //   debugger;
+  //   e.preventDefault();
+  //   $.ajax({
+  //     type: 'GET',
+  //     url: "/getFormData?FormName=category&Pid=123",
+  //     success: function (data) {
+  //       console.log(data);
+  //       alert(1)
+
+  //     }, error: function (err) {
+  //       alert(2)
+  //       console.log(err)
+  //     }
+
+  //   });
+
+
+  // });
+
+})

@@ -35,6 +35,11 @@ public class ctr {
     ChallanRepo challanRepo;
     @Autowired
     UserRepo userRepo;
+    @Autowired
+    ProductRepo productRepo;
+    @Autowired
+    CustomerRepo customerRepo;
+
 
     @GetMapping("/home")
     public String homepage() {
@@ -161,11 +166,37 @@ public class ctr {
         return "forms/searchProduct";
     }
 
-    @GetMapping("/grid")
-    public String grid1(Model model) {
+    @GetMapping("/view")
+    public String grid1(@RequestParam String form, Model model) {
 
+        if(form.toLowerCase()=="user")
+        {
         List<User> users = userRepo.findAll();
-        model.addAttribute("user", users);
+        model.addAttribute("data", users);
+        }
+        else if (form.toLowerCase().equals("category")) {
+            List<Category> categories=categoryRepo.findAll();
+            model.addAttribute("data", categories);
+            
+        }
+        else if (form.toLowerCase().equals("brand")) {
+            List<Brand> brands=brandRepo.findAll();
+            model.addAttribute("data", brands);
+
+        }
+        else if (form.toLowerCase().equals("product")) {
+            model.addAttribute("data", productRepo.findAll());
+        }
+        else if (form.toLowerCase().equals("customer")) {
+            model.addAttribute("data", customerRepo.findAll());
+        }
+        else if (form.toLowerCase().equals("catrgory")) {
+            model.addAttribute("data",categoryRepo.findAll());
+        }
+        else if (form.toLowerCase().equals("supplier")) {
+            model.addAttribute("data",supplierRepo.findAll());
+        }
+        model.addAttribute("name", form);
 
         return "/Grid/gid1";
     }

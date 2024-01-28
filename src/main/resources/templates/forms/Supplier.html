@@ -12,11 +12,11 @@ th:replace="~{navbar::layout(~{::section})}"
   </head>
   <body>
     
-    <section class="html__section">
+    <section class="html__section" th:fragment="form_supplier">
       <div class="login-box">
         <h2>Supplier</h2>
         <form action="#" th:action="@{/master/savesupplier}" method="POST" id="form">
-          <div
+          <!-- <div
             th:if="${errormessage}"
             th:text="${errormessage}"
             id="errormessage"
@@ -27,72 +27,88 @@ th:replace="~{navbar::layout(~{::section})}"
             th:if="${sucmessage}"
             th:text="${sucmessage}"
             class="alert alert-success"
-          ></div>
+          ></div> -->
 
           <div class="user-box">
             <input
               type="text"
               name="code"
-              th:value="${data!=null? data.code:''}"
+             
               required=""
             />
+            <!-- th:value="${data!=null? data.code:''}" -->
             <label>Supplier Code</label>
           </div>
           <div class="user-box">
             <input
               type="text"
               name="name"
-              th:value="${data!=null? data.name:''}"
+              
               required=""
             />
+            <!-- th:value="${data!=null? data.name:''}" -->
             <label>Supplier Name</label>
           </div>
           <div class="user-box">
             <input
                     type="email"
                     name="email"
-                    th:value="${data!=null? data.email:''}"
+                    
                     required=""
             />
+            <!-- th:value="${data!=null? data.email:''}" -->
             <label>Supplier Email</label>
           </div>
           <div class="user-box">
             <input
               type="text"
               name="mobile_no"
-              th:value="${data!=null? data.mobile_no:''}"
+             
               required=""
             />
+            <!-- th:value="${data!=null? data.mobile_no:''}" -->
             <label>Mobile Number</label>
           </div>
           <div class="user-box">
             <input
               type="text"
-              name="GST_no"
-              th:value="${data!=null? data.GST_no:''}"
+              name="gst_no"
               required=""
             />
+              <!-- th:value="${data!=null? data.GST_no:''}" -->
+
             <label>GST NO</label>
           </div>
           <div class="user-box">
             <input
               type="text"
               name="address"
-              th:value="${data!=null? data.address:''}"
               required=""
             />
+              <!-- th:value="${data!=null? data.address:''}" -->
+
             <label>Address</label>
           </div>
           <!-- <a href="#" th:href="@{/savecat?name=marur&code=dalvi}" style="border: 1px solid;"> -->
-          <button type="submit" style="border-radius: 25px" class="btn-form">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            Save
-          </button>
+         
           <!-- </a> -->
-        
+          <div class="button-container">
+            <button type="submit" id="save" style="border-radius: 25px" class="btn-form">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              Save
+            </button>
+            <button type="cancle" id="cancle" style="border-radius: 25px" class="btn-form-cancle btn-danger">
+      
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              Cancle
+            </button>
+          </div>
         </form>
       </div>
     

@@ -32,7 +32,7 @@
 
 <body>
 
-  <section class="html__section">
+  <section class="html__section" th:fragment="form_category">
     <div class="login-box">
       <h2>Category</h2>
       <form action="#" th:action="@{/master/savecat}" method="POST" id="form">
@@ -51,21 +51,33 @@
           <label>Category Name</label>
         </div>
         <!-- <a href="#" th:href="@{/savecat?name=marur&code=dalvi}" style="border: 1px solid;"> -->
-        <button type="submit" id="save" style="border-radius: 25px" class="btn-form">
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          Save
-        </button>
-        <!-- </a> -->
+    
+    <!-- <a href="#" th:href="@{/savecat?name=marur&code=dalvi}" style="border: 1px solid;"> -->
+    <div class="button-container">
+      <button type="submit" id="save" style="border-radius: 25px" class="btn-form">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Save
+      </button>
+      <button type="cancle" id="cancle" style="border-radius: 25px" class="btn-form-cancle btn-danger">
 
-        <div th:if="${errormessage}" th:text="${errormessage}" id="errormessage" class="alert alert-danger"
-          style="display: none;"></div>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Cancle
+      </button>
+    </div></div>
+    <!-- </a> -->
 
-        <div th:if="${sucmessage}" id="sucmessage" th:text="${sucmessage}" class="alert alert-success"
-          style="display: none;"></div>
-      </form>
+    <div th:if="${errormessage}" th:text="${errormessage}" id="errormessage" class="alert alert-danger"
+      style="display: none;"></div>
+
+    <div th:if="${sucmessage}" id="sucmessage" th:text="${sucmessage}" class="alert alert-success"
+      style="display: none;"></div>
+    </form>
 
 
     </div>
@@ -76,10 +88,10 @@
       $(document).ready(() => {
 
         debugger;
-// $("#save").click(()=>{
-//   debugger;
-//   $("form").submit();
-// })
+        // $("#save").click(()=>{
+        //   debugger;
+        //   $("form").submit();
+        // })
 
 
         $("#master .fa-caret-down").toggleClass("tarnsform");
@@ -90,11 +102,11 @@
         {
           if ($("#errormessage").text() != null && $("#errormessage").text() != '') {
             showToasty("<i class='fa-solid fa-triangle-exclamation fa-shake fa-xl text-white'>&nbsp;&nbsp;</i>", "bg-danger", $("#errormessage").text(), "Error")
-           
+
           }
           else if ($("#sucmessage").text() != null && $("#sucmessage").text() != '') {
             showToasty("<i class='fa-solid fa-square-check fa-shake fa-xl text-white'>&nbsp;&nbsp</i>", "bg-success", $("#sucmessage").text(), "Success")
-            
+
 
           }
 

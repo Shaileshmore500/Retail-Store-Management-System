@@ -33,7 +33,7 @@
         crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 
-
+    <script th:src=@{/js/script.js}></script>
     <!-- <link rel="stylesheet" th:href="@{/css/nav.css}" />
     <link rel="stylesheet" th:href="@{/css/form.css}" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -165,13 +165,13 @@
                             </a>
                             <div class="collapse" id="Create">
                                 <ul class="nav nav-collapse">
-                                    <li><a th:href="@{/brand}"><i class="fa-solid fa-layer-group"></i>Brand</a></li>
-                                    <li><a th:href="@{/category}"><i class="fa-solid fa-layer-group"></i>Category </a>
+                                    <li><a th:href="@{/view?form=brand}"><i class="fa-solid fa-layer-group"></i>Brand</a></li>
+                                    <li><a th:href="@{/view?form=category}"><i class="fa-solid fa-layer-group"></i>Category </a>
                                     </li>
-                                    <li><a th:href="@{/product}"><i class="fa-brands fa-product-hunt"></i>Product </a>
+                                    <li><a th:href="@{/view?form=product}"><i class="fa-brands fa-product-hunt"></i>Product </a>
                                     </li>
-                                    <li><a th:href="@{/customer}"><i class="fa-solid fa-user-tie"></i>Customer </a></li>
-                                    <li><a th:href="@{/supplier}"><i class="fa-solid fa-industry"></i>Supplier </a></li>
+                                    <li><a th:href="@{/view?form=customer}"><i class="fa-solid fa-user-tie"></i>Customer </a></li>
+                                    <li><a th:href="@{/view?form=supplier}"><i class="fa-solid fa-industry"></i>Supplier </a></li>
 
                                 </ul>
                             </div>
@@ -433,7 +433,7 @@
     <script th:src=@{js/navbarjs/jquery.scrollbar.min.js}></script>
     <script th:src=@{js/navbarjs/ready.min.js}></script>
     <script th:src=@{js/navbarjs/bootstrap.min.js}></script>
-    <script th:src=@{/js/script.js}></script>
+
     <script th:src=@{/js/nav.js}></script>
     <!-- </form> -->
 </body>

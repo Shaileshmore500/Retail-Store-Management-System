@@ -12,28 +12,17 @@ th:replace="~{navbar::layout(~{::section})}"
   </head>
   <body>
     
-    <section class="html__section">
+    <section class="html__section" th:fragment="form_customer">
       <div class="login-box">
-        <h2>Supplier</h2>
+        <h2>Customer</h2>
         <form action="#" th:action="@{/master/savecustomer}" method="POST" id="form">
-          <div
-            th:if="${errormessage}"
-            th:text="${errormessage}"
-            id="errormessage"
-            class="alert alert-danger"
-          ></div>
-
-          <div
-            th:if="${sucmessage}"
-            th:text="${sucmessage}"
-            class="alert alert-success"
-          ></div>
+          
 
           <div class="user-box">
             <input
               type="text"
               name="name"
-              th:value="${data!=null? data.name:''}"
+              
               required=""
             />
             <label>Name</label>
@@ -42,7 +31,7 @@ th:replace="~{navbar::layout(~{::section})}"
             <input
               type="text"
               name="email"
-              th:value="${data!=null? data.name:''}"
+              
               required=""
             />
             <label>Email</label>
@@ -51,7 +40,7 @@ th:replace="~{navbar::layout(~{::section})}"
             <input
               type="text"
               name="mobile_no"
-              th:value="${data!=null? data.mobile_no:''}"
+             
               required=""
             />
             <label>Mobile Number</label>
@@ -60,7 +49,7 @@ th:replace="~{navbar::layout(~{::section})}"
             <input
               type="Date"
               name="dob"
-              th:value="${data!=null? data.GST_no:''}"
+              
               required=""
             />
             <label>Date Of Birth</label>
@@ -69,19 +58,29 @@ th:replace="~{navbar::layout(~{::section})}"
             <input
               type="text"
               name="address"
-              th:value="${data!=null? data.address:''}"
+              
               required=""
             />
             <label>Address</label>
           </div>
           <!-- <a href="#" th:href="@{/savecat?name=marur&code=dalvi}" style="border: 1px solid;"> -->
-          <button type="submit" style="border-radius: 25px" class="btn-form">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            Save
-          </button>
+            <div class="button-container">
+              <button type="submit" id="save" style="border-radius: 25px" class="btn-form">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                Save
+              </button>
+              <button type="cancle" id="cancle" style="border-radius: 25px" class="btn-form-cancle btn-danger">
+        
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                Cancle
+              </button>
+            </div>
           <!-- </a> -->
         
         </form>
