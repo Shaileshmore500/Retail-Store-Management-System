@@ -196,6 +196,9 @@ public class ctr {
         else if (form.toLowerCase().equals("supplier")) {
             model.addAttribute("data",supplierRepo.findAll());
         }
+        else if (form.toLowerCase().equals("user")) {
+            model.addAttribute("data",userRepo.findAll());
+        }
         model.addAttribute("name", form);
 
         return "/Grid/gid1";

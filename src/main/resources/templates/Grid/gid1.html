@@ -119,6 +119,10 @@
 
                     <div th:replace="forms/Customer :: form_customer"></div>
                 </div>
+                <div th:if="${name=='user'}">
+
+                    <div th:replace="register :: form_user"></div>
+                </div>
 
                 <!-- <div class="login-box">
                     <h2>Category</h2>
@@ -170,7 +174,11 @@
         <!-- <script th:src=@{/js/script.js}></script> -->
         <script th:inline="javascript">
 debugger;
-displayStatus(/*[[${status}]]*/'')
+$("#customloader").show();
+
+$(document).ready(() => {
+displayStatus(/*[[${status}]]*/'',/*[[${mode}]]*/'')
+});
             var username = /*[[${data}]]*/ '';
             var jsonData = username;
 
@@ -247,6 +255,7 @@ displayStatus(/*[[${status}]]*/'')
             //   let filterLabel = document.getElementById('jsonTable_filter').children[0]
             //   filterLabel.prepend(searchIcon);
             // }
+        
         </script>
 
     </section>

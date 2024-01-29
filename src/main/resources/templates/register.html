@@ -14,11 +14,11 @@ th:replace="~{navbar::layout(~{::section})}"
   </head>
   <body>
     
-    <section class="html__section">
+    <section class="html__section" th:fragment="form_user">
       <div class="login-box">
-        <h2>Register Here !!</h2>
-        <form action="#" th:action="@{/master/registerUser}" method="POST" id="form" enctype="multipart/form-data">
-          <div
+        <h2>User</h2>
+        <form action="#" th:action="@{master//registerUser}" method="POST" id="form" enctype="multipart/form-data">
+          <!-- <div
             th:if="${errormessage}"
             th:text="${errormessage}"
             id="errormessage"
@@ -29,8 +29,10 @@ th:replace="~{navbar::layout(~{::section})}"
             th:if="${sucmessage}"
             th:text="${sucmessage}"
             class="alert alert-success"
-          ></div>
-
+          ></div> -->
+          <div class="user-box">
+            <input type="hidden" name="id"  />
+          </div>
           <div class="user-box">
             <input
               type="text"
@@ -114,15 +116,23 @@ th:replace="~{navbar::layout(~{::section})}"
             />
             <label>Image</label>
           </div>
-          <!-- <a href="#" th:href="@{/savecat?name=marur&code=dalvi}" style="border: 1px solid;"> -->
-          <button type="submit" style="border-radius: 25px" class="btn-form">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            Save
-          </button>
-          <!-- </a> -->
+          <div class="button-container">
+            <button type="submit" id="save" style="border-radius: 25px" class="btn-form">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              Save
+            </button>
+            <button type="cancle" id="cancle" style="border-radius: 25px" class="btn-form-cancle btn-danger">
+      
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              Cancle
+            </button>
+          </div>
         
         </form>
       </div>

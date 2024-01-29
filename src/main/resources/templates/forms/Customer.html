@@ -15,9 +15,11 @@ th:replace="~{navbar::layout(~{::section})}"
     <section class="html__section" th:fragment="form_customer">
       <div class="login-box">
         <h2>Customer</h2>
-        <form action="#" th:action="@{/master/savecustomer}" method="POST" id="form">
+        <form action="#" th:action="@{/savecustomer}" method="POST" id="form">
           
-
+          <div class="user-box">
+            <input type="hidden" name="customer_pid" />
+          </div>
           <div class="user-box">
             <input
               type="text"

@@ -63,6 +63,9 @@ public class GridRestCtr {
         } else if (FormName.toLowerCase().equals("supplier")) {
             return new ResponseEntity(supplierRepo.findById(Integer.parseInt(Pid)), HttpStatus.OK);
         }
+        else if (FormName.toLowerCase().equals("user")) {
+            return new ResponseEntity(userRepo.findById(Integer.parseInt(Pid)), HttpStatus.OK);
+        }
 
         return null;
     }

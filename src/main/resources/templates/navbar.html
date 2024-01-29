@@ -103,8 +103,7 @@
                             </tr>
                             <tr>
                                 <td align="center">
-                                    <img id="ctl00_ImgUser2" class="" 
-                                    th:src="@{${session.currentUser.getImageUrl()}}"
+                                    <img id="ctl00_ImgUser2" class="" th:src="@{${session.currentUser.getImageUrl()}}"
                                         style="width:80px;border-width:0px;border-radius: 15px" />
                                     <!-- src="https://icons.iconarchive.com/icons/igh0zt/ios7-style-metro-ui/256/MetroUI-Apps-Mac-App-Store-icon.png"  -->
                                 </td>
@@ -123,10 +122,10 @@
                             </tr>
                             <tr>
                                 <td align="center" style="color: #001940; font-size: 12px;">
-                                
-                                ( <span id="ctl00_LoginName1" style="font-weight:bold;"
-                                    th:text="${session.currentUser.getEmail()}"></span> )
-                                    </td>
+
+                                    ( <span id="ctl00_LoginName1" style="font-weight:bold;"
+                                        th:text="${session.currentUser.getEmail()}"></span> )
+                                </td>
                             </tr>
                             <tr>
                                 <td height="5"></td>
@@ -143,8 +142,7 @@
                             </tr>
                             <tr>
                                 <td align="center" style="color: #001940;">
-                                    <a id="ctl00_LoginStatus2" title="Log Out"
-                                        th:href="@{/logout}"
+                                    <a id="ctl00_LoginStatus2" title="Log Out" th:href="@{/logout}"
                                         style="color:#001940;font-weight:bold;">Logout</a>
                                 </td>
                             </tr>
@@ -165,13 +163,20 @@
                             </a>
                             <div class="collapse" id="Create">
                                 <ul class="nav nav-collapse">
-                                    <li><a th:href="@{/view?form=brand}"><i class="fa-solid fa-layer-group"></i>Brand</a></li>
-                                    <li><a th:href="@{/view?form=category}"><i class="fa-solid fa-layer-group"></i>Category </a>
+                                    <li><a th:href="@{/view?form=brand}"><i
+                                                class="fa-solid fa-layer-group"></i>Brand</a></li>
+                                    <li><a th:href="@{/view?form=category}"><i
+                                                class="fa-solid fa-layer-group"></i>Category </a>
                                     </li>
-                                    <li><a th:href="@{/view?form=product}"><i class="fa-brands fa-product-hunt"></i>Product </a>
+                                    <li><a th:href="@{/view?form=product}"><i
+                                                class="fa-brands fa-product-hunt"></i>Product </a>
                                     </li>
-                                    <li><a th:href="@{/view?form=customer}"><i class="fa-solid fa-user-tie"></i>Customer </a></li>
-                                    <li><a th:href="@{/view?form=supplier}"><i class="fa-solid fa-industry"></i>Supplier </a></li>
+                                    <li><a th:href="@{/view?form=customer}"><i class="fa-solid fa-user-tie"></i>Customer
+                                        </a></li>
+                                    <li><a th:href="@{/view?form=supplier}"><i class="fa-solid fa-industry"></i>Supplier
+                                        </a></li>
+                                    <li><a th:href="@{/view?form=user}"><i class="fa-solid fa-industry"></i>User
+                                    </a></li>
 
                                 </ul>
                             </div>
@@ -360,27 +365,25 @@
 
 
                 </section>
-                
-<!-- toast -->
 
-  <div class="toast align-items-center text-white   border-0" role="alert" aria-live="assertive"  aria-atomic="true" id="toast">
-    <div class="toast-header" id="toast-header">
-      <!-- <img src="..." class="rounded mr-2" alt="..."> -->
-      
-      <strong class="mr-auto text-white"></strong>
-      <small></small>
-      <button id="btn_toastclose" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="toast-body text-dark">
-      Hello, world! This is a toast message.
-    </div>
-  </div>
-  <!-- ------------------------ -->
+                <!-- toast -->
 
- 
+                <div class="toast align-items-center text-white   border-0" role="alert" aria-live="assertive"
+                    aria-atomic="true" id="toast" style="z-index: 5;">
+                    <div class="toast-header" id="toast-header">
+                        <!-- <img src="..." class="rounded mr-2" alt="..."> -->
 
+                        <strong class="mr-auto text-white"></strong>
+                        <small></small>
+                        <button id="btn_toastclose" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="toast-body text-dark">
+                        Hello, world! This is a toast message.
+                    </div>
+                </div>
+                <!-- ------------------------ -->
 
 
 
@@ -388,37 +391,40 @@
 
 
 
-   <!-- loader -->
-   <div class="customloader">
-    <div style="top: 25vw;
-    position: fixed;left: 40vw;">
-    <div class="spinner-grow text-primary" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-    <div class="spinner-grow text-secondary" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-    <div class="spinner-grow text-success" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-    <div class="spinner-grow text-danger" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-    <div class="spinner-grow text-warning" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-    <div class="spinner-grow text-info" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-    <div class="spinner-grow text-light" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-    <div class="spinner-grow text-dark" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-    </div>
-  </div>
-  <!--  -->
+
+
+
+                <!-- loader -->
+                <div class="customloader">
+                    <div style="top: 25vw;
+                        position: fixed;left: 40vw;">
+                        <div class="spinner-grow text-primary" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-secondary" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-success" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-danger" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-warning" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-info" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-light" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-dark" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                <!--  -->
 
             </div>
         </div>

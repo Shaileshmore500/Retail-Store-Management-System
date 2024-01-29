@@ -68,38 +68,40 @@ function jsonToDataTable(jsonData) {
     '</tr>');
 }
 
-function displayStatus(status)
-{
+function displayStatus(status, mode) {
+
   if (status != null && status != '') {
-      
-    if (status == "error") {
-         showToasty("<i class='fa-solid fa-square-check fa-shake fa-xl text-white'>&nbsp;&nbsp</i>", "bg-success", "Success...", "Success")
 
+    if (status == "sucess") {
+      if (mode === "add")
+        var msg = "Data added successfully..."
+      else if (mode === "edit")
+        msg = "Data edited successfully..."
+      else
+        msg = "Success..."
+      //  showToasty("<i class='fa-solid fa-square-check fa-shake fa-xl text-white'>&nbsp;&nbsp</i>", "bg-success", "Success...", "Success")       
+      showToasty(
+        "<i class='fa-solid fa-square-check fa-shake fa-xl text-white'>&nbsp;&nbsp</i>",
+        "bg-success",
+        msg,
+        "Success"
+      );
 
-     }else if (status == "sucess") {
-         showToasty("<i class='fa-solid fa-triangle-exclamation fa-shake fa-xl text-white'>&nbsp;&nbsp;</i>", "bg-danger", "Something Went Wrong! Pleae Try Again Later...", "Error")
+    } else if (status == "error") {
+      //  showToasty("<i class='fa-solid fa-triangle-exclamation fa-shake fa-xl text-white'>&nbsp;&nbsp;</i>", "bg-danger", "Something Went Wrong! Pleae Try Again Later...", "Error")
 
-     }
- }
+      showToasty(
+        "<i class='fa-solid fa-triangle-exclamation fa-shake fa-xl text-white'>&nbsp;&nbsp;</i>",
+        "bg-danger",
+        "Something Went Wrong! Pleae Try Again Later...",
+        "Error"
+      );
+    }
+  }
 }
 
 $(document).ready(() => {
 
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
- 
   $(".edit,.view,.add").on('click', function () {
 
     debugger
@@ -176,8 +178,8 @@ $(document).ready(() => {
     });
 
 
- 
-  
+
+
 
 
     $.ajax({
@@ -189,7 +191,7 @@ $(document).ready(() => {
         name: 'yourNameValue',
         code: 'yourCodeValue'
         // Add other parameters as needed
-    },
+      },
       success: function (data) {
         console.log(data);
         alert(1)
