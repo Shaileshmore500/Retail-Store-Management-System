@@ -23,7 +23,6 @@ public class SecurtyConfig {
                 .requestMatchers("/home")
                 .hasRole("ADMIN")
                 .requestMatchers("/login", "/signup", "/css/nav.css", "/css/form.css", "/master/registerUser")
-
                 .permitAll()
                 .anyRequest()
                 .authenticated()
