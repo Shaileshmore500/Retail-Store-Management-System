@@ -5,13 +5,14 @@ import jakarta.persistence.*;
 @Entity
 public class Suppiler {
 	@Id
+	@GeneratedValue
 	private int supplier_pid;
 	String code;
 	private String name;
 	private  String email;
 	private String mobile_no;
 	private String address;
-	private String GST_no;
+	private String gst_no;
 
 	public String getEmail() {
 		return email;
@@ -32,22 +33,14 @@ public class Suppiler {
 	}
 
 	public String getGST_no() {
-		return GST_no;
+		return gst_no;
 	}
 
-	public void setGST_no(String gST_no) {
-		GST_no = gST_no;
+	public void setGST_no(String gst_no) {
+		this.gst_no = gst_no;
 	}
 
-	public Suppiler(int supplier_pid, String code, String name, String mobile_no, String address, String gST_no) {
-		super();
-		this.supplier_pid = supplier_pid;
-		this.code = code;
-		this.name = name;
-		this.mobile_no = mobile_no;
-		this.address = address;
-		GST_no = gST_no;
-	}
+
 
 	public int getSupplier_pid() {
 		return supplier_pid;

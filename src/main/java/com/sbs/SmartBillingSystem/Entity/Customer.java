@@ -1,12 +1,15 @@
 package com.sbs.SmartBillingSystem.Entity;
 
-import java.sql.Date;
+
+
+import java.util.Date;
 
 import jakarta.persistence.*;
 
 @Entity
 public class Customer {
 	@Id
+	@GeneratedValue
 	private int customer_pid;
 	private String name ;
 	private String email ;
@@ -34,8 +37,8 @@ public class Customer {
 		return dob;
 	}
 
-	public void setDob(Date dob) {
-		this.dob = dob;
+	public void setDob(java.util.Date date) {
+		this.dob = date;
 	}
 
 	public String getAddress() {

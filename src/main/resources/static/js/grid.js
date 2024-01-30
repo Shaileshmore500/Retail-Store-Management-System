@@ -77,6 +77,8 @@ function displayStatus(status, mode) {
         var msg = "Data added successfully..."
       else if (mode === "edit")
         msg = "Data edited successfully..."
+      else if(mode=="delete")
+      msg="Data deleted successfully..."
       else
         msg = "Success..."
       //  showToasty("<i class='fa-solid fa-square-check fa-shake fa-xl text-white'>&nbsp;&nbsp</i>", "bg-success", "Success...", "Success")       
@@ -102,13 +104,13 @@ function displayStatus(status, mode) {
 
 $(document).ready(() => {
 
-  $(".edit,.view,.add").on('click', function () {
+  $(".edit,.view,.add,.delete").on('click', function () {
 
     debugger
     let currentelement = this;
     $("#save").show();
 
-    if (!currentelement.classList.contains("add")) {
+    if (!currentelement.classList.contains("add") && !currentelement.classList.contains("delete")) {
       let urlParams = new URLSearchParams(window.location.search);
 
 
@@ -121,7 +123,22 @@ $(document).ready(() => {
           if (data != null) {
             for (let key in data) {
               if (data.hasOwnProperty(key)) {
+
+                if($(`[name=${key}]`).attr('type')=="Date")
+                {
+                  if(data[key]!=null && data[key] != "" )
+                  {
+                  var arr_date=data[key].split('-');
+                  $(`[name=${key}]`).val(`${arr_date[0]}-${arr_date[1]}-${arr_date[2].substring(0,2)}`);
+                  
+                  }
+
+
+
+
+                }else{
                 $(`[name=${key}]`).val(data[key]);
+                }
               }
             }
             if (currentelement.classList.contains("view"))
@@ -144,7 +161,25 @@ $(document).ready(() => {
 
 
 
-    } else {
+    }
+    else if (currentelement.classList.contains("delete"))
+    {
+
+      $.ajax({
+        type: 'GET',
+        url: `/deleteItem?form=${new URLSearchParams(window.location.search).get("form")}&id=${$(currentelement).closest('tr').find('td:nth-child(2)').text()}`        ,
+        success : function(){
+          displayStatus("success", "delete")
+          window.location.reload();
+        },
+        error : function(){
+          displayStatus("error", "delete")
+        }
+
+      });
+
+    }
+    else {
       $("#myModal").css("display", "block");
     }
 
@@ -166,44 +201,44 @@ $(document).ready(() => {
 
   });
 
-  $("#save12").click(() => {
-    debugger;
-    var inputval = $("form").find('[name]');
-    // var details    ={};
-    var paramurl = "";
-    inputval.each(function () {
-      var elem = $(this);
-      // details[elem.attr("name")] = elem.val();
-      paramurl += `${elem.attr("name")}=${elem.val()}&`
-    });
+  // $("#save12").click(() => {
+  //   debugger;
+  //   var inputval = $("form").find('[name]');
+  //   // var details    ={};
+  //   var paramurl = "";
+  //   inputval.each(function () {
+  //     var elem = $(this);
+  //     // details[elem.attr("name")] = elem.val();
+  //     paramurl += `${elem.attr("name")}=${elem.val()}&`
+  //   });
 
 
 
 
 
 
-    $.ajax({
-      type: "POST",
-      url: `/savebrand`,
-      // ?${paramurl}`,
-      data: {
-        brand_pid: '',
-        name: 'yourNameValue',
-        code: 'yourCodeValue'
-        // Add other parameters as needed
-      },
-      success: function (data) {
-        console.log(data);
-        alert(1)
+  //   $.ajax({
+  //     type: "POST",
+  //     url: `/savebrand`,
+  //     // ?${paramurl}`,
+  //     data: {
+  //       brand_pid: '',
+  //       name: 'yourNameValue',
+  //       code: 'yourCodeValue'
+  //       // Add other parameters as needed
+  //     },
+  //     success: function (data) {
+  //       console.log(data);
+  //       alert(1)
 
-      }, error: function (err) {
-        alert(2)
-        console.log(err)
-      }
+  //     }, error: function (err) {
+  //       alert(2)
+  //       console.log(err)
+  //     }
 
 
-    });
-  })
+  //   });
+  // })
 
 
   // $("form").submit((e) => {
