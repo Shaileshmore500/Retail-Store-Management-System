@@ -3,7 +3,7 @@ package com.sbs.SmartBillingSystem.controllers;
 import java.security.Principal;
 import java.util.*;
 
-import com.sbs.SmartBillingSystem.Entity.User;
+import com.sbs.SmartBillingSystem.Entity.*;
 import com.sbs.SmartBillingSystem.Repository.*;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,10 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
 
-import com.sbs.SmartBillingSystem.Entity.Brand;
-import com.sbs.SmartBillingSystem.Entity.Category;
-import com.sbs.SmartBillingSystem.Entity.Suppiler;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 
@@ -39,6 +37,7 @@ public class ctr {
     ProductRepo productRepo;
     @Autowired
     CustomerRepo customerRepo;
+    
 
 
     @GetMapping("/home")
@@ -117,17 +116,62 @@ public class ctr {
     // }
 
     @GetMapping("/product")
-    public String product(org.springframework.ui.Model model) {
+    public String product(
+             @RequestParam String pid,Model model) {
 
-        List<Category> categories = categoryRepo.findAll();
-        List<Brand> brands = brandRepo.findAll();
-        List<Suppiler> suppilers = supplierRepo.findAll();
-        model.addAttribute("categories", categories);
-        model.addAttribute("brands", brands);
-        model.addAttribute("suppliers", suppilers);
+        Challan challan=new Challan();
+        List<Category> categories=new ArrayList<>();
+        List<Brand> brands=new ArrayList<>();
+        List<Product> products = new ArrayList<>();
+        List<Suppiler> suppilers=new ArrayList<>();
+        try {
+             categories = categoryRepo.findAll();
+             brands = brandRepo.findAll();
+             suppilers = supplierRepo.findAll();
+            model.addAttribute("categories", categories);
+            model.addAttribute("brands", brands);
+            model.addAttribute("suppliers", suppilers);
 
+
+            if (!pid.isEmpty()) {
+                // Challan challan= challanRepo.findById(Integer.parseInt(pid)).orElseThrow();
+                challan = challanRepo.findById(Integer.parseInt(pid))
+                        .orElseThrow(() -> new NoSuchElementException("Challan not found with ID: " + pid));
+
+                if (challan.getSupplier_fid() != null)
+                    challan.set_supplier_fid(challan.getSupplier_fid().getSupplier_pid());
+
+                if (challan != null) {
+                    products = productRepo.findByChallan_fid(challan.getPartyChallan_pid());
+
+
+                }
+
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+
+
+        }
+        if(products.size()==0)
+        {
+            Product product=new Product();
+            product.setName("product 1");
+            products.add(product);
+        }
+            model.addAttribute("challan", challan);
+            model.addAttribute("products", products);
+//redirectAttributes.addFlashAttribute("challan", challan);
+//        redirectAttributes.addFlashAttribute("products", products);
+//        redirectAttributes.addFlashAttribute("categories", categories);
+//        redirectAttributes.addFlashAttribute("brands", brands);
+//        redirectAttributes.addFlashAttribute("suppliers", suppilers);
+        //return "redirect:/addproduct";
         return "forms/product";
     }
+
+
 
     @GetMapping("/brand")
     public String brand() {
@@ -199,7 +243,11 @@ public class ctr {
         else if (form.toLowerCase().equals("user")) {
             model.addAttribute("data",userRepo.findAll());
         }
-        model.addAttribute("name", form);
+        else if (form.toLowerCase().equals("challan")) {
+            model.addAttribute("data", challanRepo.findAll());
+            return "/Grid/gridChallan";
+        }
+        model.addAttribute("name", form);   
 
         return "/Grid/gid1";
     }

@@ -55,6 +55,8 @@ import org.springframework.web.multipart.MultipartFile;
 //=======
 import com.sbs.SmartBillingSystem.Helper.EmailHelper;
 
+import static org.springframework.http.ResponseEntity.notFound;
+
 @Controller
 // @RequestMapping("/master")
 public class ctr_master {
@@ -125,6 +127,9 @@ public class ctr_master {
     @PostMapping("/master/saveproduct")
     public ResponseEntity<String> saveProduct(@RequestBody DesObjChallanProduct desObjChallanProduct)
             throws ParseException {
+       try {
+
+
 
         DesObjChallan desObjChallan = desObjChallanProduct.getDesObjChallan();
         List<DesObjProduct> desObjProduct = desObjChallanProduct.getDesObjProduct();
@@ -136,11 +141,14 @@ public class ctr_master {
         Optional<Suppiler> supplierOptional = supplierRepo.findById(Integer.parseInt(desObjChallan.getSupplier_fid()));
         Suppiler suppiler = supplierOptional.orElseThrow(() -> new RuntimeException("Supplier not found"));
         challan.setSupplier_fid(suppiler);
-        challan.setAmount(desObjChallan.getAmount());
+        challan.setAmount(Float.parseFloat(desObjChallan.getAmount()));
         challan.setChallan_date(new SimpleDateFormat("yyyy-MM-dd").parse(desObjChallan.getChallan_date()));
         challan.setChallan_no(desObjChallan.getChallan_no());
         challan.setPurchase_date(new Date());
         challan.setQuantity(desObjChallan.getQuantity());
+
+        if(desObjChallan.getPartyChallan_pid()>=0)
+        challan.setPartyChallan_pid(desObjChallan.getPartyChallan_pid());
 
         Challan savedChallan = challanRepo.save(challan);
 
@@ -155,6 +163,9 @@ public class ctr_master {
             Optional<Brand> brandoptional = brandRepo.findById(objproduct.getBrand_fid());
             Brand brand = brandoptional.orElseThrow(() -> new RuntimeException("Brand not found"));
 
+           if(objproduct.getProduct_pid()>=0)
+           p.setProduct_pid(objproduct.getProduct_pid());
+           
             p.setName(objproduct.getName());
             p.setCode(objproduct.getCode());
             p.setCategory_fid(category);
@@ -214,7 +225,11 @@ public class ctr_master {
         // System.out.println("in product save");
         // productRepo.save(lstProduct);
         return ResponseEntity.ok("ok");
-
+       }catch (Exception e)
+       {
+           e.printStackTrace();
+           return  ResponseEntity.badRequest().body(e.getMessage());
+       }
     }
 
     @PostMapping("/master/savebrand")

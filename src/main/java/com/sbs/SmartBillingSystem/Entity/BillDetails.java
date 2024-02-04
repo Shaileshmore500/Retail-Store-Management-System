@@ -21,7 +21,8 @@ public class BillDetails {
     @OneToOne
     private Bill bill_fid;
 
-    public BillDetails() {
+    public BillDetails() 
+    {
     }
 
     public void setBillDetails_pid(int billDetails_pid) {

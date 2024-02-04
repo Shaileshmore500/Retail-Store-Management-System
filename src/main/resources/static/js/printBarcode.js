@@ -55,7 +55,8 @@ if(response!=null && response.length>0)
 
     JsBarcode("#barcode" + counter, product.product_pid)
     
-    $("#barcode" + counter).find('text').text(product.style);
+    //$("#barcode" + counter).find('text').text(product.style);
+    $("#barcode" + counter).find('text').text(product.product_pid);
     counter++;
   });
 

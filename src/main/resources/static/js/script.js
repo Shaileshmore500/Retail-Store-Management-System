@@ -33,6 +33,7 @@ function showToasty(icon, bgclass, message, stat) {
 
     // Prevent the element from hiding when hovered
     toastElement.hover(function () {
+      debugger;
       // Mouse enter event: clear the hide animation using .stop()
       $(this).stop().css('opacity', 1);;
     }, function () {
@@ -129,6 +130,7 @@ $(document).ready(() => {
 
   // this function create object of table data  and send to server side
   $("#tbl_addProduct").click(() => {
+    debugger;
     $(".customloader").show();
 
 
@@ -145,6 +147,7 @@ $(document).ready(() => {
 
     let obj_product = [];
     let obj_challan = {
+      partychallan_pid:$("#html_PartyChallan_pid").val(),
       challan_no: $('#html_challanno').val(),
       supplier_fid: $('#html_supplier').val(),
       challan_date: $('#html_ChallanDate').val(),
@@ -186,6 +189,7 @@ $(document).ready(() => {
 
 
     }
+    console.log(obj);
 
 
     if (obj_product.length > 0) {
@@ -205,6 +209,14 @@ $(document).ready(() => {
         },
       });
     }
+    else{
+      showToasty(
+        "<i class='fa-solid fa-triangle-exclamation fa-shake fa-xl text-white'>&nbsp;&nbsp;</i>",
+        "bg-danger",
+        "Please Add Products",
+        "Error"
+      );
+    }
   });
 
 
@@ -219,6 +231,10 @@ $(document).ready(() => {
 
     // Get max row id and set new id
     var newid = 0;
+    
+
+
+
     $.each($("#tab_logic tr"), function () {
       if (parseInt($(this).data("id")) > newid) {
         newid = parseInt($(this).data("id"));
@@ -232,7 +248,7 @@ $(document).ready(() => {
     });
 
     // loop through each td and create new elements with name of newid
-    $.each($("#tab_logic tbody tr:nth(0) td"), function () {
+    $.each($("#tab_logic tbody tr:nth(0) td"), function (index) {
       var td;
       var cur_td = $(this);
       var children = cur_td.children();
@@ -253,6 +269,9 @@ $(document).ready(() => {
           text: $("#tab_logic tr").length,
         }).appendTo($(tr));
       }
+      if (index === 0) {
+        td.css("display", "none");
+    }
     });
 
     // add delete button and td
@@ -274,10 +293,19 @@ $(document).ready(() => {
       .find("._error")
       .text("");
 
-    $(tr)
-      .find("td button.row-remove")
-      .on("click", function () {
-        $(this).closest("tr").remove();
-      });
+    // $(tr)
+    //   .find("td button.row-remove")
+    //   .on("click", function () {
+    //     $(this).closest("tr").remove();
+    //   });
+
+     
+
+
   });
+  $("button.btn.btn-danger.glyphicon.glyphicon-remove.row-remove").on('click',function(){
+       
+    $(this).closest("tr").remove()
+}
+)
 });

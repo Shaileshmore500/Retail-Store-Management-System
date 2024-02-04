@@ -1,52 +1,72 @@
-window.onload = function () {
-  debugger
-  //----- Insert 'ButtonGroup' between 'Record limit selector' and 'Search Bar' -----//
-  let buttonList = document.getElementById('tableButtonGroup');
-  let table_wrapper = document.getElementById('jsonTable_wrapper').children;
-  let table_entryLimit = table_wrapper[0].children[0];
-  table_entryLimit.after(buttonList);
+// window.onload = function () {
+//   debugger
+//   //----- Insert 'ButtonGroup' between 'Record limit selector' and 'Search Bar' -----//
+//   let buttonList = document.getElementById('tableButtonGroup');
+//   if(document.getElementById('jsonTable_wrapper')){
+//   let table_wrapper = document.getElementById('jsonTable_wrapper').children;
+//   let table_entryLimit = table_wrapper[0].children[0];
+//   table_entryLimit.after(buttonList);
+//   }
 
-  //----- Adding View and Edit buttons to DataTable -----//
-  let tableHead = document.getElementById('jsonTable').children[0];
-  let tableHeadRow = tableHead.children[1];
-  let actionColumn = document.createElement('th');
-  actionColumn.innerText = "Action";
-  tableHeadRow.prepend(actionColumn);
-  //--Selecting rows from table body
-  let tableBody = document.getElementById('jsonTable').children[1];
-  let tableBodyRows = tableBody.children;
+//   //----- Adding View and Edit buttons to DataTable -----//
+//   if(document.getElementById('jsonTable'))
+//   {
+//   let tableHead = document.getElementById('jsonTable').children[0];
+//   let tableHeadRow = tableHead.children[1];
+//   let actionColumn = document.createElement('th');
+//   actionColumn.innerText = "Action";
+//   if(tableHeadRow)
+//   tableHeadRow.prepend(actionColumn);
+//   }
+//   //--Selecting rows from table body
+//   if(document.getElementById('jsonTable')){
+//   let tableBody = document.getElementById('jsonTable').children[1];
+//   var tableBodyRows = tableBody.children;
+//   }
+// ;
 
-  //----- Adding Checkbox column to DataTable
-  // let checkboxColumn = document.createElement('th');
-  // let headerCheckbox = document.createElement('input');
-  // headerCheckbox.type = "checkbox";
-  // console.log(headerCheckbox);
-  //checkboxColumn.append(headerCheckbox);
-  // tableHeadRow.prepend(checkboxColumn);
+//   for (let loop = 0; loop < tableBodyRows.length; loop++) {
+//     //-----
+//     let multiButtonColumn = document.createElement('td');
+//     multiButtonColumn.innerHTML = '<a  class="btn btn-primary m-1 view"><i class="btn-view"></i></a><a  class="btn btn-primary m-1 edit"><i class="btn-edit "></i></a><a  class="btn btn-danger  m-1 delete"><i class="btn-delete"></i> </a>';
 
-  for (let loop = 0; loop < tableBodyRows.length; loop++) {
-    //-----
-    let multiButtonColumn = document.createElement('td');
-    multiButtonColumn.innerHTML = '<a  class="btn btn-primary m-1 view"><i class="btn-view"></i></a><a  class="btn btn-primary m-1 edit"><i class="btn-edit "></i></a><a  class="btn btn-danger  m-1 delete"><i class="btn-delete"></i> </a>';
+//     let checkboxBodyColumn = document.createElement('td');
+//     let bodyCheckbox = document.createElement('input');
+//     bodyCheckbox.type = "checkbox";
+//     checkboxBodyColumn.append(bodyCheckbox);
 
-    let checkboxBodyColumn = document.createElement('td');
-    let bodyCheckbox = document.createElement('input');
-    bodyCheckbox.type = "checkbox";
-    checkboxBodyColumn.append(bodyCheckbox);
+//     tableBodyRows[loop].prepend(multiButtonColumn);
+//     // tableBodyRows[loop].prepend(checkboxBodyColumn);
+//   }
 
-    tableBodyRows[loop].prepend(multiButtonColumn);
-    // tableBodyRows[loop].prepend(checkboxBodyColumn);
-  }
-
-  //----- Search bar styling -----//
-  let searchIcon = document.createElement('i');
-  searchIcon.className = "icon-search";
-  let filterLabel = document.getElementById('jsonTable_filter').children[0]
-  filterLabel.prepend(searchIcon);
-}
+//   //----- Search bar styling -----//
+//   let searchIcon = document.createElement('i');
+//   searchIcon.className = "icon-search";
+//   if(document.getElementById('jsonTable_filter'))
+//   {
+//   let filterLabel = document.getElementById('jsonTable_filter').children[0]
+//   filterLabel.prepend(searchIcon);
+//   }
+// }
 
 function jsonToDataTable(jsonData) {
-  // Extract column headers from the first object in the array
+if(jsonData==null || jsonData.length<=0)
+{
+  //$(".page__body .container section")[1].append($("#empty-state"))
+  $("#EmptyStateModel").append($("#empty-state"))
+  $("#empty-state").show();
+  return;
+}
+let newKey = 'Action';
+let newValue = '<a  class="btn btn-primary m-1 view"><i class="btn-view"></i></a><a  class="btn btn-primary m-1 edit"><i class="btn-edit "></i></a><a  class="btn btn-danger  m-1 delete"><i class="btn-delete"></i> </a>';
+
+// Loop through the array and add the new key-value pair to each object
+for (let i = 0; i < jsonData.length; i++) {
+  jsonData[i] = { [newKey]: newValue, ...jsonData[i] };
+}
+
+
+
   var columns = Object.keys(jsonData[0]);
 
   // Initialize DataTable
@@ -72,7 +92,7 @@ function displayStatus(status, mode) {
 
   if (status != null && status != '') {
 
-    if (status == "sucess") {
+    if (status == "success") {
       if (mode === "add")
         var msg = "Data added successfully..."
       else if (mode === "edit")
@@ -100,12 +120,22 @@ function displayStatus(status, mode) {
       );
     }
   }
+  $("#customloader").hide();
 }
 
 $(document).ready(() => {
 
-  $(".edit,.view,.add,.delete").on('click', function () {
+  $('form').submit(function(event) {
+    debugger;
+    // Prevent the default form submission
+    event.preventDefault();
 
+    $("#customloader").show();
+    // Continue with the form submission
+    $(this).unbind('submit').submit(); // Unbind the submit event and trigger the form submission
+  });
+  $(".edit,.view,.add,.delete").on('click', function () {
+//    $("#customloader").show();
     debugger
     let currentelement = this;
     $("#save").show();
@@ -164,13 +194,15 @@ $(document).ready(() => {
     }
     else if (currentelement.classList.contains("delete"))
     {
-
+      $("#customloader").show();
       $.ajax({
         type: 'GET',
         url: `/deleteItem?form=${new URLSearchParams(window.location.search).get("form")}&id=${$(currentelement).closest('tr').find('td:nth-child(2)').text()}`        ,
         success : function(){
           displayStatus("success", "delete")
-          window.location.reload();
+
+         setTimeout(()=>window.location.reload(),1000)
+          
         },
         error : function(){
           displayStatus("error", "delete")

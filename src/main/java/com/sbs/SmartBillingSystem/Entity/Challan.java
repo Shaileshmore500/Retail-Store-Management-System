@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 public class Challan {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int PartyChallan_pid;
 	private float amount;
 	private float Quantity;
@@ -17,6 +17,17 @@ public class Challan {
 
 	@OneToOne
 	private Suppiler supplier_fid;
+	@Transient
+	private int _supplier_fid;
+
+	public void set_supplier_fid(int _supplier_fid) {
+		this._supplier_fid = _supplier_fid;
+	}
+
+	public int get_supplier_fid() {
+		return _supplier_fid;
+	}
+
 	@OneToOne
 	private Branch branch_fid;
 	private Date purchase_date;

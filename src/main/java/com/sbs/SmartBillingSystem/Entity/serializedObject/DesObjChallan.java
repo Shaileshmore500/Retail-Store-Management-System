@@ -2,14 +2,23 @@ package com.sbs.SmartBillingSystem.Entity.serializedObject;
 
 public class DesObjChallan {
 
-    private int PartyChallan_pid;
-    private float amount;
+    private int partychallan_pid;
+    private String amount;
     private float quantity;
     private String challan_date;
     private String supplier_fid;
     private String branch_fid;
     private String purchase_date;
     private String challan_no;
+    public void setPartychallan_pid(int partychallan_pid) {
+        this.partychallan_pid = partychallan_pid;
+    }
+
+    public int getPartychallan_pid() {
+        return partychallan_pid;
+    }
+
+    
 
     public String getChallan_no() {
         return challan_no;
@@ -19,12 +28,6 @@ public class DesObjChallan {
         this.challan_no = challan_no;
     }
 
-    @Override
-    public String toString() {
-        return "DesObjChallan [PartyChallan_pid=" + PartyChallan_pid + ", amount=" + amount + ", quantity=" + quantity
-                + ", challan_date=" + challan_date + ", supplier_fid=" + supplier_fid + ", branch_fid=" + branch_fid
-                + ", purchase_date=" + purchase_date + ", challan_no=" + challan_no + "]";
-    }
 
     public DesObjChallan() {
     }
@@ -34,15 +37,15 @@ public class DesObjChallan {
     }
 
     public void setPartyChallan_pid(int partyChallan_pid) {
-        PartyChallan_pid = partyChallan_pid;
+        this.partychallan_pid = partyChallan_pid;
     }
 
-    public void setAmount(float amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 
     public void setQuantity(float quantity) {
-        quantity = quantity;
+        this.quantity = quantity;
     }
 
     public void setChallan_date(String challan_date) {
@@ -58,10 +61,10 @@ public class DesObjChallan {
     }
 
     public int getPartyChallan_pid() {
-        return PartyChallan_pid;
+        return partychallan_pid;
     }
 
-    public float getAmount() {
+    public String getAmount() {
         return amount;
     }
 

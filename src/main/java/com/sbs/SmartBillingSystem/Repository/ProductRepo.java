@@ -11,6 +11,7 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
 
     // List<Product> findByChallan_fid(Challan challan_fid);
     @Query(value = "SELECT * FROM Product p WHERE p.challan_fid_party_challan_pid = :challanId", nativeQuery = true)
-    List<Product> findByChallan_fid(Integer challanId);
+    List<Product> findByChallan_fid(int challanId);
+
 
 }

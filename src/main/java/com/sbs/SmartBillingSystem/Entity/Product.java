@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 @Entity
 public class Product {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int product_pid;
 	private String code;
 	private String name;

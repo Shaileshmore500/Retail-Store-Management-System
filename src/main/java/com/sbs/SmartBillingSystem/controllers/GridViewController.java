@@ -59,7 +59,7 @@ public class GridViewController {
         }
         try {
             brandRepo.save(brand);
-            redirectAttributes.addFlashAttribute("status", "sucess");
+            redirectAttributes.addFlashAttribute("status", "success");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("status", "error");
         }
@@ -82,7 +82,7 @@ public class GridViewController {
         }
         try {
             categoryRepo.save(cat);
-            redirectAttributes.addFlashAttribute("status", "sucess");
+            redirectAttributes.addFlashAttribute("status", "success");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("status", "error");
         }
@@ -120,7 +120,7 @@ public class GridViewController {
 
         try {
             supplierRepo.save(supplier);
-            redirectAttributes.addFlashAttribute("status", "sucess");
+            redirectAttributes.addFlashAttribute("status", "success");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("status", "error");
         }
@@ -186,7 +186,7 @@ public class GridViewController {
 
             this.userrepository.save(user);
 
-            redirectAttributes.addFlashAttribute("status", "sucess");
+            redirectAttributes.addFlashAttribute("status", "success");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("status", "error");
         }
@@ -215,7 +215,7 @@ public class GridViewController {
 
             customerRepo.save(customer);
 
-            redirectAttributes.addFlashAttribute("status", "sucess");
+            redirectAttributes.addFlashAttribute("status", "success");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("status", "error");
         }
@@ -223,26 +223,26 @@ public class GridViewController {
 
     }
 
-    @GetMapping("/deleteItem")
-    public String deleteItem(@RequestParam String id, @RequestParam String form,RedirectAttributes redirectAttributes) {
-try{
-        int pid = Integer.parseInt(id);
-        if (form.equals("brand"))
-            brandRepo.deleteById(pid);
-        else if (form.equals("customer"))
-            customerRepo.deleteById(pid);
-        else if (form.equals("user"))
-            userrepository.deleteById(pid);
-        else if (form.equals("category"))
-            categoryRepo.deleteById(pid);
-        else if (form.equals("supplier"))
-            supplierRepo.deleteById(pid);
-            redirectAttributes.addFlashAttribute("status", "sucess");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("status", "error");
-        }
-        redirectAttributes.addFlashAttribute("mode", "edit");
-            return "redirect:/view?ab=ab&form="+form;
-    }
+//     @GetMapping("/deleteItem")
+//     public String deleteItem(@RequestParam String id, @RequestParam String form,RedirectAttributes redirectAttributes) {
+// try{
+//         int pid = Integer.parseInt(id);
+//         if (form.equals("brand"))
+//             brandRepo.deleteById(pid);
+//         else if (form.equals("customer"))
+//             customerRepo.deleteById(pid);
+//         else if (form.equals("user"))
+//             userrepository.deleteById(pid);
+//         else if (form.equals("category"))
+//             categoryRepo.deleteById(pid);
+//         else if (form.equals("supplier"))
+//             supplierRepo.deleteById(pid);
+//             redirectAttributes.addFlashAttribute("status", "success");
+//         } catch (Exception e) {
+//             redirectAttributes.addFlashAttribute("status", "error");
+//         }
+//         redirectAttributes.addFlashAttribute("mode", "edit");
+//             return "redirect:/view?form=supplier;//"+form;
+//     }
 
 }

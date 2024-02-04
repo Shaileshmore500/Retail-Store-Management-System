@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sbs.SmartBillingSystem.Entity.Brand;
 import com.sbs.SmartBillingSystem.Entity.Category;
@@ -28,7 +29,7 @@ import com.sbs.SmartBillingSystem.Repository.UserRepo;
 import java.util.*;
 
 @RestController
-public class GridRestCtr {
+public class GridRestController {
 
     @Autowired
     SupplierRepo supplierRepo;
@@ -44,6 +45,8 @@ public class GridRestCtr {
     BrandRepo brandRepo;
     @Autowired
     CategoryRepo categoryRepo;
+ 
+    
 
     @GetMapping("/getFormData")
     public ResponseEntity<?> FormNameData(@RequestParam String FormName, @RequestParam String Pid) {
@@ -68,6 +71,31 @@ public class GridRestCtr {
         }
 
         return null;
+    }
+
+
+
+    @GetMapping("/deleteItem")
+    public String deleteItem(@RequestParam String id, @RequestParam String form) {
+try{
+        int pid = Integer.parseInt(id);
+        if (form.equals("brand"))
+            brandRepo.deleteById(pid);
+        else if (form.equals("customer"))
+            customerRepo.deleteById(pid);
+        else if (form.equals("user"))
+            userRepo.deleteById(pid);
+        else if (form.equals("category"))
+            categoryRepo.deleteById(pid);
+        else if (form.equals("supplier"))
+            supplierRepo.deleteById(pid);
+            //redirectAttributes.addFlashAttribute("status", "sucess");
+            return "Success";
+        } catch (Exception e) {
+            //redirectAttributes.addFlashAttribute("status", "error");
+            return "Error";
+        }
+        
     }
 
     // @PostMapping("/savebrand")
