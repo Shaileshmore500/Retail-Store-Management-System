@@ -11,14 +11,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.sbs.SmartBillingSystem.Entity.Bill;
+import com.sbs.SmartBillingSystem.Entity.BillDetails;
 import com.sbs.SmartBillingSystem.Entity.Brand;
 import com.sbs.SmartBillingSystem.Entity.Category;
 import com.sbs.SmartBillingSystem.Entity.Customer;
+import com.sbs.SmartBillingSystem.Entity.Product;
 import com.sbs.SmartBillingSystem.Entity.Suppiler;
 import com.sbs.SmartBillingSystem.Entity.User;
+import com.sbs.SmartBillingSystem.Repository.BillDetailRepo;
+import com.sbs.SmartBillingSystem.Repository.BillRepo;
 import com.sbs.SmartBillingSystem.Repository.BrandRepo;
 import com.sbs.SmartBillingSystem.Repository.CategoryRepo;
 import com.sbs.SmartBillingSystem.Repository.CustomerRepo;
+import com.sbs.SmartBillingSystem.Repository.ProductRepo;
 import com.sbs.SmartBillingSystem.Repository.SupplierRepo;
 import com.sbs.SmartBillingSystem.Repository.UserRepo;
 
@@ -43,6 +49,12 @@ public class GridViewController {
     PasswordEncoder passwordEncoder;
     @Autowired
     CustomerRepo customerRepo;
+    @Autowired
+    BillDetailRepo billDetailRepo;
+    @Autowired
+    BillRepo billRepo;
+    @Autowired
+    ProductRepo productRepo;
 
     @PostMapping("/savebrand")
     public String saveBrand(@RequestParam String brand_pid, @RequestParam String name,
@@ -223,26 +235,68 @@ public class GridViewController {
 
     }
 
-//     @GetMapping("/deleteItem")
-//     public String deleteItem(@RequestParam String id, @RequestParam String form,RedirectAttributes redirectAttributes) {
-// try{
-//         int pid = Integer.parseInt(id);
-//         if (form.equals("brand"))
-//             brandRepo.deleteById(pid);
-//         else if (form.equals("customer"))
-//             customerRepo.deleteById(pid);
-//         else if (form.equals("user"))
-//             userrepository.deleteById(pid);
-//         else if (form.equals("category"))
-//             categoryRepo.deleteById(pid);
-//         else if (form.equals("supplier"))
-//             supplierRepo.deleteById(pid);
-//             redirectAttributes.addFlashAttribute("status", "success");
+    // @GetMapping("/deleteItem")
+    // public String deleteItem(@RequestParam String id, @RequestParam String
+    // form,RedirectAttributes redirectAttributes) {
+    // try{
+    // int pid = Integer.parseInt(id);
+    // if (form.equals("brand"))
+    // brandRepo.deleteById(pid);
+    // else if (form.equals("customer"))
+    // customerRepo.deleteById(pid);
+    // else if (form.equals("user"))
+    // userrepository.deleteById(pid);
+    // else if (form.equals("category"))
+    // categoryRepo.deleteById(pid);
+    // else if (form.equals("supplier"))
+    // supplierRepo.deleteById(pid);
+    // redirectAttributes.addFlashAttribute("status", "success");
+    // } catch (Exception e) {
+    // redirectAttributes.addFlashAttribute("status", "error");
+    // }
+    // redirectAttributes.addFlashAttribute("mode", "edit");
+    // return "redirect:/view?form=supplier;//"+form;
+    // }
+
+// @GetMapping("/deleteItem")
+//     public String deleteItem(@RequestParam String id, @RequestParam String form,
+//             RedirectAttributes redirectAttributes) {
+//         try {
+//             int pid = Integer.parseInt(id);
+//             if (form.equals("brand"))
+//                 brandRepo.deleteById(pid);
+//             else if (form.equals("customer"))
+//                 customerRepo.deleteById(pid);
+//             else if (form.equals("user"))
+//                 userrepository.deleteById(pid);
+//             else if (form.equals("category"))
+//                 categoryRepo.deleteById(pid);
+//             else if (form.equals("supplier"))
+//                 supplierRepo.deleteById(pid);
+//             else if (form.equals("invoice")) {
+//                 Bill bill = billRepo.findById(pid).get();
+//                 if (bill != null) {
+//                     List<BillDetails> billDetails = billDetailRepo.getBillDetailsByBill_fid(bill);//getByBillDetails(bill);
+//                     for (BillDetails billDetails2 : billDetails) {
+//                         Product product = billDetails2.getProduct_fid();
+//                         Product oldProduct = productRepo.findById(product.getProduct_pid()).get();
+//                         oldProduct.setQuantity(oldProduct.getQuantity() + billDetails2.getQuantity());
+//                         productRepo.save(oldProduct);
+//                     } 
+
+//                     billDetailRepo.deleteByBill(bill);// deleteByBill_fid(bill);
+//                     billRepo.deleteById(bill.getBill_pid());
+
+//                 }
+
+//             }
+
+//             redirectAttributes.addFlashAttribute("status", "sucess");
 //         } catch (Exception e) {
 //             redirectAttributes.addFlashAttribute("status", "error");
 //         }
 //         redirectAttributes.addFlashAttribute("mode", "edit");
-//             return "redirect:/view?form=supplier;//"+form;
+//         return "redirect:/view?form=" + form;
 //     }
 
 }

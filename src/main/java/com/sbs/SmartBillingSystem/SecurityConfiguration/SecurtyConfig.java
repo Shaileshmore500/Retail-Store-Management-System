@@ -1,60 +1,63 @@
 package com.sbs.SmartBillingSystem.SecurityConfiguration;
 
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.authorization.AuthorityReactiveAuthorizationManager;
+import org.springframework.security.authorization.ReactiveAuthorizationManager;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.web.server.SecurityWebFilterChain;
 
 @Configuration
 @EnableWebSecurity
 public class SecurtyConfig {
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeHttpRequests()
-                .requestMatchers("/home")
-                .hasRole("ADMIN")
-                .requestMatchers("/login", "/signup", "/css/nav.css", "/css/form.css", "/master/registerUser")
 
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                // <<<<<<< HEAD
-                .defaultSuccessUrl("/home") // Add this line
-                .permitAll()
-                // =======
-                .loginProcessingUrl("/login") // Ensure this matches your form's action URL
-                // Add this line to specify the success URL:
-                .defaultSuccessUrl("/", true)
-                // Optionally, specify a failure URL:
-                .failureUrl("/login?error");
-        ;
-        // >>>>>>> c27fea65b31e189313c5d87add41db0a721f776f
-        // http.csrf().disable()
-        // .authorizeRequests()
-        // .antMatchers("/login", "/signup").permitAll() // URLs allowed without
-        // authentication
-        // .antMatchers("/home").hasRole("ADMIN") // URL that requires ADMIN role
-        // .anyRequest().authenticated() // All other URLs require authentication
-        // .and()
-        // .formLogin()
-        // .loginPage("/login")
-        // .permitAll();
 
-        return http.build();
 
-    }
+
+     @Bean
+     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+         http.csrf().disable()
+                 .authorizeHttpRequests()
+                 .requestMatchers("/forgotpassword")
+                 .permitAll()
+                 .requestMatchers("/home")
+                 .hasRole("ADMIN")
+                 .anyRequest()
+                 .authenticated()
+                 .and()
+                 .formLogin()
+                 .loginPage("/login")
+                 .defaultSuccessUrl("/home")
+                 .permitAll()
+                 .loginProcessingUrl("/login")
+                
+                 .defaultSuccessUrl("/", true)
+                
+                 .failureUrl("/login?error");
+                 return http.build();
+
+           
+
+        
+         // >>>>>>> c27fea65b31e189313c5d87add41db0a721f776f
+         // http.csrf().disable()
+         // .authorizeRequests()
+         // .antMatchers("/login", "/signup").permitAll() // URLs allowed without
+         // authentication
+         // .antMatchers("/home").hasRole("ADMIN") // URL that requires ADMIN role
+         // .anyRequest().authenticated() // All other URLs require authentication
+         // .and()
+         // .formLogin()
+         // .loginPage("/login")
+         // .permitAll();
+
+        
+     }
 
     // @Bean
     // public UserDetailsService userDetailsService() {

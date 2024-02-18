@@ -20,6 +20,16 @@ public class Bill {
 	@OneToOne(cascade = CascadeType.ALL)
 	private User user_fid;
 	private String payment_type;
+//	private float total_amount;
+//
+//	public float getTotal_amount() {
+//		return total_amount;
+//	}
+//
+//	public void setTotal_amount(float total_amount) {
+//		this.total_amount = total_amount;
+//	}
+
 	//	@Transient
 //	private String _user_fid;
 	@Transient

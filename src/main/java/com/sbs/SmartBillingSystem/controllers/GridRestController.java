@@ -16,9 +16,14 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.sbs.SmartBillingSystem.Entity.Bill;
+import com.sbs.SmartBillingSystem.Entity.BillDetails;
 import com.sbs.SmartBillingSystem.Entity.Brand;
 import com.sbs.SmartBillingSystem.Entity.Category;
+import com.sbs.SmartBillingSystem.Entity.Product;
 import com.sbs.SmartBillingSystem.Entity.User;
+import com.sbs.SmartBillingSystem.Repository.BillDetailRepo;
+import com.sbs.SmartBillingSystem.Repository.BillRepo;
 import com.sbs.SmartBillingSystem.Repository.BrandRepo;
 import com.sbs.SmartBillingSystem.Repository.CategoryRepo;
 import com.sbs.SmartBillingSystem.Repository.ChallanRepo;
@@ -45,8 +50,12 @@ public class GridRestController {
     BrandRepo brandRepo;
     @Autowired
     CategoryRepo categoryRepo;
- 
-    
+    @Autowired
+    UserRepo userrepository;
+    @Autowired
+    BillDetailRepo billDetailRepo;
+    @Autowired
+    BillRepo billRepo;
 
     @GetMapping("/getFormData")
     public ResponseEntity<?> FormNameData(@RequestParam String FormName, @RequestParam String Pid) {
@@ -65,55 +74,93 @@ public class GridRestController {
             return new ResponseEntity(customerRepo.findById(Integer.parseInt(Pid)), HttpStatus.OK);
         } else if (FormName.toLowerCase().equals("supplier")) {
             return new ResponseEntity(supplierRepo.findById(Integer.parseInt(Pid)), HttpStatus.OK);
-        }
-        else if (FormName.toLowerCase().equals("user")) {
+        } else if (FormName.toLowerCase().equals("user")) {
             return new ResponseEntity(userRepo.findById(Integer.parseInt(Pid)), HttpStatus.OK);
         }
 
         return null;
     }
 
+    // @GetMapping("/deleteItem")
+    // public String deleteItem(@RequestParam String id, @RequestParam String form)
+    // {
+    // try{
+    // int pid = Integer.parseInt(id);
+    // if (form.equals("brand"))
+    // brandRepo.deleteById(pid);
+    // else if (form.equals("customer"))
+    // customerRepo.deleteById(pid);
+    // else if (form.equals("user"))
+    // userRepo.deleteById(pid);
+    // else if (form.equals("category"))
+    // categoryRepo.deleteById(pid);
+    // else if (form.equals("supplier"))
+    // supplierRepo.deleteById(pid);
+    // //redirectAttributes.addFlashAttribute("status", "sucess");
+    // return "Success";
+    // } catch (Exception e) {
+    // //redirectAttributes.addFlashAttribute("status", "error");
+    // return "Error";
+    // }
 
+    // }
+
+    // @PostMapping("/savebrand")
+    // public ResponseEntity<?> saveBrand(@RequestParam String brand_pid,
+    // @RequestParam String name,
+    // @RequestParam String code, Model model) {
+
+    // // Brand brand = new Brand();
+    // // brand.setCode(code);
+    // // brand.setName(name);
+    // // if(!brand_pid.isBlank())
+    // // brand.setBrand_pid(Integer.parseInt(brand_pid));
+    // try
+    // {
+    // // brandRepo.save(brand);
+    // return new ResponseEntity( "hiii", HttpStatus.OK);
+    // } catch (Exception e) {
+    // return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+    // }
+
+    // }
 
     @GetMapping("/deleteItem")
     public String deleteItem(@RequestParam String id, @RequestParam String form) {
-try{
-        int pid = Integer.parseInt(id);
-        if (form.equals("brand"))
-            brandRepo.deleteById(pid);
-        else if (form.equals("customer"))
-            customerRepo.deleteById(pid);
-        else if (form.equals("user"))
-            userRepo.deleteById(pid);
-        else if (form.equals("category"))
-            categoryRepo.deleteById(pid);
-        else if (form.equals("supplier"))
-            supplierRepo.deleteById(pid);
-            //redirectAttributes.addFlashAttribute("status", "sucess");
+        try {
+            int pid = Integer.parseInt(id);
+            if (form.equals("brand"))
+                brandRepo.deleteById(pid);
+            else if (form.equals("customer"))
+                customerRepo.deleteById(pid);
+            else if (form.equals("user"))
+                userrepository.deleteById(pid);
+            else if (form.equals("category"))
+                categoryRepo.deleteById(pid);
+            else if (form.equals("supplier"))
+                supplierRepo.deleteById(pid);
+            else if (form.equals("invoice")) {
+                 Bill bill = billRepo.findById(pid).get();
+                if (bill != null) {
+                    List<BillDetails> billDetails = billDetailRepo.getBillDetailsByBill_fid(bill);// getByBillDetails(bill);
+                    for (BillDetails billDetails2 : billDetails) {
+                        Product product = billDetails2.getProduct_fid();
+                        Product oldProduct = productRepo.findById(product.getProduct_pid()).get();
+                        oldProduct.setQuantity(oldProduct.getQuantity() + billDetails2.getQuantity());
+                        productRepo.save(oldProduct);
+                    }
+
+                    billDetailRepo.deleteByBill(bill);// deleteByBill_fid(bill);
+                    billRepo.deleteById(bill.getBill_pid());
+
+                }
+
+            }
             return "Success";
         } catch (Exception e) {
-            //redirectAttributes.addFlashAttribute("status", "error");
+            // redirectAttributes.addFlashAttribute("status", "error");
             return "Error";
         }
-        
+
     }
-
-    // @PostMapping("/savebrand")
-    // public ResponseEntity<?> saveBrand(@RequestParam String brand_pid, @RequestParam String name,
-    //         @RequestParam String code, Model model) {
-       
-    //     // Brand brand = new Brand();
-    //     // brand.setCode(code);
-    //     // brand.setName(name);
-    //     // if(!brand_pid.isBlank())
-    //     // brand.setBrand_pid(Integer.parseInt(brand_pid));
-    //     try 
-    //     {
-    //         // brandRepo.save(brand);
-    //         return new ResponseEntity( "hiii", HttpStatus.OK);
-    //     } catch (Exception e) {
-    //         return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
-    //     }
-
-    // }
 }

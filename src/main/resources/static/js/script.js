@@ -305,6 +305,7 @@ $(document).ready(() => {
   });
   $("button.btn.btn-danger.glyphicon.glyphicon-remove.row-remove").on('click',function(){
        
+    if($("#tab_logic tr").length>2)
     $(this).closest("tr").remove()
 }
 )

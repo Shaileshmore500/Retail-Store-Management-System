@@ -10,7 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        Welcome to Add Master
+        Retail Store Management System
     </title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
     <link rel="stylesheet" th:href="@{/css/navbarcss/azzara.min.css}" />
@@ -51,6 +51,18 @@
     <!-- <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css}"> -->
     <!-- <link rel="stylesheet" th:href="@{/css/nav.css}" />
      <link rel="stylesheet" th:href="@{/css/form.css}" /> -->
+
+
+      <!-- Include DataTables CSS -->
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+      <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
+      <!-- Include jQuery -->
+      <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+      <!-- Include DataTables JS -->
+      <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+      <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+      <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+      <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
 
 
 </head>
@@ -147,6 +159,12 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td align="center" style="color: #001940;">
+                                    <a id="ctl00_LoginStatus2" title="Log Out" th:href="@{/changepassword}"
+                                        style="color:#001940;font-weight:bold;">Change Password</a>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td height="10"></td>
                             </tr>
                         </table>
@@ -196,9 +214,11 @@
                             </a>
                             <div class="collapse" id="Create2">
                                 <ul class="nav nav-collapse">
-                                    <li><a th:href="@{/invoice}"><i class="fa-solid fa-receipt"></i>Generate</a></li>
-                                    <li><a th:href="@{/}"><i class="fa-solid fa-layer-group"></i>Return Bill </a></li>
-                                    <li><a th:href="@{/}"><i class="fa-brands fa-product-hunt"></i>Cancle Bill </a></li>
+                                    <li><a th:href="@{/invoice?id=}"><i class="fa-solid fa-receipt"></i>Generate</a></li>
+                                    <li><a th:href="@{/invoice?id=1052}"><i class="fa-solid fa-layer-group"></i>Return Bill2 </a></li>
+                                    <li><a th:href="@{/}"><i class="fa-brands fa-product-hunt"></i>Cancle Bill2 </a></li>
+                                    <li><a th:href="@{/view?form=invoice&mode=Return}"><i class="fa-solid fa-layer-group"></i>Return Bill </a></li>
+                                        <li><a th:href="@{/view?form=invoice&mode=Cancel}"><i class="fa-brands fa-product-hunt"></i>Cancel Bill </a></li>
 
                                 </ul>
                             </div>

@@ -25,6 +25,7 @@ import java.util.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sbs.SmartBillingSystem.Entity.Bill;
+import com.sbs.SmartBillingSystem.Entity.BillDetails;
 import com.sbs.SmartBillingSystem.Entity.Brand;
 import com.sbs.SmartBillingSystem.Entity.Category;
 import com.sbs.SmartBillingSystem.Entity.Challan;
@@ -32,7 +33,7 @@ import com.sbs.SmartBillingSystem.Entity.Customer;
 import com.sbs.SmartBillingSystem.Entity.Product;
 import com.sbs.SmartBillingSystem.Entity.PurchaseOrder;
 import com.sbs.SmartBillingSystem.Entity.Suppiler;
-
+import com.sbs.SmartBillingSystem.Repository.BillDetailRepo;
 import com.sbs.SmartBillingSystem.Repository.BillRepo;
 
 import com.sbs.SmartBillingSystem.Entity.User;
@@ -86,7 +87,8 @@ public class ctr_master {
     private CustomerRepo customerRepo;
     @Autowired
     UserRepo userRepo;
-    
+    @Autowired
+    BillDetailRepo billDetailRepo;
    private EmailService emailService;
    
    public ctr_master(EmailService emailService) {
@@ -301,6 +303,7 @@ public class ctr_master {
                 return new ResponseEntity<>(errorList, HttpStatus.NOT_FOUND);
             }
             Bill bill = billProduct.getBill();
+            bill.setDate(new Date());
             try {
                 Customer customer = customerRepo.findById(Integer.parseInt(bill.get_customer_fid())).orElseThrow();
                 bill.setCustomer_fid(customer);
@@ -312,8 +315,14 @@ public class ctr_master {
             Bill bill2 = billRepo.save(bill);
 
             boolean updateStatus = invoiveHelper.updateProduct(productList, bill2);
+            List<BillDetails> billDetails=billDetailRepo.getBillDetailsByBill_fid(bill2);
+            Map<String,Object> resMap=new HashMap<>();
+            resMap.put("BIll", bill2);
+            resMap.put("BillDetails", billDetails);
+
+
             if (updateStatus)
-                return new ResponseEntity<>("Invoice Generated successfully", HttpStatus.OK);
+                return new ResponseEntity<>(resMap, HttpStatus.OK);
 
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
@@ -324,7 +333,6 @@ public class ctr_master {
     }
 
     @PostMapping("/master/registerUser")
-
     public String registerUser(@ModelAttribute("user") User user, @RequestParam("file") MultipartFile file
 
     ) {

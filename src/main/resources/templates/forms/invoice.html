@@ -28,7 +28,7 @@
       <h2>Invoice</h2>
     </div>
 
-    <div class="panel mlr-15" style="height: 176px" id="pnl_invoiceDetails">
+    <div class="panel mlr-15" style="height: 185px" id="pnl_invoiceDetails">
 
       <div class="panel-header">Invoice Details</div>
       <div class="container ">
@@ -57,27 +57,31 @@
 
         </div>
         <div class="mb-2 col-6 text-center mt-2 d-flex mlr">
-          <div class="form-floating mb-3 col-7 ">
-            <select class="form-select form-select-lg mb-3" style="    padding-top: 15px !important;" aria-label=".form-select-lg example" data-field="brand_fid">
+          <div class="form-floating mb-3 col-7 mandatory">
+            <select class="form-select form-select-lg mb-3" id="html_paymenttype" style="padding-top: 15px !important;"
+              aria-label=".form-select-lg example" data-field="brand_fid">
               <option value="">Payment Type</option>
               <option value="Cash">Cash</option>
               <option value="NetBanking">Net Banking</option>
               <option value="Card">Card</option>
             </select>
-            <label for="floatingInput mr-5" class="ml-15 md_lbl">Product ID</label>
-            <span class="_error2"></span>
+            <label for="floatingInput mr-5" class="ml-15 md_lbl">Payment Type</label>
+            <span class="_error" style="width: auto;left: 23px;"></span>
+          </div>
+          <div class="form-floating mb-3 col-7 mandatory">
+            <select class="form-select form-select-lg mb-3" id="html_customer" style="padding-top: 15px !important;"
+              aria-label=".form-select-lg example" data-field="brand_fid">
+              <option value="">Customer</option>
+              <option th:each="c:${customer}" th:value="${c.customer_pid}" th:text="${c.name}">Cash</option>
+
+            </select>
+            <label for="floatingInput mr-5" class="ml-15 md_lbl">Customer</label>
+            <span class="_error" style="width: auto;left: 23px;"></span>
           </div>
           <div class="form-floating mb-3 col-7 ">
-            <select class="form-select form-select-lg mb-3" style="    padding-top: 15px !important;" aria-label=".form-select-lg example" data-field="brand_fid">
-              <option value="">Customer</option>
-              <option value="Cash">Cash</option>
-              <option value="NetBanking">Net Banking</option>
-              <option value="Card">Card</option>
-            </select>
-            <label for="floatingInput mr-5" class="ml-15 md_lbl">Quantity</label>
-            <span class="_error2"></span>
+            <input type="hidden" name="bill_pid" id="html_bill_Pid">
           </div>
-          
+
 
 
         </div>
@@ -96,6 +100,7 @@
             <table class="table table-bordered table-hover table-sortable" id="tbl_product">
               <thead>
                 <tr>
+                  <th style="display: none;"></th>
                   <th class="text-center mw150"> ProductID</th>
                   <!-- <th class="text-center mw150"> Style</th> -->
                   <th class="text-center mw150">MRP</th>
@@ -185,14 +190,14 @@
     </div>
     <div class="d-flex mb-2 btn-div mt-5">
       <button class="noselect btn_del ml" id="btn_cancle">
-        <span class="text">Cancle</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+        <span class="text">Cancel</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24"
             height="24" viewBox="0 0 24 24">
             <path
               d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z">
             </path>
           </svg></span>
       </button>
-      <button class="noselect btn_add ml" id="btn_generateInvoice">
+      <button class="noselect btn_add ml" id="btn_generateInvoice" style="display: none;">
         <span class="text">Genarate</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" height="1em"
             viewBox="0 0 512 512">
             <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -205,8 +210,55 @@
 
 
     <script th:src=@{/js/invoice.js}></script>
-    <script>
+    <script th:inline="javascript">
       $(document).ready(function () {
+        debugger;
+        var obj_products = {};
+        var bill =/*[[${bill}]]*/'';
+        var billdetail =/*[[${billdetails}]]*/'';
+        if (bill != '' && bill != null) {
+          $("#html_paymenttype").val(bill["payment_type"]);
+          $("#html_customer").val(bill.customer_fid?bill.customer_fid.customer_pid:"")
+          $("#html_bill_Pid").val(bill["bill_pid"])
+
+        }
+        if (billdetail != '' && billdetail != null) {
+
+          billdetail.forEach(billdetails => {
+
+            var obj = {};
+
+            obj["billDetails_fid"] = billdetails["billDetails_pid"];
+
+            obj["product_pid"] = billdetails.product_fid["product_pid"];
+
+            obj["discountamt"] = billdetails["discount_amount"];
+
+            obj["discountper"] = billdetails["discount_rate"];
+
+            obj["mrp"] = billdetails.product_fid["mrp"];
+
+            obj["netamount"] = billdetails["net_amount"];
+
+            obj["quantity"] = billdetails["quantity"];
+
+            obj["total_amount"] = billdetails["total_amount"];
+            obj_product[obj["product_pid"]] = obj;
+
+          });
+        }
+
+
+        buildTable(obj_product);
+        if(new URLSearchParams(window.location.search).get("mode")=='edit')
+        {
+          $("#btn_generateInvoice").show();
+
+        }
+        
+
+
+
 
 
 

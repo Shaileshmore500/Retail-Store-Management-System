@@ -1,19 +1,31 @@
 package com.sbs.SmartBillingSystem.controllers;
 
 import com.sbs.SmartBillingSystem.Entity.Bill;
+import com.sbs.SmartBillingSystem.Entity.BillDetails;
+import com.sbs.SmartBillingSystem.Entity.Brand;
+import com.sbs.SmartBillingSystem.Entity.Category;
 import com.sbs.SmartBillingSystem.Entity.Challan;
 import com.sbs.SmartBillingSystem.Entity.Product;
+import com.sbs.SmartBillingSystem.Entity.User;
 import com.sbs.SmartBillingSystem.Entity.serializedObject.DesObjBillProduct;
 import com.sbs.SmartBillingSystem.Helper.InvoiveHelper;
+import com.sbs.SmartBillingSystem.Repository.BillDetailRepo;
 import com.sbs.SmartBillingSystem.Repository.BillRepo;
+import com.sbs.SmartBillingSystem.Repository.BrandRepo;
+import com.sbs.SmartBillingSystem.Repository.CategoryRepo;
 import com.sbs.SmartBillingSystem.Repository.ChallanRepo;
 import com.sbs.SmartBillingSystem.Repository.ProductRepo;
 
+import com.sbs.SmartBillingSystem.Repository.UserRepo;
 import jakarta.annotation.Resources;
-
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +33,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+
+import javax.mail.Session;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +46,40 @@ public class ctrService {
     ProductRepo productRepo;
     @Autowired
     ChallanRepo challanRepo;
+    @Autowired
+    UserRepo userRepo;
+    @Autowired
+    private EntityManager entityManager;
+    @Autowired
+    BrandRepo brandRepo;
+    @Autowired
+    CategoryRepo categoryRepo;
+    @Autowired
+    BillDetailRepo billDetailRepo;
+@Autowired
+BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @PostMapping("/setnewpassword")
+    public ResponseEntity<String> setnewpassword(@RequestParam String old, @RequestParam String newpass, HttpServletRequest request){
+        try {
+            User user = (User) request.getSession().getAttribute("currentUser");
+            boolean ismatch = bCryptPasswordEncoder.matches(old, user.getPassword());
+            if (ismatch) {
+                user.setPassword(bCryptPasswordEncoder.encode(newpass));
+                userRepo.save(user);
+
+                return new ResponseEntity<>("Success",HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Old Password not Matchhed",HttpStatus.NOT_FOUND);
+            }
+        }catch (Exception e)
+        {
+
+            return new ResponseEntity<>("Oops! Something went wrong. Please try again later...",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+
+    }
     @PostMapping("/printBarcode")
     public ResponseEntity<List<Product>> printbarcode(@RequestBody Map<String, String> requestBody) {
         String challanID = requestBody.get("challanID");
@@ -57,6 +104,7 @@ public class ctrService {
 
     }
 
+    //this is used is invoice page
     @PostMapping("/searchProduct")
     public ResponseEntity<?> serachProductEntity(@RequestBody Map<String, Object> details) {
         try {
@@ -65,9 +113,16 @@ public class ctrService {
             String qty = (String) details.get("qty");
             String existid = (String) details.get("exist_pid");
             String existqty = (String) details.get("exist_qty");
+            var billDetail_pid= details.get("billDetail_pid");
 
             Product product = productRepo.findById(Integer.parseInt(pid)).orElse(null);
             if (product != null) {
+                
+                float oldBillQty=0;
+            if (billDetail_pid!=null && billDetail_pid !="") {
+                BillDetails billDetails = billDetailRepo.findById(Integer.parseInt(billDetail_pid.toString())).get();
+               oldBillQty=billDetails.getQuantity();
+            }
 
                 float productqty = Float.parseFloat(qty),
                         availableqty = product.getQuantity();
@@ -77,19 +132,23 @@ public class ctrService {
                     availableqty = product.getQuantity() - Float.parseFloat(existqty);
                 }
 
-                if (Float.parseFloat(qty) <= availableqty) {
+                if (Float.parseFloat(qty) <= availableqty+oldBillQty) {
                     Product p = new Product();
                     p.setProduct_pid(product.getProduct_pid());
                     p.setStyle(product.getStyle());
                     p.setMrp(product.getMrp());
                     p.setQuantity(productqty);
                     p.setTotal_amount(product.getMrp() * p.getQuantity());
+                    p.setNetamount(p.getTotal_amount()- p.getTotal_amount()*product.getDiscountper()/100);
+                    p.setDiscountamt(p.getTotal_amount()*product.getDiscountper()/100);
+                    if(billDetail_pid!=null && billDetail_pid != "")
+                    p.setBillDetails_fid(billDetail_pid.toString());
 
                     return new ResponseEntity<>(p, HttpStatus.OK);
                 } else {
                     System.out.println("in elsblock");
                     return new ResponseEntity<>(
-                            "Available Quantity is Only " + availableqty,
+                            "Available Quantity is Only " + (availableqty+oldBillQty),
                             HttpStatus.NOT_FOUND);
                 }
 
@@ -122,5 +181,74 @@ public class ctrService {
     // return null;
 
     // }
+
+    // this is used in search product page 
+    @PostMapping("/getProductByParameter")
+    public ResponseEntity<?> getProductByParameter(@RequestBody Map<String,String> jsonObject)
+    {
+        
+        try{
+
+            int productPid =0;
+            int categoryID = 0;
+            int brandID = 0;
+            Brand brand=null;
+            Category category=null;
+        
+            if(jsonObject.get("id")!=null && jsonObject.get("id")!="")
+         productPid =Integer.parseInt(jsonObject.get("id"));
+         if(jsonObject.get("category")!=null && jsonObject.get("category")!="")
+         {
+         categoryID = Integer.parseInt(jsonObject.get("category"));
+         category=categoryRepo.findById(categoryID).get();
+         }
+         if(jsonObject.get("brand")!=null && jsonObject.get("brand")!=""){
+         brandID = Integer.parseInt(jsonObject.get("brand"));
+         brand=brandRepo.findById(brandID).get(); 
+        }
+          
+         
+
+        StringBuilder queryStringBuilder = new StringBuilder("SELECT p FROM Product p WHERE 1=1 ");
+
+        if (jsonObject.get("id") != null && jsonObject.get("id") != "") {
+            queryStringBuilder.append("AND p.product_pid = :productPid ");
+        }        
+        if (brand != null) {
+            queryStringBuilder.append("AND p.brand_fid = :brand ");
+        }
+        if (category != null) {
+            queryStringBuilder.append("AND p.category_fid = :category ");
+        }
+
+        TypedQuery<Product> query = entityManager.createQuery(queryStringBuilder.toString(), Product.class);
+
+        if (jsonObject.get("id") != null && jsonObject.get("id")!="") {
+            query.setParameter("productPid", productPid);
+        }
+       
+        if (brand != null) {
+            query.setParameter("brand", brand);
+        }
+        if (category != null) {
+            query.setParameter("category", category);
+        }
+        if(query.getResultList().size()>0)
+        return new ResponseEntity<>(query.getResultList(),HttpStatus.OK);
+        else
+        return new ResponseEntity<>("Product Not Found...",HttpStatus.NOT_FOUND);
+   
+
+    }catch(Exception e)
+    {
+
+        return new ResponseEntity<>("Products Not Found...",HttpStatus.NOT_FOUND);
+
+    }
+    
+
+        
+    
+    }
 
 }

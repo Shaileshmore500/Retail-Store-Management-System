@@ -8,6 +8,7 @@ import com.sbs.SmartBillingSystem.Entity.Product;
 public class DesObjBillProduct {
     private List<Product> product;
     private Bill bill;
+    
 
     public DesObjBillProduct() {
     }
@@ -28,4 +29,5 @@ public class DesObjBillProduct {
         this.bill = bill;
     }
 
+   
 }

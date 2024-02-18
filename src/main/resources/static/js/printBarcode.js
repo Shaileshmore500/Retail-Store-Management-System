@@ -51,7 +51,7 @@ if(response!=null && response.length>0)
     svgElement.setAttribute("jsbarcode-fontoptions", "bold");
 
     barcodeContainer.appendChild(svgElement);
-     $("#barcode" + counter).wrap("<tr><td><div style=''></div></td></tr>")
+     $("#barcode" + counter).wrap("<tr><td><div style='' class='innerdiv'></div></td></tr>")
 
     JsBarcode("#barcode" + counter, product.product_pid)
     
@@ -119,9 +119,27 @@ else{
       $("#btn_print").click(()=> {
         var printWindow = window.open('', '_blank');
         printWindow.document.open();
-        printWindow.document.write('<html><head><title>Print</title></head><body>');
+        printWindow.document.write(`<html><head><title>Print</title>
+        <style>
+        body div:nth-child(1){
+        display: flex;
+    flex-wrap: wrap;
+  }
+    body div div {
+    position: relative;
+    top: 2px;
+    bottom: 2px;
+    /* padding: 20px 60px 24px 60px; */
+    border: 1px solid black;
+    min-width: 225px;
+    margin: 3px;
+}
+        </style>
+        
+        
+        </head><body><div>`);
         printWindow.document.write($("#barcodetable").html());
-        printWindow.document.write('</body></html>');
+        printWindow.document.write('</div></body></html>');
         printWindow.document.close();
         printWindow.print();
       });

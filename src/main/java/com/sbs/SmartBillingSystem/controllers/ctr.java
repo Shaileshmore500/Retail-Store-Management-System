@@ -3,9 +3,14 @@ package com.sbs.SmartBillingSystem.controllers;
 import java.security.Principal;
 import java.util.*;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
+import org.springframework.data.jpa.repository.Query;
+
 import com.sbs.SmartBillingSystem.Entity.*;
 import com.sbs.SmartBillingSystem.Repository.*;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +42,12 @@ public class ctr {
     ProductRepo productRepo;
     @Autowired
     CustomerRepo customerRepo;
-    
-
+    @Autowired
+    BillRepo billRepo;
+    @Autowired
+    BillDetailRepo billDetailRepo;
+    @Autowired
+    EntityManager entityManager;
 
     @GetMapping("/home")
     public String homepage() {
@@ -53,11 +62,32 @@ public class ctr {
     }
 
     @GetMapping("/")
-    public String home(Principal principal,HttpServletRequest request) {
+    public String home(Principal principal, HttpServletRequest request) {
 
-        var a= principal.getName();
+        var a = principal.getName();
         request.getSession().removeAttribute("currentUser");
         request.getSession().setAttribute("currentUser", userRepo.getUserByUserName(a));
+try {
+   var abc=billRepo.findMonthlySalesByYear(2024);
+// Process the results as needed
+
+}catch (Exception e)
+{
+    System.out.println(e.getMessage());
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
         return "home";
     }
 
@@ -98,40 +128,27 @@ public class ctr {
         // model.addAttribute("errormessage", null);
         // model.addAttribute("sucmessage", null);
 
-        List<Category> categories= categoryRepo.findAll();
+        List<Category> categories = categoryRepo.findAll();
         model.addAttribute("data", categories);
         return "forms/CategoryForm";
     }
 
-    // @GetMapping("/nav")
-    // public String nav() {
-    // // Category cat = new Category();
-
-    // // cat.setCode("code");
-    // // cat.setName("name");
-
-    // // model.addAttribute("data", cat);
-
-    // return "navbar";
-    // }
-
     @GetMapping("/product")
     public String product(
-             @RequestParam String pid,Model model) {
+            @RequestParam String pid, Model model) {
 
-        Challan challan=new Challan();
-        List<Category> categories=new ArrayList<>();
-        List<Brand> brands=new ArrayList<>();
+        Challan challan = new Challan();
+        List<Category> categories = new ArrayList<>();
+        List<Brand> brands = new ArrayList<>();
         List<Product> products = new ArrayList<>();
-        List<Suppiler> suppilers=new ArrayList<>();
+        List<Suppiler> suppilers = new ArrayList<>();
         try {
-             categories = categoryRepo.findAll();
-             brands = brandRepo.findAll();
-             suppilers = supplierRepo.findAll();
+            categories = categoryRepo.findAll();
+            brands = brandRepo.findAll();
+            suppilers = supplierRepo.findAll();
             model.addAttribute("categories", categories);
             model.addAttribute("brands", brands);
             model.addAttribute("suppliers", suppilers);
-
 
             if (!pid.isEmpty()) {
                 // Challan challan= challanRepo.findById(Integer.parseInt(pid)).orElseThrow();
@@ -144,34 +161,28 @@ public class ctr {
                 if (challan != null) {
                     products = productRepo.findByChallan_fid(challan.getPartyChallan_pid());
 
-
                 }
 
             }
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
 
-
         }
-        if(products.size()==0)
-        {
-            Product product=new Product();
+        if (products.size() == 0) {
+            Product product = new Product();
             product.setName("product 1");
             products.add(product);
         }
-            model.addAttribute("challan", challan);
-            model.addAttribute("products", products);
-//redirectAttributes.addFlashAttribute("challan", challan);
-//        redirectAttributes.addFlashAttribute("products", products);
-//        redirectAttributes.addFlashAttribute("categories", categories);
-//        redirectAttributes.addFlashAttribute("brands", brands);
-//        redirectAttributes.addFlashAttribute("suppliers", suppilers);
-        //return "redirect:/addproduct";
+        model.addAttribute("challan", challan);
+        model.addAttribute("products", products);
+        // redirectAttributes.addFlashAttribute("challan", challan);
+        // redirectAttributes.addFlashAttribute("products", products);
+        // redirectAttributes.addFlashAttribute("categories", categories);
+        // redirectAttributes.addFlashAttribute("brands", brands);
+        // redirectAttributes.addFlashAttribute("suppliers", suppilers);
+        // return "redirect:/addproduct";
         return "forms/product";
     }
-
-
 
     @GetMapping("/brand")
     public String brand() {
@@ -179,7 +190,26 @@ public class ctr {
     }
 
     @GetMapping("/invoice")
-    public String invoice() {
+    public String invoice(@RequestParam String id, Model model) {
+        model.addAttribute("customer", customerRepo.findAll());
+
+        Bill bill = null;
+        List<BillDetails> billDetails = null;
+        try {
+
+            if (!id.isEmpty()) {
+                bill = billRepo.findById(Integer.parseInt(id)).get();
+                billDetails = billDetailRepo.getBillDetailsByBill_fid(bill);
+            }
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+
+        model.addAttribute("bill", bill);
+        model.addAttribute("billdetails", billDetails);
+
         return "forms/invoice";
     }
 
@@ -206,48 +236,59 @@ public class ctr {
     }
 
     @GetMapping("/searchProduct")
-    public String searchProduct() {
+    public String searchProduct(Model model) {
+
+        List<Category> categories = new ArrayList<>();
+        List<Brand> brands = new ArrayList<>();
+
+        try {
+            categories = categoryRepo.findAll();
+            brands = brandRepo.findAll();
+            model.addAttribute("categories", categories);
+            model.addAttribute("brands", brands);
+
+        } catch (Exception exception) {
+
+        }
+
         return "forms/searchProduct";
     }
 
     @GetMapping("/view")
     public String grid1(@RequestParam String form, Model model) {
 
-        if(form.toLowerCase()=="user")
-        {
-        List<User> users = userRepo.findAll();
-        model.addAttribute("data", users);
-        }
-        else if (form.toLowerCase().equals("category")) {
-            List<Category> categories=categoryRepo.findAll();
+        if (form.toLowerCase() == "user") {
+            List<User> users = userRepo.findAll();
+            model.addAttribute("data", users);
+        } else if (form.toLowerCase().equals("category")) {
+            List<Category> categories = categoryRepo.findAll();
             model.addAttribute("data", categories);
-            
-        }
-        else if (form.toLowerCase().equals("brand")) {
-            List<Brand> brands=brandRepo.findAll();
+
+        } else if (form.toLowerCase().equals("brand")) {
+            List<Brand> brands = brandRepo.findAll();
             model.addAttribute("data", brands);
 
-        }
-        else if (form.toLowerCase().equals("product")) {
+        } else if (form.toLowerCase().equals("product")) {
             model.addAttribute("data", productRepo.findAll());
-        }
-        else if (form.toLowerCase().equals("customer")) {
+        } else if (form.toLowerCase().equals("customer")) {
             model.addAttribute("data", customerRepo.findAll());
-        }
-        else if (form.toLowerCase().equals("catrgory")) {
-            model.addAttribute("data",categoryRepo.findAll());
-        }
-        else if (form.toLowerCase().equals("supplier")) {
-            model.addAttribute("data",supplierRepo.findAll());
-        }
-        else if (form.toLowerCase().equals("user")) {
-            model.addAttribute("data",userRepo.findAll());
-        }
-        else if (form.toLowerCase().equals("challan")) {
+        } else if (form.toLowerCase().equals("catrgory")) {
+            model.addAttribute("data", categoryRepo.findAll());
+        } else if (form.toLowerCase().equals("supplier")) {
+            model.addAttribute("data", supplierRepo.findAll());
+        } else if (form.toLowerCase().equals("user")) {
+            model.addAttribute("data", userRepo.findAll());
+        } else if (form.toLowerCase().equals("challan")) {
             model.addAttribute("data", challanRepo.findAll());
             return "/Grid/gridChallan";
+        } else if (form.equals("invoice")) {
+            var a = billRepo.findAll();
+            model.addAttribute("data", billRepo.findAll());
+            model.addAttribute("name", form);
+            return "/Grid/gridInvoice";
+
         }
-        model.addAttribute("name", form);   
+        model.addAttribute("name", form);
 
         return "/Grid/gid1";
     }
@@ -255,6 +296,17 @@ public class ctr {
     @GetMapping("/oldnav")
     public String old() {
         return "navbar copy";
+    }
+
+    @GetMapping("/ForgotPAssword")
+    public String ForgotPassword() {
+
+        return "forms/Forgot";
+    }
+
+    @GetMapping("/changepassword")
+    public String changepassword() {
+        return "forms/changepassword";
     }
 
 }

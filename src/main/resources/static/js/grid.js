@@ -50,20 +50,19 @@
 // }
 
 function jsonToDataTable(jsonData) {
-if(jsonData==null || jsonData.length<=0)
-{
-  //$(".page__body .container section")[1].append($("#empty-state"))
-  $("#EmptyStateModel").append($("#empty-state"))
-  $("#empty-state").show();
-  return;
-}
-let newKey = 'Action';
-let newValue = '<a  class="btn btn-primary m-1 view"><i class="btn-view"></i></a><a  class="btn btn-primary m-1 edit"><i class="btn-edit "></i></a><a  class="btn btn-danger  m-1 delete"><i class="btn-delete"></i> </a>';
+  if (jsonData == null || jsonData.length <= 0) {
+    //$(".page__body .container section")[1].append($("#empty-state"))
+    $("#EmptyStateModel").append($("#empty-state"))
+    $("#empty-state").show();
+    return;
+  }
+  let newKey = 'Action';
+  let newValue = '<a  class="btn btn-primary m-1 view"><i class="btn-view"></i></a><a  class="btn btn-primary m-1 edit"><i class="btn-edit "></i></a><a  class="btn btn-danger  m-1 delete"><i class="btn-delete"></i> </a>';
 
-// Loop through the array and add the new key-value pair to each object
-for (let i = 0; i < jsonData.length; i++) {
-  jsonData[i] = { [newKey]: newValue, ...jsonData[i] };
-}
+  // Loop through the array and add the new key-value pair to each object
+  for (let i = 0; i < jsonData.length; i++) {
+    jsonData[i] = { [newKey]: newValue, ...jsonData[i] };
+  }
 
 
 
@@ -91,14 +90,14 @@ for (let i = 0; i < jsonData.length; i++) {
 function displayStatus(status, mode) {
 
   if (status != null && status != '') {
-
-    if (status == "success") {
+0
+     if (status == "success" || status == "Success") {
       if (mode === "add")
         var msg = "Data added successfully..."
       else if (mode === "edit")
         msg = "Data edited successfully..."
-      else if(mode=="delete")
-      msg="Data deleted successfully..."
+      else if (mode == "delete")
+        msg = "Data deleted successfully..."
       else
         msg = "Success..."
       //  showToasty("<i class='fa-solid fa-square-check fa-shake fa-xl text-white'>&nbsp;&nbsp</i>", "bg-success", "Success...", "Success")       
@@ -109,7 +108,7 @@ function displayStatus(status, mode) {
         "Success"
       );
 
-    } else if (status == "error") {
+    } else if (status == "Error" || status == "error") {
       //  showToasty("<i class='fa-solid fa-triangle-exclamation fa-shake fa-xl text-white'>&nbsp;&nbsp;</i>", "bg-danger", "Something Went Wrong! Pleae Try Again Later...", "Error")
 
       showToasty(
@@ -125,7 +124,7 @@ function displayStatus(status, mode) {
 
 $(document).ready(() => {
 
-  $('form').submit(function(event) {
+  $('form').submit(function (event) {
     debugger;
     // Prevent the default form submission
     event.preventDefault();
@@ -135,7 +134,7 @@ $(document).ready(() => {
     $(this).unbind('submit').submit(); // Unbind the submit event and trigger the form submission
   });
   $(".edit,.view,.add,.delete").on('click', function () {
-//    $("#customloader").show();
+    //    $("#customloader").show();
     debugger
     let currentelement = this;
     $("#save").show();
@@ -154,20 +153,18 @@ $(document).ready(() => {
             for (let key in data) {
               if (data.hasOwnProperty(key)) {
 
-                if($(`[name=${key}]`).attr('type')=="Date")
-                {
-                  if(data[key]!=null && data[key] != "" )
-                  {
-                  var arr_date=data[key].split('-');
-                  $(`[name=${key}]`).val(`${arr_date[0]}-${arr_date[1]}-${arr_date[2].substring(0,2)}`);
-                  
+                if ($(`[name=${key}]`).attr('type') == "Date") {
+                  if (data[key] != null && data[key] != "") {
+                    var arr_date = data[key].split('-');
+                    $(`[name=${key}]`).val(`${arr_date[0]}-${arr_date[1]}-${arr_date[2].substring(0, 2)}`);
+
                   }
 
 
 
 
-                }else{
-                $(`[name=${key}]`).val(data[key]);
+                } else {
+                  $(`[name=${key}]`).val(data[key]);
                 }
               }
             }
@@ -192,19 +189,19 @@ $(document).ready(() => {
 
 
     }
-    else if (currentelement.classList.contains("delete"))
-    {
+    else if (currentelement.classList.contains("delete")) {
       $("#customloader").show();
       $.ajax({
         type: 'GET',
-        url: `/deleteItem?form=${new URLSearchParams(window.location.search).get("form")}&id=${$(currentelement).closest('tr').find('td:nth-child(2)').text()}`        ,
-        success : function(){
-          displayStatus("success", "delete")
+        url: `/deleteItem?form=${new URLSearchParams(window.location.search).get("form")}&id=${$(currentelement).closest('tr').find('td:nth-child(2)').text()}`,
+        success: function (data) {
+          displayStatus(data, "delete")
 
-         setTimeout(()=>window.location.reload(),1000)
-          
+
+          setTimeout(() => window.location.reload(), 1000)
+
         },
-        error : function(){
+        error: function () {
           displayStatus("error", "delete")
         }
 

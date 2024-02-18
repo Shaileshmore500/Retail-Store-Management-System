@@ -1,202 +1,366 @@
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<!-- <html xmlns="http://www.w3.org/1999/xhtml"> -->
 
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{navbar::layout(~{::section})}">
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid View</title>
 </head>
 
 <body>
     <section>
+        <!-- <link rel="stylesheet" href="" th:href="@{/css/grid.css}"> -->
+        <style>@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+
+
+
+
+
+            /* new css */
+            button {
+              padding: 10px 20px;
+              border: none;
+              background-color: #3498db;
+              color: #fff;
+              font-size: 18px;
+              cursor: pointer;
+              transition: background-color 0.2s;
+            }
+            
+            button:hover {
+              background-color: #2980b9;
+            }
+            
+            /* The Modal (background) */
+            .modal {
+              display: none;
+              position: fixed;
+              left: 0;
+              top: 0;
+              width: 100%;
+              height: 100%;
+              overflow: auto;
+              background-color: rgba(0, 0, 0, 0.7);
+            }
+            
+            /* Modal Content */
+            .modal-content {
+              position: relative;
+              background-color: #ffffff;
+              margin: 10% auto;
+              padding: 20px;
+              width: 50%;
+              border-radius: 8px;
+              box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.3);
+            }
+            
+            /* The Close Button */
+            .close {
+              color: #aaaaaa;
+              float: right;
+              font-size: 28px;
+              font-weight: bold;
+              cursor: pointer;
+              transition: color 0.2s;
+            }
+            
+            .close:hover,
+            .close:focus {
+              color: #ff5b5b;
+            }
+            
+            /* Modal Text */
+            p {
+              font-size: 18px;
+            }
+            /*  */
+            
+            
+            /* /----- Json Table Wrapper Styling-----/ */
+                #jsonTable_wrapper .row{
+                  flex-wrap:nowrap;
+                  /* width: 100%; */
+                  margin: 0 15px;
+                  margin-top:10px;
+                }
+                #jsonTable_wrapper div.row:nth-child(1) {
+                  align-items: center;
+                }
+                 /* Table Record Limit */
+                #jsonTable_wrapper div.row:nth-child(1) div:nth-child(1){
+                  flex: 0 1 ;
+                }
+                /* Button Group */
+                #jsonTable_wrapper div.row:nth-child(1) div:nth-child(2){
+                  flex: 1 ;
+                  padding-left:30px;
+                }
+                #jsonTable_wrapper div.row:nth-child(1) div{
+                  padding:0;
+                }
+                #jsonTable_wrapper div.row:nth-child(2){
+                  width:98%;
+                  overflow: auto;
+                  border: 2px solid #dee2e6;
+                  border-radius: 8px;
+                  background-color: #eff6ff;
+                  /* overflow-x: hidden; */
+                }
+                /* /ScrollBar Styling/ */
+                #jsonTable_wrapper div.row:nth-child(2)::-webkit-scrollbar {
+                  height: 6px;
+                  scrollbar-width: 5px;
+                }
+                /* Track */
+                #jsonTable_wrapper div.row:nth-child(2)::-webkit-scrollbar-track {
+                  /* background: #f1f1f1;  */
+                  background: #fff; 
+                }
+                /* Handle */
+                #jsonTable_wrapper div.row:nth-child(2)::-webkit-scrollbar-thumb {
+                  border-radius: 12px;
+                  /* height: 3px; */
+                  /* width: 6px; */
+                  background-color: #3b82f6;
+                  /* border:#3b82f6 solid 2px; */
+                }
+                /* Handle on hover */
+                #jsonTable_wrapper div.row:nth-child(2)::-webkit-scrollbar-thumb:active {
+                  background: gray; 
+                }
+            
+                #jsonTable_wrapper div.row:nth-child(2) div{
+                  padding: 0;
+                }
+            
+                /* #jsonTable_wrapper div.row:nth-child(3) {
+                  border:solid 2px lightgray;
+                  border-radius: 8px;
+                } */
+            
+                #jsonTable_wrapper div.row:nth-child(3)>div{
+                  /* border-right: solid 3px gray; */
+                  font-weight: 600;
+                  padding: 0;
+                  display: flex;
+                  justify-content: center;
+                  border:solid 3px lightgray;
+                  border-radius: 8px;
+                }
+                #jsonTable_info{
+                  padding:0;
+                  text-align: center;
+                  height: fit-content;
+                  align-self: center;
+                }
+               
+                div.dataTables_wrapper div.dataTables_filter label, div.dataTables_wrapper div.dataTables_length label {
+                  padding: 5px;
+                }
+                table.dataTable.table-sm .sorting:after, table.dataTable.table-sm .sorting_asc:after, table.dataTable.table-sm .sorting_desc:after,table.dataTable.table-sm .sorting:before, table.dataTable.table-sm .sorting_asc:before, table.dataTable.table-sm .sorting_desc:before
+                {
+                  top: 16px;
+                }
+                /* /----- Table Length Selector Styling-----/ */
+                #jsonTable_length{
+                  position: relative;
+                  font-family: 'Roboto';
+                }
+                #jsonTable_length label{
+                  position: absolute;
+                  right: 22px;
+                  top:4px;
+                  font-size: 14px;
+                  font-weight: 600;
+                  color: gray;
+                  
+                }
+            
+                #jsonTable_length select{
+                  border-radius: 8px;
+                  padding: 3px 0px;
+                  padding-left: 10px;
+                  padding-right: 130px;
+                  background-color: #eff6ff;
+                  font-weight: 600;
+                  color: gray;
+                  border: solid;
+                  border-color: #80bdff;
+                  min-width: 130px;
+                  min-height: 38px;
+                }
+            
+                #jsonTable_length select:focus + label{
+                  visibility: hidden;
+                }
+            
+                /* /----- Filter Search Bar Styling-----/ */
+                #jsonTable_filter{
+                  position: relative;
+                }
+                #jsonTable_filter label{
+                  /* 
+                  
+                  */
+                  position: absolute;
+                  right: 205px;
+                  margin-bottom: 0;
+                  font-weight: 600;
+                  color: gray;
+                  transition:all .125s ease-in-out; 
+                }
+                #jsonTable_searchInput{
+                  min-width: 250px;
+                  min-height: 38px;
+                  position: relative;
+                }
+                
+                /* /----- Json Table Styling-----/ */
+                #jsonTable{
+                  /* width: unset !important; */
+                  font-family: 'Roboto', sans-serif;
+                  margin:0 auto !important;
+                }
+                /* /Table Heading Column Styling/ */
+              
+                #jsonTable tbody tr:nth-child(2) th{
+                  font-size: 15px;
+                  background-color: #eff6ff;
+                }
+                /* /Default Styling/ */
+                #jsonTable thead tr:nth-child(1) th, #jsonTable{
+                  border : none;
+                }
+                .table-bordered td, .table-bordered th {
+                  border: unset;
+                }
+                .table tbody th {
+                  vertical-align: bottom;
+                  border-bottom: 2px solid #dee2e6;
+                  /* 
+                  border-top: 2px solid #dee2e6;
+                  */
+                }
+                #jsonTable tbody tr:nth-child(even){
+                  background-color: #fff;
+                }
+                #jsonTable tbody tr:nth-child(odd){
+                  background-color: #fff;
+                }
+                #jsonTable tbody tr:hover{
+                  background-color: rgb(219, 217, 217);
+                } 
+                #jsonTable tbody tr td{
+                  border-bottom: solid 1px lightgray;
+                  font-size: 15px;
+                }
+                #jsonTable tbody tr td:nth-child(1){
+                  /* max-width: 100px; */
+                  text-align: left;
+                  min-width: 193px;
+                }
+            
+              
+               
+             
+            /* th {
+                background-color: #000;
+                color: #fff
+            }
+
+            th,
+            td {
+                padding: 10px
+            }
+
+            tr:nth-child(odd) {
+                background-color: #f2f2f2
+            } */
+        </style>
+
         <link rel="stylesheet" th:href="@{/css/searchProduct.css}" />
         <script src="" th:href=@{/js/searchProduct.js}></script>
         <div class="container">
-            <div class="row" id="search">
-                <!-- <form id="search-form" action="" method="POST" enctype="multipart/form-data"> -->
-                <!-- <div class="form-group col-xs-9">
-                    <input class="form-control" type="text" placeholder="Search" />
-                </div> -->
+            <h1 class="text-center mt-3 mb-3">Search Product</h1>
+            <div class="row" id="search" style="padding-left: 2px;
+			padding-right: 14px;
+		">
 
-                <div class="form-group col-sm-3 col-xs-6">
-                    <input class="form-control" type="text" placeholder="Product ID" />
-                </div><div class="form-group col-sm-3 col-xs-6">
-                    <input class="form-control" type="text" placeholder="Product style" />
-                </div><div class="form-group col-sm-3 col-xs-6">
-                    <input class="form-control" type="text" placeholder="Product Bardode"/>
+                <div class="form-group col-sm-4 col-xs-6">
+                    <input class="form-control" type="number" id="html_id" placeholder="Product ID" />
                 </div>
+                <div class="form-group col-sm-4 col-xs-6">
+                    <select data-filter="make" id="html_cat" class="filter-make filter form-control">
+
+                        <option value="" selected>Select Category</option>
+                        <option th:each="c:${categories}" th:value="${c.category_pid}" th:text="${c.name+'-'+c.code}">
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-4 col-xs-6">
+                    <select data-filter="model" id="html_brand" class="filter-model filter form-control">
+                        <option value="">Select Brand</option>
+                        <option th:each="b:${brands}"
+                            th:selected="${product != null && product.brand_fid != null && product.brand_fid.brand_pid == b.brand_pid}"
+                            th:value="${b.brand_pid}" th:text="${b.code + ' - ' + b.name}"></option>
+
+                    </select>
+                </div>
+
             </div>
             <div class="row" id="filter">
 
-                <div class="form-group col-sm-3 col-xs-6">
-                    <select data-filter="make" class="filter-make filter form-control">
-                        <option value="">Select Make</option>
-                        <option value="">Show All</option>
-                    </select>
-                </div>
-                <div class="form-group col-sm-3 col-xs-6">
-                    <select data-filter="model" class="filter-model filter form-control">
-                        <option value="">Select Model</option>
-                        <option value="">Show All</option>
-                    </select>
-                </div>
-                <div class="form-group col-sm-3 col-xs-6">
-                    <select data-filter="type" class="filter-type filter form-control">
-                        <option value="">Select Type</option>
-                        <option value="">Show All</option>
-                    </select>
-                </div>
-               
+
                 <div class="form-group col-xs-3">
-                    <button type="submit" class="btn btn-block btn-primary">Search</button>
+                    <button type="" class="btn btn-block btn-primary" id="searchbtn">Search</button>
                 </div>
 
             </div>
-            <div class="row" id="products">
+
+            <!-- <table id="jsonTable" class="table table-striped table-bordered table-sm" style="width:99%;margin: 0 auto;">
+					
+					<thead>
+					</thead>
+					
+					<tbody>
+					</tbody>
+				</table> -->
+
+            <div id="tblEmployee"></div>
+
+        
+            <div id="EmptyStateModel"></div>
+
+
+
+
+        </div>
+        <div class="empty-state" id="empty-state" style="padding-top: 0px;">
+            <div class="empty-state__content">
+                <div class="empty-state__icon">
+                    <img th:src="@{/images/norecfound.gif}" alt="">
+                </div>
+                <div class="empty-state__message">We couldn't find any records matching your search. 
+                    <br>Please try again
+                    with different criteria</div>
 
             </div>
         </div>
-        <script>
-            var data = [
-	{
-		"make": "Gibson",
-		"model": "Les Paul",
-		"type": "Electric",
-		"price": "$3,000",
-		"image": "http://www.sweetwater.com/images/items/120/LPST5HTHDCH-medium.jpg?9782bd"
-	},
-	{
-		"make": "Gibson",
-		"model": "SG",
-		"type": "Electric",
-		"price": "$1,500",
-		"image": "http://www.sweetwater.com/images/items/120/SGSEBCH-medium.jpg?e69cfe"
-	},
-	{
-		"make": "Fender",
-		"model": "Telecaster",
-		"type": "Electric",
-		"price": "$2,000",
-		"image": "http://www.sweetwater.com/images/items/120/TelePLMPHB-medium.jpg?28e48b"
-	},
-	{
-		"make": "Fender",
-		"model": "Stratocaster",
-		"type": "Electric",
-		"price": "$2,000",
-		"image": "http://www.sweetwater.com/images/items/120/StratAMM3SB2-medium.jpg?dfd0a9"
-	},
-	{
-		"make": "Gretsch",
-		"model": "White Falcon",
-		"type": "Electric",
-		"price": "$5,000",
-		"image": "http://www.sweetwater.com/images/items/120/G613655GE-medium.jpg?9bfb0e"
-	},
-	{
-		"make": "Paul Reed Smith",
-		"model": "Custom 24",
-		"type": "Electric",
-		"price": "$5,000",
-		"image": "http://www.sweetwater.com/images/items/120/HBII10BGWB-medium.jpg?982763"
-	},
-	{
-		"make": "Gibson",
-		"model": "Hummingbird",
-		"type": "Acoustic",
-		"price": "$2,500",
-		"image": "http://www.sweetwater.com/images/items/120/SSHBHCNP-medium.jpg?11fbea"
-	}
-];
 
-var products = "",
-	makes = "",
-	models = "",
-	types = "";
 
-for (var i = 0; i < data.length; i++) {
-	var make = data[i].make,
-		model = data[i].model,
-		type = data[i].type,
-		price = data[i].price,
-		rawPrice = price.replace("$",""),
-		rawPrice = parseInt(rawPrice.replace(",","")),
-		image = data[i].image;
-	
-	//create product cards
-	products += "<div class='col-sm-4 product' data-make='" + make + "' data-model='" + model + "' data-type='" + type + "' data-price='" + rawPrice + "'><div class='product-inner text-center'><img src='" + image + "'><br />Make: " + make + "<br />Model: " + model + "<br />Type: " + type + "<br />Price: " + price + "</div></div>";
-	
-	//create dropdown of makes
-	if (makes.indexOf("<option value='" + make + "'>" + make + "</option>") == -1) {
-		makes += "<option value='" + make + "'>" + make + "</option>";
-	}
-	
-	//create dropdown of models
-	if (models.indexOf("<option value='" + model+"'>" + model + "</option>") == -1) {
-		models += "<option value='" + model + "'>" + model + "</option>";
-	}
-	
-	//create dropdown of types
-	if (types.indexOf("<option value='" + type + "'>" + type + "</option>") == -1) {
-		types += "<option value='" + type + "'>" + type + "</option>";
-	}
-}
 
-$("#products").html(products);
-$(".filter-make").append(makes);
-$(".filter-model").append(models);
-$(".filter-type").append(types);
+        <script th:src="@{/js/searchProduct.js}"></script>
+        <script th:inline="javascript">
 
-var filtersObject = {};
 
-//on filter change
-$(".filter").on("change",function() {
-	var filterName = $(this).data("filter"),
-		filterVal = $(this).val();
-	
-	if (filterVal == "") {
-		delete filtersObject[filterName];
-	} else {
-		filtersObject[filterName] = filterVal;
-	}
-	
-	var filters = "";
-	
-	for (var key in filtersObject) {
-	  	if (filtersObject.hasOwnProperty(key)) {
-			filters += "[data-"+key+"='"+filtersObject[key]+"']";
-	 	}
-	}
-	
-	if (filters == "") {
-		$(".product").show();
-	} else {
-		$(".product").hide();
-		$(".product").hide().filter(filters).show();
-	}
-});
 
-//on search form submit
-$("#search-form").submit(function(e) {
-	e.preventDefault();
-	var query = $("#search-form input").val().toLowerCase();
 
-	$(".product").hide();
-	$(".product").each(function() {
-		var make = $(this).data("make").toLowerCase(),
-			model = $(this).data("model").toLowerCase(),
-			type = $(this).data("type").toLowerCase();
 
-		if (make.indexOf(query) > -1 || model.indexOf(query) > -1 || type.indexOf(query) > -1) {
-			$(this).show();
-		}
-	});
-});
+
         </script>
-
     </section>
 </body>
 

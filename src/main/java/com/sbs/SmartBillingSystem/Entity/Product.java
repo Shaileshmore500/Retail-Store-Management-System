@@ -33,6 +33,16 @@ public class Product {
 	private Challan challan_fid;
 
 	private LocalDate createdDate;
+	@Transient
+	private String billDetails_fid;
+
+	public String getBillDetails_fid() {
+		return billDetails_fid;
+	}
+
+	public void setBillDetails_fid(String billDetails_fid) {
+		this.billDetails_fid = billDetails_fid;
+	}
 
 	@PrePersist
 	public void prePersist() {

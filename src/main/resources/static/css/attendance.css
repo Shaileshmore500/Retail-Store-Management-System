@@ -1,5 +1,5 @@
    
-th {
+#attendancetable th {
     background-color: #1c0c5b;;
     color: #fff;
     padding: 0.5em 1em;
@@ -7,21 +7,21 @@ th {
     font-weight: bolder;
 }
 
-td {
+#attendancetable td {
     border-top: 1px solid #eee;
     padding: 0.5em 1em;
 }
 
-input {
+#attendancetable input {
     cursor: pointer;
 }
 
 /* Column types */
-th.missed-col {
+#attendancetable th.missed-col {
     background-color: #f00;
 }
 
-td.missed-col {
+#attendancetable td.missed-col {
     background-color: #ffecec;
     color: #f00;
     text-align: center;
@@ -51,16 +51,16 @@ section {
 
 
 
-  th:first-child,
-  td:first-child,
-  th:last-child,
-  td:last-child {
+  #attendancetable th:first-child,
+  #attendancetable td:first-child,
+  #attendancetable th:last-child,
+  #attendancetable td:last-child {
     position: sticky;
     
     z-index: 1;
   }
 
-  th:first-child, td:first-child {
+  #attendancetable th:first-child,#attendancetable  td:first-child {
     left: 0;
     color: #fff;
     background-color: #1c0c5b;

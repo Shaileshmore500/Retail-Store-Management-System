@@ -23,10 +23,10 @@ public class emailctr {
 
  
 
-    @Autowired
-    SupplierRepo supplierRepo;
-    @Autowired
-    PurchaseOrderRepo purchaseOrderRepo;
+    // @Autowired
+    // SupplierRepo supplierRepo;
+    // @Autowired
+    // PurchaseOrderRepo purchaseOrderRepo;
 
 
 

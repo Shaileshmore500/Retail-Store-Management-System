@@ -16,6 +16,16 @@ public class BillDetails {
     private float discount_amount;
     private float discount_rate;
     private float net_amount;
+    private float total_amount;
+
+    public float getTotal_amount() {
+        return total_amount;
+    }
+
+    public void setTotal_amount(float total_amount) {
+        this.total_amount = total_amount;
+    }
+
     @OneToOne
     private Product product_fid;
     @OneToOne
