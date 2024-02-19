@@ -68,7 +68,7 @@ public class ctr {
         request.getSession().removeAttribute("currentUser");
         request.getSession().setAttribute("currentUser", userRepo.getUserByUserName(a));
 try {
-   var abc=billRepo.findMonthlySalesByYear(2024);
+   //var abc=billRepo.findMonthlySalesByYear(2024);
 // Process the results as needed
 
 }catch (Exception e)
