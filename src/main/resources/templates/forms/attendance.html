@@ -1,5 +1,4 @@
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- <!DOCTYPE html    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> -->
 
 <!-- <html xmlns="http://www.w3.org/1999/xhtml"> -->
 
@@ -15,46 +14,37 @@
         <link rel="stylesheet" th:href="@{/css/attendance.css}" />
         
         <h1> Attendance</h1>
+        <b th:text="${monthName}"></b>
+
 
         <table id="attendancetable">
             <thead>
                 <tr>
                     <th class="name-col">Student Name</th>                    
-            <th>1</th>
-            <th>2</th>
-            <th>3</th>
-            <th>4</th>
-            <th>5</th>
-            <th>6</th>
-            <th>7</th>
-            <th>8</th>
-            <th>9</th>
-            <th>10</th>
-            <th>11</th>
-            <th>12</th>
-            <th>13</th>
-            <th>14</th>
-            <th>15</th>
-            <th>16</th>
-            <th>17</th>
-            <th>18</th>
-            <th>19</th>
-            <th>20</th>
-            <th>21</th>
-            <th>22</th>
-            <th>23</th>
-            <th>24</th>
-            <th>25</th>
-            <th>26</th>
-            <th>27</th>
-            <th>28</th>
-            <th>29</th>
-            <th>30</th>
+            
+                    <!-- <th th:text="${at[0]['monthMaster_fid'].totalDays}"></th> -->
+                    <!-- <th th:each="day : ${#numbers.sequence(1, at!=null? at[0]['monthMaster_fid'].totalDays:1)}" th:text="${day}"></th> -->
+                    <!-- <th  th:each="day : ${#numbers.sequence(1,${at==null?30: at[0]['monthMaster_fid'].totalDays})}" th:text="${day}"></th> -->
+                    <!-- <th th:if="${dt!=null}" th:each="day : ${#numbers.sequence(1, ${at == null ? 30 : at[0]['monthMaster_fid'] == null ? 30 : at[0]['monthMaster_fid'].totalDays})}" th:text="${day}"></th> -->
+                    <th th:each="day : ${#numbers.sequence(1, totaldays)}" th:text="${day}"></th>
+
+
+
+
+                   
                     <th class="missed-col">Days Missed-col</th>
                 </tr>
             </thead>
-            <tbody>             
-                <tr class="student">
+            <tbody>  
+              <tr class="student" th:each="at:${at}">
+                
+                <td class="name" th:text="${at['user_fid']['name']}"></td>
+                <td class="name-col" th:text="${at['user_fid']['id']}" style="display: none;"></td>
+                
+                <td class="attend-col" th:each="m : ${#numbers.sequence(1,at['monthMaster_fid']['totalDays'])}"><input type="checkbox"></td>
+                <td class="missed-col">0</td>
+                </tr>           
+                <!-- <tr class="student">
                     <td class="name-col">Slappy the Frog</td>
                     <td class="attend-col"><input type="checkbox"></td>
                     <td class="attend-col"><input type="checkbox"></td>
@@ -223,12 +213,19 @@
                     <td class="attend-col"><input type="checkbox"></td>
                     <td class="attend-col"><input type="checkbox"></td>
                     <td class="missed-col">0</td>
-                </tr>
+                </tr> -->
             </tbody>
         </table>
         
-        <script>
-            (function () {
+        
+        <script th:inline="javascript">
+          debugger;
+            var a=/*[[${at}]]*/'';
+            
+            console.log(a);
+          debugger;
+           ( function () {
+            debugger;
     if (!localStorage.attendance) {
       console.log("Creating attendance records...");
       function getRandom() {
@@ -254,6 +251,9 @@
   /* STUDENT APPLICATION */
   $(
     (function () {
+      debugger;
+
+
       var attendance = JSON.parse(localStorage.attendance),
         $allMissed = $("tbody .missed-col"),
         $allCheckboxes = $("tbody input");
@@ -289,6 +289,7 @@
   
       // When a checkbox is clicked, update localStorage
       $allCheckboxes.on("click", function () {
+        debugger;
         var studentRows = $("tbody .student"),
           newAttendance = {};
   

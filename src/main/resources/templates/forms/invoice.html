@@ -21,14 +21,17 @@
 
 <body>
   <section>
+    
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <link rel="stylesheet" th:href="@{/css/printInvoice.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/invoiveForm.css}" />
     <!-- <link rel="stylesheet" th:href="@{/css/ProductForm.css}" /> -->
-    <div class="form-floating col-md-6 mx-auto mb-3 text-center col-4 aligh-center">
+    <div class="form-floating col-md-6 mx-auto mb-3 text-center col-4 aligh-center  in">
       <h2>Invoice</h2>
     </div>
 
-    <div class="panel mlr-15" style="height: 185px" id="pnl_invoiceDetails">
+    <div class="panel mlr-15 in" style="height: 185px" id="pnl_invoiceDetails">
 
       <div class="panel-header">Invoice Details</div>
       <div class="container ">
@@ -68,7 +71,7 @@
             <label for="floatingInput mr-5" class="ml-15 md_lbl">Payment Type</label>
             <span class="_error" style="width: auto;left: 23px;"></span>
           </div>
-          <div class="form-floating mb-3 col-7 mandatory">
+          <div class="form-floating mb-3 col-7 ">
             <select class="form-select form-select-lg mb-3" id="html_customer" style="padding-top: 15px !important;"
               aria-label=".form-select-lg example" data-field="brand_fid">
               <option value="">Customer</option>
@@ -91,7 +94,7 @@
     </div>
 
 
-    <div class="panel mlr-15 mt-5" id="addProduct">
+    <div class="panel mlr-15 mt-5 in" id="addProduct">
       <div class="panel-header">Product Details</div>
       <div class="container ">
 
@@ -188,8 +191,8 @@
       </div>
 
     </div>
-    <div class="d-flex mb-2 btn-div mt-5">
-      <button class="noselect btn_del ml" id="btn_cancle">
+    <div class="d-flex mb-2 btn-div mt-5 in">
+      <button class="noselect btn_del ml  in" id="btn_cancle">
         <span class="text">Cancel</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24"
             height="24" viewBox="0 0 24 24">
             <path
@@ -197,7 +200,7 @@
             </path>
           </svg></span>
       </button>
-      <button class="noselect btn_add ml" id="btn_generateInvoice" style="display: none;">
+      <button class="noselect btn_add ml in" id="btn_generateInvoice" >
         <span class="text">Genarate</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" height="1em"
             viewBox="0 0 512 512">
             <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -206,6 +209,7 @@
           </svg></span>
       </button>
     </div>
+    <div id="Invoice"></div>
 
 
 
@@ -213,6 +217,25 @@
     <script th:inline="javascript">
       $(document).ready(function () {
         debugger;
+
+
+
+        if(!new URLSearchParams(window.location.search).get("mode")||new URLSearchParams(window.location.search).get("mode")=='edit')
+        {
+          $("#btn_generateInvoice").show();
+
+        }
+        else{
+          $("#btn_generateInvoice").hide();
+        }
+
+
+
+
+
+
+
+
         var obj_products = {};
         var bill =/*[[${bill}]]*/'';
         var billdetail =/*[[${billdetails}]]*/'';
@@ -250,11 +273,7 @@
 
 
         buildTable(obj_product);
-        if(new URLSearchParams(window.location.search).get("mode")=='edit')
-        {
-          $("#btn_generateInvoice").show();
-
-        }
+        
         
 
 

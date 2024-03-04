@@ -118,7 +118,7 @@ else{
       // Function to trigger printing of an element
       $("#btn_print").click(()=> {
         var printWindow = window.open('', '_blank');
-        printWindow.document.open();
+        // printWindow.document.open();
         printWindow.document.write(`<html><head><title>Print</title>
         <style>
         body div:nth-child(1){

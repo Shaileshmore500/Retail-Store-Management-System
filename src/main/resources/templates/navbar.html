@@ -32,7 +32,7 @@
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-
+    
     <script th:src=@{/js/script.js}></script>
     <!-- <link rel="stylesheet" th:href="@{/css/nav.css}" />
     <link rel="stylesheet" th:href="@{/css/form.css}" />
@@ -63,8 +63,9 @@
       <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
       <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
       <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
-
-
+      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		
+      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body>
@@ -215,8 +216,8 @@
                             <div class="collapse" id="Create2">
                                 <ul class="nav nav-collapse">
                                     <li><a th:href="@{/invoice?id=}"><i class="fa-solid fa-receipt"></i>Generate</a></li>
-                                    <li><a th:href="@{/invoice?id=1052}"><i class="fa-solid fa-layer-group"></i>Return Bill2 </a></li>
-                                    <li><a th:href="@{/}"><i class="fa-brands fa-product-hunt"></i>Cancle Bill2 </a></li>
+                                    <!-- <li><a th:href="@{/invoice?id=1052}"><i class="fa-solid fa-layer-group"></i>Return Bill2 </a></li>
+                                    <li><a th:href="@{/}"><i class="fa-brands fa-product-hunt"></i>Cancle Bill2 </a></li> -->
                                     <li><a th:href="@{/view?form=invoice&mode=Return}"><i class="fa-solid fa-layer-group"></i>Return Bill </a></li>
                                         <li><a th:href="@{/view?form=invoice&mode=Cancel}"><i class="fa-brands fa-product-hunt"></i>Cancel Bill </a></li>
 
@@ -461,6 +462,8 @@
         </table>
 
     </div>
+    
+
     <script th:src=@{js/navbarjs/jquery.3.2.1.min.js}></script>
     <script th:src=@{js/navbarjs/jquery-ui.min.js}></script>
     <script th:src=@{js/navbarjs/jquery.scrollbar.min.js}></script>

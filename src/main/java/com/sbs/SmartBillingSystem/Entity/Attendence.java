@@ -3,13 +3,16 @@ package com.sbs.SmartBillingSystem.Entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Attendence {
     @Id
     @GeneratedValue
     private int attendence_pid;
+    @OneToOne
     private User user_fid;
+@OneToOne
     private MonthMaster monthMaster_fid;
     private String attendenceJson;
 

@@ -1,4 +1,12 @@
 
+function displayLoader(action)
+{
+  if(action)
+  $(".customloader").show();
+else
+$(".customloader").hide();
+}
+
 function showToasty(icon, bgclass, message, stat) {
   debugger;
   $(".customloader").hide();

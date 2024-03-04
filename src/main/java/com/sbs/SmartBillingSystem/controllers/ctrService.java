@@ -1,5 +1,8 @@
 package com.sbs.SmartBillingSystem.controllers;
 
+import com.razorpay.Order;
+import com.razorpay.RazorpayClient;
+import com.razorpay.RazorpayException;
 import com.sbs.SmartBillingSystem.Entity.Bill;
 import com.sbs.SmartBillingSystem.Entity.BillDetails;
 import com.sbs.SmartBillingSystem.Entity.Brand;
@@ -8,7 +11,7 @@ import com.sbs.SmartBillingSystem.Entity.Challan;
 import com.sbs.SmartBillingSystem.Entity.Product;
 import com.sbs.SmartBillingSystem.Entity.User;
 import com.sbs.SmartBillingSystem.Entity.serializedObject.DesObjBillProduct;
-import com.sbs.SmartBillingSystem.Helper.InvoiveHelper;
+
 import com.sbs.SmartBillingSystem.Repository.BillDetailRepo;
 import com.sbs.SmartBillingSystem.Repository.BillRepo;
 import com.sbs.SmartBillingSystem.Repository.BrandRepo;
@@ -17,12 +20,17 @@ import com.sbs.SmartBillingSystem.Repository.ChallanRepo;
 import com.sbs.SmartBillingSystem.Repository.ProductRepo;
 
 import com.sbs.SmartBillingSystem.Repository.UserRepo;
+import com.sbs.SmartBillingSystem.Services.InvoiceService;
+
 import jakarta.annotation.Resources;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.servlet.http.HttpServletRequest;
+
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -58,7 +66,10 @@ public class ctrService {
     BillDetailRepo billDetailRepo;
 @Autowired
 BCryptPasswordEncoder bCryptPasswordEncoder;
-
+// @Autowired
+// InvoiveHelper invoiveHelper;
+@Autowired
+InvoiceService invoiceService;
     @PostMapping("/setnewpassword")
     public ResponseEntity<String> setnewpassword(@RequestParam String old, @RequestParam String newpass, HttpServletRequest request){
         try {
@@ -250,5 +261,59 @@ BCryptPasswordEncoder bCryptPasswordEncoder;
         
     
     }
+   
+    @PostMapping("Create-Payment-Order")
+    //public String createPayment(@RequestBody List<Product> productList) throws RazorpayException ,Exception
+    public ResponseEntity<String> createPaymentOrder(@RequestBody DesObjBillProduct billProduct)
+        {
+            try {
+                
+            
+            List<Product> productList=billProduct.getProduct();
+            List<String> errorList = invoiceService.validateinvoice(productList);
+
+
+            if(errorList.size()>0)
+            {
+                return new ResponseEntity<String>(errorList.toString(), HttpStatus.CONFLICT);
+            }
+
+            float amount=0;
+             for(Product p : productList)
+             {
+                 amount+=p.getNetamount();
+
+             }
+
+
+
+
+		int amt=(int) amount;
+        //Integer.parseInt(data.get("amount").toString());
+		
+		var client=new RazorpayClient("rzp_test_2A5WF7VAuSATXf", "apGC4z6uGpKglolXxj0Ahuap");
+		
+		JSONObject ob=new JSONObject();
+		ob.put("amount", amt*100);
+		ob.put("currency", "INR");
+		ob.put("receipt", "txn_235425");
+		
+		//creating new order
+		
+		Order order = client.Orders.create(ob);
+		System.out.println(order);
+		
+		//if you want you can save this to your data..		
+		//return order.toString();
+        return new ResponseEntity<String>(order.toString(), HttpStatus.OK);
+        
+    } catch (Exception e) {
+       return new ResponseEntity<>("Something Went Wrong...",HttpStatus.BAD_REQUEST);
+    }
+        
+       
+
+    }
+    
 
 }

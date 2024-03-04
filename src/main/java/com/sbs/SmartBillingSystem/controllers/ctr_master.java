@@ -48,9 +48,10 @@ import com.sbs.SmartBillingSystem.Repository.PurchaseOrderRepo;
 import com.sbs.SmartBillingSystem.Repository.SupplierRepo;
 import com.sbs.SmartBillingSystem.Repository.UserRepo;
 import com.sbs.SmartBillingSystem.Services.EmailService;
+import com.sbs.SmartBillingSystem.Services.InvoiceService;
 import com.sbs.SmartBillingSystem.Entity.serializedObject.*;
 //<<<<<<< HEAD
-import com.sbs.SmartBillingSystem.Helper.InvoiveHelper;
+
 import org.springframework.web.multipart.MultipartFile;
 //>>>>>>> bd73ce8323737b0d97e12ef35a3914d69be88555
 //=======
@@ -72,8 +73,10 @@ public class ctr_master {
     SupplierRepo supplierRepo;
     @Autowired
     ChallanRepo challanRepo;
+    // @Autowired
+    // InvoiveHelper invoiveHelper;
     @Autowired
-    InvoiveHelper invoiveHelper;
+    InvoiceService invoiceService;
     @Autowired
     BillRepo billRepo;
     @Autowired
@@ -89,18 +92,16 @@ public class ctr_master {
     UserRepo userRepo;
     @Autowired
     BillDetailRepo billDetailRepo;
-   private EmailService emailService;
-   
-   public ctr_master(EmailService emailService) {
-    this.emailService = emailService;
-}
+    private EmailService emailService;
 
+    public ctr_master(EmailService emailService) {
+        this.emailService = emailService;
+    }
 
-    
-// private final ObjectMapper objectMapper;
+    // private final ObjectMapper objectMapper;
     // @Autowired
     // public ctr_master( ObjectMapper objectMapper) {
-    //     this.objectMapper = objectMapper;
+    // this.objectMapper = objectMapper;
     // }
 
     @PostMapping("/master/savecat")
@@ -129,118 +130,117 @@ public class ctr_master {
     @PostMapping("/master/saveproduct")
     public ResponseEntity<String> saveProduct(@RequestBody DesObjChallanProduct desObjChallanProduct)
             throws ParseException {
-       try {
+        try {
 
+            DesObjChallan desObjChallan = desObjChallanProduct.getDesObjChallan();
+            List<DesObjProduct> desObjProduct = desObjChallanProduct.getDesObjProduct();
+            System.out.println("in product 1234");
+            System.out.println(desObjChallan);
+            // setting values in challan object
+            Challan challan = new Challan();
 
+            Optional<Suppiler> supplierOptional = supplierRepo
+                    .findById(Integer.parseInt(desObjChallan.getSupplier_fid()));
+            Suppiler suppiler = supplierOptional.orElseThrow(() -> new RuntimeException("Supplier not found"));
+            challan.setSupplier_fid(suppiler);
+            challan.setAmount(Float.parseFloat(desObjChallan.getAmount()));
+            challan.setChallan_date(new SimpleDateFormat("yyyy-MM-dd").parse(desObjChallan.getChallan_date()));
+            challan.setChallan_no(desObjChallan.getChallan_no());
+            challan.setPurchase_date(new Date());
+            challan.setQuantity(desObjChallan.getQuantity());
 
-        DesObjChallan desObjChallan = desObjChallanProduct.getDesObjChallan();
-        List<DesObjProduct> desObjProduct = desObjChallanProduct.getDesObjProduct();
-        System.out.println("in product 1234");
-        System.out.println(desObjChallan);
-        // setting values in challan object
-        Challan challan = new Challan();
+            if (desObjChallan.getPartyChallan_pid() >= 0)
+                challan.setPartyChallan_pid(desObjChallan.getPartyChallan_pid());
 
-        Optional<Suppiler> supplierOptional = supplierRepo.findById(Integer.parseInt(desObjChallan.getSupplier_fid()));
-        Suppiler suppiler = supplierOptional.orElseThrow(() -> new RuntimeException("Supplier not found"));
-        challan.setSupplier_fid(suppiler);
-        challan.setAmount(Float.parseFloat(desObjChallan.getAmount()));
-        challan.setChallan_date(new SimpleDateFormat("yyyy-MM-dd").parse(desObjChallan.getChallan_date()));
-        challan.setChallan_no(desObjChallan.getChallan_no());
-        challan.setPurchase_date(new Date());
-        challan.setQuantity(desObjChallan.getQuantity());
+            Challan savedChallan = challanRepo.save(challan);
 
-        if(desObjChallan.getPartyChallan_pid()>=0)
-        challan.setPartyChallan_pid(desObjChallan.getPartyChallan_pid());
+            // setting values in product object
+            List<Product> lst_Products = new ArrayList<Product>();
 
-        Challan savedChallan = challanRepo.save(challan);
+            for (DesObjProduct objproduct : desObjProduct) {
+                Product p = new Product();
+                Optional<Category> categoryoptional = categoryRepo.findById(objproduct.getCategory_fid());
+                Category category = categoryoptional.orElseThrow(() -> new RuntimeException("Category not found"));
 
-        // setting values in product object
-        List<Product> lst_Products = new ArrayList<Product>();
+                Optional<Brand> brandoptional = brandRepo.findById(objproduct.getBrand_fid());
+                Brand brand = brandoptional.orElseThrow(() -> new RuntimeException("Brand not found"));
 
-        for (DesObjProduct objproduct : desObjProduct) {
-            Product p = new Product();
-            Optional<Category> categoryoptional = categoryRepo.findById(objproduct.getCategory_fid());
-            Category category = categoryoptional.orElseThrow(() -> new RuntimeException("Category not found"));
+                if (objproduct.getProduct_pid() >= 0)
+                    p.setProduct_pid(objproduct.getProduct_pid());
 
-            Optional<Brand> brandoptional = brandRepo.findById(objproduct.getBrand_fid());
-            Brand brand = brandoptional.orElseThrow(() -> new RuntimeException("Brand not found"));
+                p.setName(objproduct.getName());
+                p.setCode(objproduct.getCode());
+                p.setCategory_fid(category);
+                p.setPurchase_rate(objproduct.getPurchase_rate());
+                p.setMrp(objproduct.getMrp());
+                p.setBrand_fid(brand);
+                p.setQuantity(objproduct.getQuantity());
+                p.setTotal_amount(objproduct.getQuantity() * objproduct.getPurchase_rate());
+                p.setChallan_fid(savedChallan);
+                p.setStyle(suppiler.getCode().toString().substring(0, Math.min(suppiler.getCode().length(), 3)) + "-"
+                        + brand.getCode().substring(0, Math.min(brand.getCode().length(), 3)) + "-"
+                        + category.getCode().substring(0, Math.min(category.getCode().length(), 3))
+                        + "#" + p.getSize());
+                lst_Products.add(p);
 
-           if(objproduct.getProduct_pid()>=0)
-           p.setProduct_pid(objproduct.getProduct_pid());
-           
-            p.setName(objproduct.getName());
-            p.setCode(objproduct.getCode());
-            p.setCategory_fid(category);
-            p.setPurchase_rate(objproduct.getPurchase_rate());
-            p.setMrp(objproduct.getMrp());
-            p.setBrand_fid(brand);
-            p.setQuantity(objproduct.getQuantity());
-            p.setTotal_amount(objproduct.getQuantity() * objproduct.getPurchase_rate());
-            p.setChallan_fid(savedChallan);
-            p.setStyle(suppiler.getCode().toString().substring(0, Math.min(suppiler.getCode().length(), 3)) + "-"
-                    + brand.getCode().substring(0, Math.min(brand.getCode().length(), 3)) + "-"
-                    + category.getCode().substring(0, Math.min(category.getCode().length(), 3))
-                    + "#" + p.getSize());
-            lst_Products.add(p);
+            }
+            productRepo.saveAll(lst_Products);
+            System.out.println("saves");
+            // Map<String, Object> jsonMap = objectMapper.readValue(jsonString, Map.class);
 
+            // // Now you have a Map representing the JSON object
+            // // You can access values using keys
+            // String name = (String) jsonMap.get("name");
+            // var age = jsonMap.get("age");
+
+            // List<Product> products = new ArrayList<Product>();
+            // for (Product product : lstProduct) {
+
+            // Category c = product.getCategory_fid();
+            // System.out.println("----------------------------------" +
+            // c.getCategory_pid());
+
+            // Optional<Category> categoryoptional =
+            // categoryRepo.findById(c.getCategory_pid());
+            // Category category = categoryoptional.orElseThrow(() -> new
+            // RuntimeException("Category not found"));
+            // product.setCategory_fid(category);
+
+            // Brand b = product.getBrand_fid();
+            // Optional<Brand> brandoptional = brandRepo.findById(b.getBrand_pid());
+            // Brand brand = brandoptional.orElseThrow(() -> new RuntimeException("Brand not
+            // found"));
+            // product.setBrand_fid(brand);
+
+            // products.add(product);
+            // }
+
+            // Optional<Category> categoryOptional = categoryRepo.findById(1);
+
+            // // Convert Optional<Category> to Category instance
+            // // converting and setting category
+            // // Category category = categoryOptional.orElseThrow(() -> new
+            // // RuntimeException("Category not found"));
+            // lstProduct.get(0).setCategory_fid(category);
+
+            // System.out.println(lstProduct.get(0).getName());
+            // System.out.println("in product save");
+            // productRepo.save(lstProduct);
+            return ResponseEntity.ok("ok");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-        productRepo.saveAll(lst_Products);
-        System.out.println("saves");
-        // Map<String, Object> jsonMap = objectMapper.readValue(jsonString, Map.class);
-
-        // // Now you have a Map representing the JSON object
-        // // You can access values using keys
-        // String name = (String) jsonMap.get("name");
-        // var age = jsonMap.get("age");
-
-        // List<Product> products = new ArrayList<Product>();
-        // for (Product product : lstProduct) {
-
-        // Category c = product.getCategory_fid();
-        // System.out.println("----------------------------------" +
-        // c.getCategory_pid());
-
-        // Optional<Category> categoryoptional =
-        // categoryRepo.findById(c.getCategory_pid());
-        // Category category = categoryoptional.orElseThrow(() -> new
-        // RuntimeException("Category not found"));
-        // product.setCategory_fid(category);
-
-        // Brand b = product.getBrand_fid();
-        // Optional<Brand> brandoptional = brandRepo.findById(b.getBrand_pid());
-        // Brand brand = brandoptional.orElseThrow(() -> new RuntimeException("Brand not
-        // found"));
-        // product.setBrand_fid(brand);
-
-        // products.add(product);
-        // }
-
-        // Optional<Category> categoryOptional = categoryRepo.findById(1);
-
-        // // Convert Optional<Category> to Category instance
-        // // converting and setting category
-        // // Category category = categoryOptional.orElseThrow(() -> new
-        // // RuntimeException("Category not found"));
-        // lstProduct.get(0).setCategory_fid(category);
-
-        // System.out.println(lstProduct.get(0).getName());
-        // System.out.println("in product save");
-        // productRepo.save(lstProduct);
-        return ResponseEntity.ok("ok");
-       }catch (Exception e)
-       {
-           e.printStackTrace();
-           return  ResponseEntity.badRequest().body(e.getMessage());
-       }
     }
 
     @PostMapping("/master/savebrand")
-    public String saveBrand(@RequestParam String brand_pid, @RequestParam String name, @RequestParam String code, Model model) {
+    public String saveBrand(@RequestParam String brand_pid, @RequestParam String name, @RequestParam String code,
+            Model model) {
         Brand brand = new Brand();
         brand.setCode(code);
         brand.setName(name);
-        if(!brand_pid.isEmpty())
-        brand.setBrand_pid(Integer.parseInt(brand_pid));
+        if (!brand_pid.isEmpty())
+            brand.setBrand_pid(Integer.parseInt(brand_pid));
         try {
             brandRepo.save(brand);
             model.addAttribute("sucmessage", "Brand Added...");
@@ -252,10 +252,10 @@ public class ctr_master {
             // model.addAttribute("data", brand);
 
         }
-        List<Brand> brands=brandRepo.findAll();
+        List<Brand> brands = brandRepo.findAll();
         model.addAttribute("data", brands);
         model.addAttribute("name", "brannd");
-         return "/Grid/gid1";
+        return "/Grid/gid1";
     }
 
     @PostMapping("/master/savesupplier")
@@ -297,7 +297,7 @@ public class ctr_master {
 
             List<Product> productList = billProduct.getProduct();
 
-            List<String> errorList = invoiveHelper.validateinvoice(productList);
+            List<String> errorList = invoiceService.validateinvoice(productList);
 
             if (errorList.size() > 0) {
                 return new ResponseEntity<>(errorList, HttpStatus.NOT_FOUND);
@@ -314,16 +314,16 @@ public class ctr_master {
 
             Bill bill2 = billRepo.save(bill);
 
-            boolean updateStatus = invoiveHelper.updateProduct(productList, bill2);
-            List<BillDetails> billDetails=billDetailRepo.getBillDetailsByBill_fid(bill2);
-            Map<String,Object> resMap=new HashMap<>();
-            resMap.put("BIll", bill2);
-            resMap.put("BillDetails", billDetails);
+            boolean updateStatus = invoiceService.updateProduct(productList, bill2);
+            // List<BillDetails> billDetails = billDetailRepo.getBillDetailsByBill_fid(bill2);
+            // Map<String, Object> resMap = new HashMap<>();
+            // resMap.put("BIll", bill2);
+            // resMap.put("BillDetails", billDetails);
 
-
-            if (updateStatus)
-                return new ResponseEntity<>(resMap, HttpStatus.OK);
-
+            if (updateStatus) {
+                var invoicehtml=invoiceService.printIncoice(bill2);
+                return new ResponseEntity<>(invoicehtml, HttpStatus.OK);
+            }
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
 
@@ -361,7 +361,7 @@ public class ctr_master {
                 if (resourcesPath == null)
                     user.setImageUrl("default.png");
                 else
-                    user.setImageUrl("/images/"+timestamp + file.getOriginalFilename());
+                    user.setImageUrl("/images/" + timestamp + file.getOriginalFilename());
                 ;
 
             }
@@ -382,8 +382,6 @@ public class ctr_master {
 
     }
 
-    
-
     @PostMapping("/savePO")
     public ResponseEntity<?> savePO(@RequestParam("file") MultipartFile file, @RequestParam String ponumber,
             @RequestParam String supplier_fid,
@@ -395,9 +393,7 @@ public class ctr_master {
             @RequestParam String qty, @RequestParam String note) {
         try {
 
-
-
-         byte[] attchment = file.getInputStream().readAllBytes();
+            byte[] attchment = file.getInputStream().readAllBytes();
             PurchaseOrder order = new PurchaseOrder();
             Suppiler suppiler = supplierRepo.findById(Integer.parseInt(supplier_fid)).orElseThrow();
             order.setSuppiler_fid(suppiler);
@@ -413,51 +409,69 @@ public class ctr_master {
             var receiver = suppiler.getEmail();
             var subject = "Purchase Order ";
             var filename = file.getOriginalFilename();
-            StringBuilder body_Builder=new StringBuilder();
-            SimpleDateFormat format=new SimpleDateFormat("dd/MM/yyyy");
+            StringBuilder body_Builder = new StringBuilder();
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
-            body_Builder.append("Dear "+suppiler.getName()+",\r\n" + //
-            "\r\n" + 
-            "I trust this email finds you well. We are excited to place a purchase order with your company for the following items:\r\n" + //
-"Total Estimated Purchase Order Quantity : "+order.getQuantity()+
-            "Total Estimated Purchase Order Cost: " + order.getAmount()+ //
-            "\r\n" + //
-            "Please find attached the detailed Purchase Order document containing specifications, terms, and conditions. Kindly review the document thoroughly, and confirm your acceptance at your earliest convenience.\r\n" + //
-            "\r\n" + //
-            "Attachment: [Attach the Purchase Order document]\r\n" + 
-            "\r\n" + 
-            "Delevery Note : "+order.getNotes()+
-            "\r\n" + //
+            body_Builder.append("Dear " + suppiler.getName() + ",\r\n" + //
+                    "\r\n" +
+                    "I trust this email finds you well. We are excited to place a purchase order with your company for the following items:\r\n"
+                    + //
+                    "Total Estimated Purchase Order Quantity : " + order.getQuantity() +
+                    "Total Estimated Purchase Order Cost: " + order.getAmount() + //
+                    "\r\n" + //
+                    "Please find attached the detailed Purchase Order document containing specifications, terms, and conditions. Kindly review the document thoroughly, and confirm your acceptance at your earliest convenience.\r\n"
+                    + //
+                    "\r\n" + //
+                    "Attachment: [Attach the Purchase Order document]\r\n" +
+                    "\r\n" +
+                    "Delevery Note : " + order.getNotes() +
+                    "\r\n" + //
 
-            "Delivery Date : "+format.format(order.getDueDate())+"\r\n" + //
-            "Delivery Location: [Provide the delivery address]\r\n" + //
-            "Should there be any discrepancies or if you require further details, please do not hesitate to contact us promptly.\r\n" + //
-            "\r\n" + //
-            "Your swift attention to this matter is highly appreciated. We anticipate a successful collaboration and thank you for your cooperation.\r\n" + //
-            "\r\n" + //
-            "Best regards,\r\n" + //
-            "\r\n" + //
-            "[Your Full Name]\r\n" + //
-            "[Your Position]\r\n" + //
-            "[Your Company Name]\r\n" + //
-            "[Your Contact Information]");
-// body_Builder.append("<p>Dear "+suppiler.getName()+",\r\n </p>"+
-// "<p>I trust this email finds you well. We are delighted to inform you that we have decided to proceed with a purchase order from your esteemed company. The details are as follows:</p>"
-// +"<p><strong>Total Estimated Purchase Order Quantity:</strong> "+order.getQuantity()+"</p>"
-// +"<p><strong>Total Estimated Purchase Order Cost:</strong> "+order.getAmount()+"</p>"
-// +"<p>Please refer to the attached Purchase Order document for a comprehensive overview of the specifications, terms, and conditions associated with this order.</p>"
+                    "Delivery Date : " + format.format(order.getDueDate()) + "\r\n" + //
+                    "Delivery Location: [Provide the delivery address]\r\n" + //
+                    "Should there be any discrepancies or if you require further details, please do not hesitate to contact us promptly.\r\n"
+                    + //
+                    "\r\n" + //
+                    "Your swift attention to this matter is highly appreciated. We anticipate a successful collaboration and thank you for your cooperation.\r\n"
+                    + //
+                    "\r\n" + //
+                    "Best regards,\r\n" + //
+                    "\r\n" + //
+                    "[Your Full Name]\r\n" + //
+                    "[Your Position]\r\n" + //
+                    "[Your Company Name]\r\n" + //
+                    "[Your Contact Information]");
+            // body_Builder.append("<p>Dear "+suppiler.getName()+",\r\n </p>"+
+            // "<p>I trust this email finds you well. We are delighted to inform you that we
+            // have decided to proceed with a purchase order from your esteemed company. The
+            // details are as follows:</p>"
+            // +"<p><strong>Total Estimated Purchase Order Quantity:</strong>
+            // "+order.getQuantity()+"</p>"
+            // +"<p><strong>Total Estimated Purchase Order Cost:</strong>
+            // "+order.getAmount()+"</p>"
+            // +"<p>Please refer to the attached Purchase Order document for a comprehensive
+            // overview of the specifications, terms, and conditions associated with this
+            // order.</p>"
 
+            // +"<p><strong>Delivery Note:</strong> "+order.getNotes()+"</p>"
+            // +"<p><strong>Delivery Date:</strong>"+order.getDueDate()+"</p>"
+            // +"<p>We kindly request you to review the attached document thoroughly and
+            // confirm your acceptance at your earliest convenience.</p><p>Should there be
+            // any discrepancies or if you require further clarification on any aspect of
+            // the purchase order, please do not hesitate to reach out to us promptly. Your
+            // prompt attention to this matter is highly appreciated.</p><p>We look forward
+            // to a successful collaboration and express our gratitude for your cooperation
+            // in advance.</p><p><strong>Best regards,</strong></p><p>[Your Full
+            // Name]<br>[Your Position]<br>[Your Company Name]<br>[Your Contact
+            // Information]</p>");
+            EmailHelper emailHelper = new EmailHelper();
 
-// +"<p><strong>Delivery Note:</strong> "+order.getNotes()+"</p>"
-// +"<p><strong>Delivery Date:</strong>"+order.getDueDate()+"</p>"
-// +"<p>We kindly request you to review the attached document thoroughly and confirm your acceptance at your earliest convenience.</p><p>Should there be any discrepancies or if you require further clarification on any aspect of the purchase order, please do not hesitate to reach out to us promptly. Your prompt attention to this matter is highly appreciated.</p><p>We look forward to a successful collaboration and express our gratitude for your cooperation in advance.</p><p><strong>Best regards,</strong></p><p>[Your Full Name]<br>[Your Position]<br>[Your Company Name]<br>[Your Contact Information]</p>");
-            EmailHelper emailHelper=new EmailHelper();
-           
-            //var isSendmail = emailHelper.sendMail(subject, "body_Builder".toString(), attchment, receiver, filename);
-            String result= emailService.sendMail(file, suppiler.getEmail(), null, subject, body_Builder.toString());
+            // var isSendmail = emailHelper.sendMail(subject, "body_Builder".toString(),
+            // attchment, receiver, filename);
+            String result = emailService.sendMail(file, suppiler.getEmail(), null, subject, body_Builder.toString());
 
-
-            //public String sendMail(MultipartFile[] file, String to, String[] cc, String subject, String body) {
+            // public String sendMail(MultipartFile[] file, String to, String[] cc, String
+            // subject, String body) {
 
             if (result.equals("mail send"))
                 return new ResponseEntity<>("Purchase Order Generated Succesfull...", HttpStatus.OK);

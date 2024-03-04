@@ -72,7 +72,10 @@
 
 		</div>
 
-		<script>
+		<script th:inline="javascript">
+			debugger;
+var monthlySale=/*[[${monthlySale}]]*/'';
+			
 			// Sample data (replace with your actual AJAX request)
 			var monthlySalesProfitsData = [
 				[1, 1000, 500],
@@ -122,19 +125,22 @@
 			
 				// ... more data
 			];
+			monthlySale.filter(function(item) {    return item.monthYear === 3;});
 
 			var monthlySalesData = [
-				{ month: 'January', sales: 5000 },
-				{ month: 'February', sales: 6000 },
-				{ month: 'March', sales: 4500 },{ month: 'January', sales: 5000 },
-				{ month: 'February', sales: 6000 },
-				{ month: 'March', sales: 4500 },
-				{ month: 'January', sales: 5000 },
-				{ month: 'February', sales: 6000 },
-				{ month: 'March', sales: 4500 },{ month: 'January', sales: 5000 },
-				{ month: 'February', sales: 6000 },
-				{ month: 'March', sales: 4500 },
-				// ... more data
+				{ month: 'January', sales: monthlySale.filter(function(item) {    return item.monthYear === 1;}).length>0? monthlySale.filter(function(item) {    return item.monthYear === 1;})[0]['totalSales']:0 },
+				{ month: 'February', sales: monthlySale.filter(function(item) {    return item.monthYear === 2;}).length>0 ? monthlySale.filter(function(item) {    return item.monthYear === 2;})[0]['totalSales']:0 },
+				{ month: 'March', sales: monthlySale.filter(function(item) {    return item.monthYear === 3;}).length>0 ? monthlySale.filter(function(item) {    return item.monthYear === 3;})[0]['totalSales'] :0},
+				{ month: 'April', sales: monthlySale.filter(function(item) {    return item.monthYear === 4;}).length>0 ? monthlySale.filter(function(item) {    return item.monthYear === 4;})[0]['totalSales'] :0},
+				{ month: 'May', sales: monthlySale.filter(function(item) {    return item.monthYear === 5;}).length>0 ? monthlySale.filter(function(item) {    return item.monthYear === 5;})[0]['totalSales'] :0},
+				{ month: 'June', sales:  monthlySale.filter(function(item) {    return item.monthYear === 6;}).length>0 ? monthlySale.filter(function(item) {    return item.monthYear === 6;})[0]['totalSales'] :0},
+				{ month: 'Jully', sales:  monthlySale.filter(function(item) {    return item.monthYear === 7;}).length>0 ? monthlySale.filter(function(item) {    return item.monthYear === 7;})[0]['totalSales'] :0},
+				{ month: 'August', sales: monthlySale.filter(function(item) {    return item.monthYear === 8;}).length>0 ? monthlySale.filter(function(item) {    return item.monthYear === 8;})[0]['totalSales'] :0},
+				{ month: 'Suptember', sales:  monthlySale.filter(function(item) {    return item.monthYear === 9;}).length>0 ? monthlySale.filter(function(item) {    return item.monthYear === 9;})[0]['totalSales'] :0},
+				{ month: 'Octomber', sales:  monthlySale.filter(function(item) {    return item.monthYear === 10;}).length>0 ? monthlySale.filter(function(item) {    return item.monthYear === 10;})[0]['totalSales'] :0},
+				{ month: 'November', sales:  monthlySale.filter(function(item) {    return item.monthYear === 11;}).length>0 ? monthlySale.filter(function(item) {    return item.monthYear === 11;})[0]['totalSales'] :0},
+				{ month: 'December', sales:  monthlySale.filter(function(item) {    return item.monthYear === 12;}).length>0 ? monthlySale.filter(function(item) {    return item.monthYear === 12;})[0]['totalSales'] :0},
+				
 			];
 
 			var monthlyPurchaseData = [

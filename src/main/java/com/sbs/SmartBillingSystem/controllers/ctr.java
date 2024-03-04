@@ -1,33 +1,42 @@
 package com.sbs.SmartBillingSystem.controllers;
 
-import java.security.Principal;
-import java.util.*;
-
-import ch.qos.logback.core.net.SyslogOutputStream;
-import org.springframework.data.jpa.repository.Query;
-
-import com.sbs.SmartBillingSystem.Entity.*;
-import com.sbs.SmartBillingSystem.Repository.*;
-
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.security.Principal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.NoSuchElementException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.ui.Model;
-
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.sbs.SmartBillingSystem.Repository.AttendenceRepo;
+import com.sbs.SmartBillingSystem.Repository.BillDetailRepo;
+import com.sbs.SmartBillingSystem.Repository.BillRepo;
+import com.sbs.SmartBillingSystem.Repository.BrandRepo;
+import com.sbs.SmartBillingSystem.Repository.CategoryRepo;
+import com.sbs.SmartBillingSystem.Repository.ChallanRepo;
+import com.sbs.SmartBillingSystem.Repository.CustomerRepo;
+import com.sbs.SmartBillingSystem.Repository.ProductRepo;
+import com.sbs.SmartBillingSystem.Repository.SupplierRepo;
+import com.sbs.SmartBillingSystem.Repository.UserRepo;
+import com.sbs.SmartBillingSystem.Services.ReportDataService;
+import com.sbs.SmartBillingSystem.Entity.*;
+import org.springframework.ui.Model;
+import java.util.List;
+import java.util.Map;
 
 @Controller
-
-// if u want to use method base authorization then use this anotation
-// @EnableMethodSecurity
 public class ctr {
-
+    @Autowired
+    UserRepo userRepo;
     @Autowired
     CategoryRepo categoryRepo;
     @Autowired
@@ -35,9 +44,7 @@ public class ctr {
     @Autowired
     SupplierRepo supplierRepo;
     @Autowired
-    ChallanRepo challanRepo;
-    @Autowired
-    UserRepo userRepo;
+    ChallanRepo challanRepo;   
     @Autowired
     ProductRepo productRepo;
     @Autowired
@@ -48,50 +55,63 @@ public class ctr {
     BillDetailRepo billDetailRepo;
     @Autowired
     EntityManager entityManager;
-
-    @GetMapping("/home")
-    public String homepage() {
-        return "home";
-    }
-
+    @Autowired
+    ReportDataService dataService;
+  @Autowired
+    JdbcTemplate jdbcTemplate;
+    @Autowired
+    AttendenceRepo attendenceRepo;
+    
     // if u want to use method base authorization then use this anotation
     // @PreAuthorize("hasRoll('ADMIN')")
     @GetMapping("/login")
     public String login() {
         return "login";
     }
-
     @GetMapping("/")
-    public String home(Principal principal, HttpServletRequest request) {
+    public String home(Principal principal, HttpServletRequest request,Model model) {
 
         var a = principal.getName();
+        List<Map<String, Object>> monthlySale=new ArrayList<>();
         request.getSession().removeAttribute("currentUser");
         request.getSession().setAttribute("currentUser", userRepo.getUserByUserName(a));
-try {
-   //var abc=billRepo.findMonthlySalesByYear(2024);
-// Process the results as needed
-
-}catch (Exception e)
-{
-    System.out.println(e.getMessage());
-}
+        try {
+            var sql="SELECT  month(date) AS month_year, SUM(net_amount) AS total_sales FROM retailstoremanagementsystem.bill where year(date)=year(now()) GROUP BY DATE_FORMAT(date, '%Y-%m') ORDER BY DATE_FORMAT(date, '%Y-%m');";
 
 
+//             List<Object[]> monthlySale = jdbcTemplate.query(sql,new RowMapper<Object[]>() {
+//      @Override
+//      public Object[] mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+//          int monthYear = resultSet.getInt("month_year");
+//          double totalSales = resultSet.getDouble("total_sales");
+//          return new Object[]{monthYear, totalSales};
+//      }
+//  });
+ monthlySale = jdbcTemplate.query(sql, new RowMapper<Map<String, Object>>() {
+    @Override
+    public Map<String, Object> mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+        int monthYear = resultSet.getInt("month_year");
+        double totalSales = resultSet.getDouble("total_sales");
+        
+        Map<String, Object> saleMap = new HashMap<>();
+        saleMap.put("monthYear", monthYear);
+        saleMap.put("totalSales", totalSales);
+        
+        return saleMap;
+    }
+});
 
 
 
+          }catch (Exception e)
+          {
+              System.out.println(e.getMessage());
+          }
 
-
-
-
-
-
-
-
+        model.addAttribute("monthlySale",monthlySale);
         return "home";
     }
-
-    @GetMapping("/customer")
+@GetMapping("/customer")
     public String customer() {
         return "forms/Customer";
     }
@@ -231,7 +251,16 @@ try {
     }
 
     @GetMapping("/attendance")
-    public String attendance() {
+    public String attendance(Model model) {
+
+   var a = attendenceRepo.getAttendenceByDate();
+        int totaldays = a.size() > 0 ? a.get(0).getMonthMaster_fid().getTotalDays() : 30;
+        String monthName = a.size() > 0 ? a.get(0).getMonthMaster_fid().getName() : "";
+
+        model.addAttribute("at", a);
+        model.addAttribute("totaldays", totaldays);
+        model.addAttribute("monthName", monthName);
+
         return "forms/attendance";
     }
 
@@ -308,5 +337,4 @@ try {
     public String changepassword() {
         return "forms/changepassword";
     }
-
 }

@@ -30,6 +30,8 @@ $.ajax({
   $(".customloader").hide();
   return;
 }else
+$(".customloader").hide();
+$("#empty-state").hide();
         JSONToHTMLTable(response, "tblEmployee");
     },
     error: function(xhr, status, error) {
