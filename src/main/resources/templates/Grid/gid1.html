@@ -120,6 +120,10 @@
 
                     <div th:replace="forms/Customer :: form_customer"></div>
                 </div>
+                <div th:if="${name=='po'}">
+
+                    <div th:replace="forms/po :: form_po"></div>
+                </div>
                 <div th:if="${name=='user'}">
 
                     <div th:replace="register :: form_user"></div>

@@ -29,6 +29,7 @@ import com.sbs.SmartBillingSystem.Repository.CategoryRepo;
 import com.sbs.SmartBillingSystem.Repository.ChallanRepo;
 import com.sbs.SmartBillingSystem.Repository.CustomerRepo;
 import com.sbs.SmartBillingSystem.Repository.ProductRepo;
+import com.sbs.SmartBillingSystem.Repository.PurchaseOrderRepo;
 import com.sbs.SmartBillingSystem.Repository.SupplierRepo;
 import com.sbs.SmartBillingSystem.Repository.UserRepo;
 import java.util.*;
@@ -56,6 +57,8 @@ public class GridRestController {
     BillDetailRepo billDetailRepo;
     @Autowired
     BillRepo billRepo;
+    @Autowired
+    PurchaseOrderRepo orderRepo;
 
     @GetMapping("/getFormData")
     public ResponseEntity<?> FormNameData(@RequestParam String FormName, @RequestParam String Pid) {
@@ -77,6 +80,10 @@ public class GridRestController {
         } else if (FormName.toLowerCase().equals("user")) {
             return new ResponseEntity(userRepo.findById(Integer.parseInt(Pid)), HttpStatus.OK);
         }
+        else if (FormName.toLowerCase().equals("po")) {
+            return new ResponseEntity(orderRepo.findById(Integer.parseInt(Pid)), HttpStatus.OK);
+        }
+
 
         return null;
     }
@@ -139,6 +146,8 @@ public class GridRestController {
                 categoryRepo.deleteById(pid);
             else if (form.equals("supplier"))
                 supplierRepo.deleteById(pid);
+                else if (form.equals("po"))
+                orderRepo.deleteById(pid);
             else if (form.equals("invoice")) {
                  Bill bill = billRepo.findById(pid).get();
                 if (bill != null) {
