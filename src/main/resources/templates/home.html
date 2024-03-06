@@ -54,21 +54,24 @@
 					<canvas id="monthlySalesChart" width="400" height="200"></canvas>
 				</div>
 			</div>
-			<div>
-				<br>
+			<div style="display: flex;">
+
 				<!-- Frame 3: Monthly Purchase -->
-				<div class="dashboard-frame">
+				<div class="dashboard-frame" style="width: 50%;">
 					<h3>Monthly Purchase</h3>
 					<canvas id="monthlyPurchaseChart" width="400" height="200"></canvas>
 				</div>
 
 				<!-- Frame 4: Brand-wise Stock Balance -->
-				<div class="dashboard-frame">
+				<div class="dashboard-frame" style="width: 50%;">
 					<h3>Brand-wise Stock Balance</h3>
 					<canvas id="brandStockBalanceChart" width="400" height="200"></canvas>
 				</div>
+			</div>
+
+			<div style="display: flex;">
 				<br>
-				<div class="dashboard-frame">
+				<div class="dashboard-frame" style="width: 50%;" >
 					<h3>Category-wise Stock Balance</h3>
 					<canvas id="salesByCategoryChart" width="400" height="200"></canvas>
 				</div>
@@ -78,12 +81,12 @@
 
 		<script th:inline="javascript">
 			debugger;
-var monthlySale=/*[[${monthlySale}]]*/'';
-var monthlyPurchase=/*[[${monthlyPurchase}]]*/'';
-var StockBrandwise=/*[[${StockBrandwise}]]*/'';
-var StockCategorywise=/*[[${StockCategorywise}]]*/'';
-var ProfitLoss=/*[[${ProfitLoss}]]*/'';
-			
+			var monthlySale =/*[[${monthlySale}]]*/'';
+			var monthlyPurchase =/*[[${monthlyPurchase}]]*/'';
+			var StockBrandwise =/*[[${StockBrandwise}]]*/'';
+			var StockCategorywise =/*[[${StockCategorywise}]]*/'';
+			var ProfitLoss =/*[[${ProfitLoss}]]*/'';
+
 			// Sample data (replace with your actual AJAX request)
 			var monthlySalesProfitsData = [
 				[1, 1000, 500],
@@ -106,69 +109,69 @@ var ProfitLoss=/*[[${ProfitLoss}]]*/'';
 			// 	// ... more data
 			// ];
 			StockCategorywise.forEach(element => {
-				salesByCategoryData.push({category:element['categoryname'],amount:element['qty']})
+				salesByCategoryData.push({ category: element['categoryname'], amount: element['qty'] })
 			});
-			
-		
-			var profitLossData =[
-			{ month: 'January', profit: ProfitLoss.filter(function(item) {    return item.monthYear === 1;}).length>0? ProfitLoss.filter(function(item) {    return item.monthYear === 1;})[0]['profit']:0 },
-				{ month: 'February', profit: ProfitLoss.filter(function(item) {    return item.monthYear === 2;}).length>0 ? ProfitLoss.filter(function(item) {    return item.monthYear === 2;})[0]['profit']:0 },
-				{ month: 'March', profit: ProfitLoss.filter(function(item) {    return item.monthYear === 3;}).length>0 ? ProfitLoss.filter(function(item) {    return item.monthYear === 3;})[0]['profit'] :0},
-				{ month: 'April', profit: ProfitLoss.filter(function(item) {    return item.monthYear === 4;}).length>0 ? ProfitLoss.filter(function(item) {    return item.monthYear === 4;})[0]['profit'] :0},
-				{ month: 'May', profit: ProfitLoss.filter(function(item) {    return item.monthYear === 5;}).length>0 ? ProfitLoss.filter(function(item) {    return item.monthYear === 5;})[0]['profit'] :0},
-				{ month: 'June', profit:  ProfitLoss.filter(function(item) {    return item.monthYear === 6;}).length>0 ? ProfitLoss.filter(function(item) {    return item.monthYear === 6;})[0]['profit'] :0},
-				{ month: 'Jully', profit:  ProfitLoss.filter(function(item) {    return item.monthYear === 7;}).length>0 ? ProfitLoss.filter(function(item) {    return item.monthYear === 7;})[0]['profit'] :0},
-				{ month: 'August', profit: ProfitLoss.filter(function(item) {    return item.monthYear === 8;}).length>0 ? ProfitLoss.filter(function(item) {    return item.monthYear === 8;})[0]['profit'] :0},
-				{ month: 'Suptember', profit:  ProfitLoss.filter(function(item) {    return item.monthYear === 9;}).length>0 ? ProfitLoss.filter(function(item) {    return item.monthYear === 9;})[0]['profit'] :0},
-				{ month: 'Octomber', profit:  ProfitLoss.filter(function(item) {    return item.monthYear === 10;}).length>0 ? ProfitLoss.filter(function(item) {    return item.monthYear === 10;})[0]['profit'] :0},
-				{ month: 'November', profit:  ProfitLoss.filter(function(item) {    return item.monthYear === 11;}).length>0 ? ProfitLoss.filter(function(item) {    return item.monthYear === 11;})[0]['profit'] :0},
-				{ month: 'December', profit:  ProfitLoss.filter(function(item) {    return item.monthYear === 12;}).length>0 ? ProfitLoss.filter(function(item) {    return item.monthYear === 12;})[0]['profit'] :0},
-				
+
+
+			var profitLossData = [
+				{ month: 'January', profit: ProfitLoss.filter(function (item) { return item.monthYear === 1; }).length > 0 ? ProfitLoss.filter(function (item) { return item.monthYear === 1; })[0]['profit'] : 0 },
+				{ month: 'February', profit: ProfitLoss.filter(function (item) { return item.monthYear === 2; }).length > 0 ? ProfitLoss.filter(function (item) { return item.monthYear === 2; })[0]['profit'] : 0 },
+				{ month: 'March', profit: ProfitLoss.filter(function (item) { return item.monthYear === 3; }).length > 0 ? ProfitLoss.filter(function (item) { return item.monthYear === 3; })[0]['profit'] : 0 },
+				{ month: 'April', profit: ProfitLoss.filter(function (item) { return item.monthYear === 4; }).length > 0 ? ProfitLoss.filter(function (item) { return item.monthYear === 4; })[0]['profit'] : 0 },
+				{ month: 'May', profit: ProfitLoss.filter(function (item) { return item.monthYear === 5; }).length > 0 ? ProfitLoss.filter(function (item) { return item.monthYear === 5; })[0]['profit'] : 0 },
+				{ month: 'June', profit: ProfitLoss.filter(function (item) { return item.monthYear === 6; }).length > 0 ? ProfitLoss.filter(function (item) { return item.monthYear === 6; })[0]['profit'] : 0 },
+				{ month: 'Jully', profit: ProfitLoss.filter(function (item) { return item.monthYear === 7; }).length > 0 ? ProfitLoss.filter(function (item) { return item.monthYear === 7; })[0]['profit'] : 0 },
+				{ month: 'August', profit: ProfitLoss.filter(function (item) { return item.monthYear === 8; }).length > 0 ? ProfitLoss.filter(function (item) { return item.monthYear === 8; })[0]['profit'] : 0 },
+				{ month: 'Suptember', profit: ProfitLoss.filter(function (item) { return item.monthYear === 9; }).length > 0 ? ProfitLoss.filter(function (item) { return item.monthYear === 9; })[0]['profit'] : 0 },
+				{ month: 'Octomber', profit: ProfitLoss.filter(function (item) { return item.monthYear === 10; }).length > 0 ? ProfitLoss.filter(function (item) { return item.monthYear === 10; })[0]['profit'] : 0 },
+				{ month: 'November', profit: ProfitLoss.filter(function (item) { return item.monthYear === 11; }).length > 0 ? ProfitLoss.filter(function (item) { return item.monthYear === 11; })[0]['profit'] : 0 },
+				{ month: 'December', profit: ProfitLoss.filter(function (item) { return item.monthYear === 12; }).length > 0 ? ProfitLoss.filter(function (item) { return item.monthYear === 12; })[0]['profit'] : 0 },
+
 			];
-			
+
 			var monthlySalesData = [
-				{ month: 'January', sales: monthlySale.filter(function(item) {    return item.monthYear === 1;}).length>0? monthlySale.filter(function(item) {    return item.monthYear === 1;})[0]['totalSales']:0 },
-				{ month: 'February', sales: monthlySale.filter(function(item) {    return item.monthYear === 2;}).length>0 ? monthlySale.filter(function(item) {    return item.monthYear === 2;})[0]['totalSales']:0 },
-				{ month: 'March', sales: monthlySale.filter(function(item) {    return item.monthYear === 3;}).length>0 ? monthlySale.filter(function(item) {    return item.monthYear === 3;})[0]['totalSales'] :0},
-				{ month: 'April', sales: monthlySale.filter(function(item) {    return item.monthYear === 4;}).length>0 ? monthlySale.filter(function(item) {    return item.monthYear === 4;})[0]['totalSales'] :0},
-				{ month: 'May', sales: monthlySale.filter(function(item) {    return item.monthYear === 5;}).length>0 ? monthlySale.filter(function(item) {    return item.monthYear === 5;})[0]['totalSales'] :0},
-				{ month: 'June', sales:  monthlySale.filter(function(item) {    return item.monthYear === 6;}).length>0 ? monthlySale.filter(function(item) {    return item.monthYear === 6;})[0]['totalSales'] :0},
-				{ month: 'Jully', sales:  monthlySale.filter(function(item) {    return item.monthYear === 7;}).length>0 ? monthlySale.filter(function(item) {    return item.monthYear === 7;})[0]['totalSales'] :0},
-				{ month: 'August', sales: monthlySale.filter(function(item) {    return item.monthYear === 8;}).length>0 ? monthlySale.filter(function(item) {    return item.monthYear === 8;})[0]['totalSales'] :0},
-				{ month: 'Suptember', sales:  monthlySale.filter(function(item) {    return item.monthYear === 9;}).length>0 ? monthlySale.filter(function(item) {    return item.monthYear === 9;})[0]['totalSales'] :0},
-				{ month: 'Octomber', sales:  monthlySale.filter(function(item) {    return item.monthYear === 10;}).length>0 ? monthlySale.filter(function(item) {    return item.monthYear === 10;})[0]['totalSales'] :0},
-				{ month: 'November', sales:  monthlySale.filter(function(item) {    return item.monthYear === 11;}).length>0 ? monthlySale.filter(function(item) {    return item.monthYear === 11;})[0]['totalSales'] :0},
-				{ month: 'December', sales:  monthlySale.filter(function(item) {    return item.monthYear === 12;}).length>0 ? monthlySale.filter(function(item) {    return item.monthYear === 12;})[0]['totalSales'] :0},
-				
+				{ month: 'January', sales: monthlySale.filter(function (item) { return item.monthYear === 1; }).length > 0 ? monthlySale.filter(function (item) { return item.monthYear === 1; })[0]['totalSales'] : 0 },
+				{ month: 'February', sales: monthlySale.filter(function (item) { return item.monthYear === 2; }).length > 0 ? monthlySale.filter(function (item) { return item.monthYear === 2; })[0]['totalSales'] : 0 },
+				{ month: 'March', sales: monthlySale.filter(function (item) { return item.monthYear === 3; }).length > 0 ? monthlySale.filter(function (item) { return item.monthYear === 3; })[0]['totalSales'] : 0 },
+				{ month: 'April', sales: monthlySale.filter(function (item) { return item.monthYear === 4; }).length > 0 ? monthlySale.filter(function (item) { return item.monthYear === 4; })[0]['totalSales'] : 0 },
+				{ month: 'May', sales: monthlySale.filter(function (item) { return item.monthYear === 5; }).length > 0 ? monthlySale.filter(function (item) { return item.monthYear === 5; })[0]['totalSales'] : 0 },
+				{ month: 'June', sales: monthlySale.filter(function (item) { return item.monthYear === 6; }).length > 0 ? monthlySale.filter(function (item) { return item.monthYear === 6; })[0]['totalSales'] : 0 },
+				{ month: 'Jully', sales: monthlySale.filter(function (item) { return item.monthYear === 7; }).length > 0 ? monthlySale.filter(function (item) { return item.monthYear === 7; })[0]['totalSales'] : 0 },
+				{ month: 'August', sales: monthlySale.filter(function (item) { return item.monthYear === 8; }).length > 0 ? monthlySale.filter(function (item) { return item.monthYear === 8; })[0]['totalSales'] : 0 },
+				{ month: 'Suptember', sales: monthlySale.filter(function (item) { return item.monthYear === 9; }).length > 0 ? monthlySale.filter(function (item) { return item.monthYear === 9; })[0]['totalSales'] : 0 },
+				{ month: 'Octomber', sales: monthlySale.filter(function (item) { return item.monthYear === 10; }).length > 0 ? monthlySale.filter(function (item) { return item.monthYear === 10; })[0]['totalSales'] : 0 },
+				{ month: 'November', sales: monthlySale.filter(function (item) { return item.monthYear === 11; }).length > 0 ? monthlySale.filter(function (item) { return item.monthYear === 11; })[0]['totalSales'] : 0 },
+				{ month: 'December', sales: monthlySale.filter(function (item) { return item.monthYear === 12; }).length > 0 ? monthlySale.filter(function (item) { return item.monthYear === 12; })[0]['totalSales'] : 0 },
+
 			];
 
 
 			var monthlyPurchaseData = [
-				{ month: 'January', purchase: monthlyPurchase.filter(function(item) {    return item.monthYear === 1;}).length>0? monthlyPurchase.filter(function(item) {    return item.monthYear === 1;})[0]['total_purchase']:0 },
-				{ month: 'February', purchase: monthlyPurchase.filter(function(item) {    return item.monthYear === 2;}).length>0 ? monthlyPurchase.filter(function(item) {    return item.monthYear === 2;})[0]['total_purchase']:0 },
-				{ month: 'March', purchase: monthlyPurchase.filter(function(item) {    return item.monthYear === 3;}).length>0 ? monthlyPurchase.filter(function(item) {    return item.monthYear === 3;})[0]['total_purchase'] :0},
-				{ month: 'April', purchase: monthlyPurchase.filter(function(item) {    return item.monthYear === 4;}).length>0 ? monthlyPurchase.filter(function(item) {    return item.monthYear === 4;})[0]['total_purchase'] :0},
-				{ month: 'May', purchase: monthlyPurchase.filter(function(item) {    return item.monthYear === 5;}).length>0 ? monthlyPurchase.filter(function(item) {    return item.monthYear === 5;})[0]['total_purchase'] :0},
-				{ month: 'June', purchase:  monthlyPurchase.filter(function(item) {    return item.monthYear === 6;}).length>0 ? monthlyPurchase.filter(function(item) {    return item.monthYear === 6;})[0]['total_purchase'] :0},
-				{ month: 'Jully', purchase:  monthlyPurchase.filter(function(item) {    return item.monthYear === 7;}).length>0 ? monthlyPurchase.filter(function(item) {    return item.monthYear === 7;})[0]['total_purchase'] :0},
-				{ month: 'August', purchase: monthlyPurchase.filter(function(item) {    return item.monthYear === 8;}).length>0 ? monthlyPurchase.filter(function(item) {    return item.monthYear === 8;})[0]['total_purchase'] :0},
-				{ month: 'Suptember', purchase:  monthlyPurchase.filter(function(item) {    return item.monthYear === 9;}).length>0 ? monthlyPurchase.filter(function(item) {    return item.monthYear === 9;})[0]['total_purchase'] :0},
-				{ month: 'Octomber', purchase:  monthlyPurchase.filter(function(item) {    return item.monthYear === 10;}).length>0 ? monthlyPurchase.filter(function(item) {    return item.monthYear === 10;})[0]['total_purchase'] :0},
-				{ month: 'November', purchase:  monthlyPurchase.filter(function(item) {    return item.monthYear === 11;}).length>0 ? monthlyPurchase.filter(function(item) {    return item.monthYear === 11;})[0]['total_purchase'] :0},
-				{ month: 'December', purchase:  monthlyPurchase.filter(function(item) {    return item.monthYear === 12;}).length>0 ? monthlyPurchase.filter(function(item) {    return item.monthYear === 12;})[0]['total_purchase'] :0},
-				
+				{ month: 'January', purchase: monthlyPurchase.filter(function (item) { return item.monthYear === 1; }).length > 0 ? monthlyPurchase.filter(function (item) { return item.monthYear === 1; })[0]['total_purchase'] : 0 },
+				{ month: 'February', purchase: monthlyPurchase.filter(function (item) { return item.monthYear === 2; }).length > 0 ? monthlyPurchase.filter(function (item) { return item.monthYear === 2; })[0]['total_purchase'] : 0 },
+				{ month: 'March', purchase: monthlyPurchase.filter(function (item) { return item.monthYear === 3; }).length > 0 ? monthlyPurchase.filter(function (item) { return item.monthYear === 3; })[0]['total_purchase'] : 0 },
+				{ month: 'April', purchase: monthlyPurchase.filter(function (item) { return item.monthYear === 4; }).length > 0 ? monthlyPurchase.filter(function (item) { return item.monthYear === 4; })[0]['total_purchase'] : 0 },
+				{ month: 'May', purchase: monthlyPurchase.filter(function (item) { return item.monthYear === 5; }).length > 0 ? monthlyPurchase.filter(function (item) { return item.monthYear === 5; })[0]['total_purchase'] : 0 },
+				{ month: 'June', purchase: monthlyPurchase.filter(function (item) { return item.monthYear === 6; }).length > 0 ? monthlyPurchase.filter(function (item) { return item.monthYear === 6; })[0]['total_purchase'] : 0 },
+				{ month: 'Jully', purchase: monthlyPurchase.filter(function (item) { return item.monthYear === 7; }).length > 0 ? monthlyPurchase.filter(function (item) { return item.monthYear === 7; })[0]['total_purchase'] : 0 },
+				{ month: 'August', purchase: monthlyPurchase.filter(function (item) { return item.monthYear === 8; }).length > 0 ? monthlyPurchase.filter(function (item) { return item.monthYear === 8; })[0]['total_purchase'] : 0 },
+				{ month: 'Suptember', purchase: monthlyPurchase.filter(function (item) { return item.monthYear === 9; }).length > 0 ? monthlyPurchase.filter(function (item) { return item.monthYear === 9; })[0]['total_purchase'] : 0 },
+				{ month: 'Octomber', purchase: monthlyPurchase.filter(function (item) { return item.monthYear === 10; }).length > 0 ? monthlyPurchase.filter(function (item) { return item.monthYear === 10; })[0]['total_purchase'] : 0 },
+				{ month: 'November', purchase: monthlyPurchase.filter(function (item) { return item.monthYear === 11; }).length > 0 ? monthlyPurchase.filter(function (item) { return item.monthYear === 11; })[0]['total_purchase'] : 0 },
+				{ month: 'December', purchase: monthlyPurchase.filter(function (item) { return item.monthYear === 12; }).length > 0 ? monthlyPurchase.filter(function (item) { return item.monthYear === 12; })[0]['total_purchase'] : 0 },
+
 			];
 
 
 
-			 var brandStockBalanceData = [];
+			var brandStockBalanceData = [];
 			// 	{ brand: 'Brand A', stock: 100 },0
 			// 	{ brand: 'Brand B', stock: 80 },
 			// 	{ brand: 'Brand C', stock: 120 },
 			// 	// ... more data
 			// ];
 			StockBrandwise.forEach(element => {
-				brandStockBalanceData.push({brand:element['brandname'],stock:element['qty']})
+				brandStockBalanceData.push({ brand: element['brandname'], stock: element['qty'] })
 			});
 
 
@@ -238,7 +241,7 @@ var ProfitLoss=/*[[${ProfitLoss}]]*/'';
 			//     });
 			// }
 
-			
+
 
 			// function createCustomerDemographicsChart(data) {
 			//     var ctx = document.getElementById('customerDemographicsChart').getContext('2d');
@@ -316,7 +319,7 @@ var ProfitLoss=/*[[${ProfitLoss}]]*/'';
 							{
 								label: 'Monthly Purchase',
 								data: data.map(item => item.purchase),
-								backgroundColor: 'rgba(255, 99, 132, 0.2)',
+								backgroundColor: 'red',//'rgba(255, 99, 132, 0.2)',
 								borderColor: 'rgba(255, 99, 132, 1)',
 								borderWidth: 1
 							}
@@ -342,7 +345,7 @@ var ProfitLoss=/*[[${ProfitLoss}]]*/'';
 							{
 								label: 'Stock Balance',
 								data: data.map(item => item.stock),
-								backgroundColor: 'rgba(255, 205, 86, 0.2)',
+								backgroundColor: 'yellow',//'rgba(255, 205, 86, 0.2)',
 								borderColor: 'rgba(255, 205, 86, 1)',
 								borderWidth: 1
 							}
@@ -358,29 +361,29 @@ var ProfitLoss=/*[[${ProfitLoss}]]*/'';
 				});
 			}
 			function createSalesByCategoryChart(data) {
-			    var ctx = document.getElementById('salesByCategoryChart').getContext('2d');
-			    new Chart(ctx, {
-			        type: 'pie',
-			        data: {
-			            labels: data.map(item => item.category),
-			            datasets: [
-			                {
-			                    data: data.map(item => item.amount),
-			                    backgroundColor: [
-			                        'rgba(255, 99, 132, 0.2)',
-			                        'rgba(75, 192, 192, 0.2)',
-			                        'rgba(255, 205, 86, 0.2)'
-			                    ],
-			                    borderColor: [
-			                        'rgba(255, 99, 132, 1)',
-			                        'rgba(75, 192, 192, 1)',
-			                        'rgba(255, 205, 86, 1)'
-			                    ],
-			                    borderWidth: 1
-			                }
-			            ]
-			        }
-			    });
+				var ctx = document.getElementById('salesByCategoryChart').getContext('2d');
+				new Chart(ctx, {
+					type: 'pie',
+					data: {
+						labels: data.map(item => item.category),
+						datasets: [
+							{
+								data: data.map(item => item.amount),
+								backgroundColor: [
+									'rgba(255, 99, 132, 0.2)',
+									'rgba(75, 192, 192, 0.2)',
+									'rgba(255, 205, 86, 0.2)'
+								],
+								borderColor: [
+									'rgba(255, 99, 132, 1)',
+									'rgba(75, 192, 192, 1)',
+									'rgba(255, 205, 86, 1)'
+								],
+								borderWidth: 1
+							}
+						]
+					}
+				});
 			}
 		</script>
 

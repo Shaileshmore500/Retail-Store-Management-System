@@ -19,6 +19,28 @@ function jsonToDataTable(jsonData) {
     $("#empty-state").show();
     return;
   }
+
+var data=[];
+for(var i=0 ; i<jsonData.length;i++)
+{
+  var obj=jsonData[i]
+  data.push({"ID":obj["partyChallan_pid"],
+  "Challan No":obj["challan_no"],
+  "Challan Date":obj["challan_date"]!=null ? new Date(obj["challan_date"]).getDate()+"-"+new Date(obj["challan_date"]).getMonth()+1+"-"+new Date(obj["challan_date"]).getFullYear():"",
+  "Quantity":obj["quantity"],
+  "Supplier":obj["supplier_fid"] !=null?obj["supplier_fid"].name:"",
+  
+
+
+
+
+})
+
+}
+jsonData=data;
+
+
+
   let newKey = 'Action';
   let newValue = '<a  class="btn btn-primary m-1 edit"><i class="btn-edit "></i></a>';
   
@@ -120,7 +142,8 @@ $(document).ready(() => {
     }
     else if (currentelement.classList.contains("edit"))
     {
-      var pid =$(currentelement).closest('tr').find('td:nth-child(10)').text();
+      debugger;
+      var pid =$(currentelement).closest('tr').find('td:nth-child(2)').text();
       window.location.href=`/product?pid=${pid}`;
 
 
