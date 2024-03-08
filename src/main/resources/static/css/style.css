@@ -46,6 +46,7 @@
       background-color: #02090a;
       box-sizing: border-box;
       padding-right: 25px;
+      z-index: 1;
   }
 
   .profile_icon {
@@ -169,12 +170,12 @@
   #toggler {
       --toggleIcon: 25px;
       position: absolute;
-      top: 25%;
+      top: 2%;
       left: 110%;
       box-sizing: content-box;
       width: calc(var(--toggleIcon) + 25px);
       height: calc(var(--toggleIcon) + 25px);
-      border: solid 3px orange;
+      /* border: solid 3px orange; */
       border-radius: 50%;
       background-color: #02090a;
       overflow: hidden;
@@ -419,6 +420,7 @@
 
       /* CSS styles here */
       .navbar {
+        
           height: 44px;
       }
 

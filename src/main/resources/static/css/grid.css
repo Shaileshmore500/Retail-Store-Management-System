@@ -159,7 +159,7 @@ p {
       font-family: 'Roboto';
     }
     #jsonTable_length label{
-      position: absolute;
+      /* position: absolute; */
       right: 22px;
       top:4px;
       font-size: 14px;
@@ -194,7 +194,7 @@ p {
       /* 
       
       */
-      position: absolute;
+      /* position: absolute; */
       right: 205px;
       margin-bottom: 0;
       font-weight: 600;
@@ -561,3 +561,4 @@ text-align: center;
 } */
 
 
+  
