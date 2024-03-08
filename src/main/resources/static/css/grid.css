@@ -86,6 +86,9 @@ p {
     }
     #jsonTable_wrapper div.row:nth-child(1) div{
       padding:0;
+    } #jsonTable_filter
+    {
+      margin-top: -44px;
     }
     #jsonTable_wrapper div.row:nth-child(2){
       width:98%;
@@ -556,3 +559,5 @@ p {
 font-size: 19px;
 text-align: center;
 } */
+
+

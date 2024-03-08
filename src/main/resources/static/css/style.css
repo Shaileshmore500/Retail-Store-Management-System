@@ -1,0 +1,517 @@
+  @import url('https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap');
+
+  /* font-family: 'Protest Guerrilla', sans-serif; */
+  :root {
+      --sidebarWidth: 24vw;
+      --logoSize: 26px;
+      --profileButton: 35px;
+  }
+
+  body {
+      margin: 0;
+      /* padding for navbar */
+      padding-top: 16vh;
+      /* padding for collapsible sidebar */
+      padding-left: var(--sidebarWidth);
+      /* temporary */
+      height: 1000px;
+      /* background-color: beige; */
+  }
+  
+.accordion-header a{
+    text-decoration: none !important;
+}
+  .dropdown_backdrop.collapsed {
+      visibility: collapse;
+      opacity: 0;
+  }
+
+  .profile_dropdown.collapsed {
+      transform: translate(0px, -480px);
+  }
+
+  body.collapsed {
+      padding-left: 0;
+  }
+
+  .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: flex-end;
+      box-sizing: content-box;
+      height: 75px;
+      width: 100%;
+      background-color: #02090a;
+      box-sizing: border-box;
+      padding-right: 25px;
+  }
+
+  .profile_icon {
+      outline: solid 3px orange;
+      outline-offset: 5px;
+      border-radius: 50%;
+      max-width: 45px;
+      max-height: 45px;
+      overflow: hidden;
+  }
+
+
+  .profile_icon svg {
+      color: aliceblue;
+      height: var(--profileButton);
+      width: var(--profileButton);
+  }
+
+
+  .dropdown_backdrop {
+      background: rgba(0, 0, 0, .5);
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100vh;
+      width: 100vw;
+      z-index: 2;
+      opacity: 1;
+      transition: visibility .2s ease-in-out, opacity .2s ease-in-out;
+  }
+
+  .profile_dropdown {
+      height: 400px;
+      width: 275px;
+      background: #02090a;
+      position: absolute;
+      top: 80px;
+      right: 0.5vw;
+      border-radius: 8px;
+      outline: solid 3px white;
+      outline-offset: -5px;
+      box-sizing: border-box;
+      padding: 5px;
+      z-index: 3;
+      display: flex;
+      flex-flow: column nowrap;
+      transition: transform .2s ease-in-out;
+  }
+
+  .profile_image {
+      display: block;
+      aspect-ratio: 1 / 1;
+      width: 125px;
+      /* background-color: #0d6efd; */
+      margin: 10px auto;
+      border-radius: 50%;
+      outline: solid 3px orange;
+      object-position: bottom;
+      object-fit: cover;
+  }
+
+  .profile_preview {
+      /* border:solid 3px wheat; */
+      margin: 3px;
+      flex: 1;
+      display: flex;
+      flex-flow: column nowrap;
+      row-gap: 2px;
+
+  }
+
+  .profile_info_field {
+      /* border: solid 1px #0d6efd; */
+      display: flex;
+      color: aqua;
+  }
+
+  .field_property {
+      /* border: solid 1px red; */
+      padding: 6px;
+      width: 42%;
+      font-size: 14px;
+  }
+
+  .field_value {
+      /* border: solid 1px yellow; */
+      flex: 1;
+      padding: 6px;
+      font-size: 14px;
+      background-color: gray;
+      border-radius: 8px;
+  }
+
+  .field_value .field_data {}
+
+  .field_data {
+      white-space: nowrap;
+      text-wrap: wrap;
+      word-break: break-word;
+  }
+
+  .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      box-sizing: border-box;
+      height: 100vh;
+      width: var(--sidebarWidth);
+      padding: 2rem;
+      padding-top: 1rem;
+      background-color: #02080a;
+      box-shadow: 0 0.5em 1.5em rgba(255, 255, 255, .1), 0 0.125em 0.5em rgba(255, 255, 255, .15);
+      transition: all .25s ease-in-out;
+      /* border:solid 1px red; */
+  }
+
+  .sidebar.collapsed {
+      left: -24%;
+  }
+
+  #toggler {
+      --toggleIcon: 25px;
+      position: absolute;
+      top: 25%;
+      left: 110%;
+      box-sizing: content-box;
+      width: calc(var(--toggleIcon) + 25px);
+      height: calc(var(--toggleIcon) + 25px);
+      border: solid 3px orange;
+      border-radius: 50%;
+      background-color: #02090a;
+      overflow: hidden;
+      text-wrap: nowrap;
+  }
+
+  .toggle_state {
+      width: max-content;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 5;
+      transform: translate(-12.5%, -50%);
+      /* border: solid 1px red; */
+      transition: all .5s ease-in-out;
+  }
+
+  #toggler svg {
+      box-sizing: content-box;
+      height: var(--toggleIcon);
+      width: var(--toggleIcon);
+      color: orange;
+      padding-right: var(--toggleIcon);
+      vertical-align: bottom;
+      transition: all .5s ease-in-out;
+  }
+
+  #toggler svg.left {
+      transform: translate(40%, 50%);
+  }
+
+  #toggler svg.right {
+      transform: translate(75%, 50%);
+  }
+
+  .sidebar_logo {
+      display: inline-block;
+      text-align: center;
+      box-sizing: content-box;
+      height: max-content;
+      width: 100%;
+      /* temporary */
+      /* background-color: #050d14; */
+      /* border: solid 2px gray; */
+      /* border:solid 1px yellow; */
+  }
+
+  .sidebar_logo svg {
+      box-sizing: content-box;
+      width: var(--logoSize);
+      height: var(--logoSize);
+      /* padding-right: 10px; */
+      color: white;
+      transition: all 0.125s ease-in-out;
+      padding-right: 10px;
+      /* box-sizing: content-box;
+    width:var(--logoSize);
+    height:var(--logoSize);
+    color:white;
+    transition:all 0.125s ease-in-out; */
+  }
+
+  .sidebar_logo:hover svg {
+      color: blanchedalmond;
+  }
+
+  .company_name {
+      width: -webkit-fill-available;
+      font-size: var(--logoSize);
+      transition: all 0.125s ease-in-out;
+      display: inline-block;
+      vertical-align: -webkit-baseline-middle;
+      font-family: 'Protest Guerrilla', sans-serif;
+      color: white;
+      /* temporary */
+      /* background-color: aliceblue; */
+  }
+
+  .sidebar_logo:hover .company_name {
+      color: orange;
+  }
+
+  .collapsed .toggle_state {
+      transform: translate(-63.5%, -50%);
+  }
+
+  hr {
+      height: 3px;
+      margin: 1rem 0;
+      background-color: white;
+      border: 0;
+      border-top: var(--bs-border-width) solid;
+      opacity: .25;
+  }
+
+  .menu_container {
+      height: 75vh;
+      width: 99%;
+      padding: 0 1.3rem;
+      padding: 0;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      overflow-y: auto;
+      overflow-x: hidden;
+      /* firefox scrollbar styling */
+  }
+
+  .menu_container::-webkit-scrollbar {
+      width: 8px;
+      background: transparent;
+  }
+
+  .menu_container::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      transition: all .125s;
+  }
+
+  .menu_container:hover::-webkit-scrollbar-thumb {
+      background: rgba(128, 128, 128, 0.418);
+      border-radius: 10px;
+  }
+
+  #accordionSidebarMenuList {
+      display: flex;
+      flex-flow: column nowrap;
+      /* row-gap: 5px; */
+      position: absolute;
+      /* width: var(--sidebarWidth); */
+      width: 100%;
+  }
+
+  .accordion-item {
+      background-color: inherit;
+      border: none;
+      border-bottom-left-radius: 8px !important;
+      border-bottom-right-radius: 8px !important;
+      overflow: hidden;
+      /* margin-bottom: 15px; */
+  }
+
+  .accordion-header {
+      border-top-right-radius: 4px;
+      /* border-bottom-right-radius: 4px; */
+      overflow: hidden;
+  }
+
+  .accordion-button {
+      /* change icon caret color manually by changing numbers after '%23' in fill='%23xxx' where %23 translates to '#'symbol" */
+      --bs-accordion-btn-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23808080'>%20 <path d=\"M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z\"/></svg>");
+      --bs-accordion-btn-active-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23052c65'%3e%3cpath fill-rule='evenodd' d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3e%3c/svg%3e");
+      --bs-accordion-active-color: white;
+      --bs-accordion-active-bg: #0d6efd;
+      color: #fff;
+      font-size: 16px;
+      background: #02080a;
+      padding: 8px;
+      padding-left: 36px;
+      /* margin-bottom: 8px; */
+      border-bottom-right-radius: 4px !important;
+  }
+
+  .accordion-button:hover {
+      background-color: #2d4367;
+  }
+
+  .accordion-button:not(.collapsed) {
+      box-shadow: none;
+      background-color: #2d4367;
+  }
+
+  .accordion-button:focus {
+      border-color: transparent;
+  }
+
+  .accordion-button>svg {
+      box-sizing: content-box;
+      --menuLogoSize: 20px;
+      height: var(--menuLogoSize);
+      width: var(--menuLogoSize);
+      padding-right: 15px;
+  }
+
+  .accordion-button.direct_link{
+    --bs-accordion-btn-icon: none;
+  }
+
+  .accordion-button a{
+    text-decoration: none;
+    color: #fff;
+  }
+
+  /* .accordion-body {
+    padding-right: 0px
+} */
+
+  /* parent accordion specific css code starts here */
+
+  [data-bs-parent="#accordionSidebarMenuList"]>.accordion-body {
+      padding-right: 0;
+      padding-left: 40px;
+      padding-top: 5px;
+      /* background: #092b30; */
+  }
+
+  div#accordionSidebarMenuList>.accordion-item {
+      margin-bottom: 15px;
+  }
+
+  /* child accordions specific css code starts here */
+  .accordion-body .accordion-item {
+      margin-bottom: 5px;
+  }
+
+  .accordion-body .accordion-header {
+      border-radius: 5px;
+      /* border-top-left-radius: 8px; */
+      border-bottom-left-radius: 18px;
+      overflow: hidden;
+  }
+
+  .accordion-body .accordion-button {
+      font-size: 15px;
+      /* background-color: #0d5eff; */
+  }
+
+
+
+
+  /* While writing media queries abide by following rule: */
+  /* create the largest view for lower limit of screen width */
+  /* create the smallest view for upper limit of screen width */
+  @media screen and (max-width: 576px) {
+      :root {
+          --sidebarWidth: 50vw;
+          --logoSize: 16px;
+      }
+
+      .sidebar.collapsed {
+          left: -51%;
+      }
+
+      /* CSS styles here */
+      .navbar {
+          height: 44px;
+      }
+
+      .sidebar {
+
+          padding: 1rem;
+      }
+
+      .sidebar_logo {
+          line-height: 12px;
+          text-align: center;
+      }
+
+      .sidebar_logo svg {
+          padding-right: 2px;
+      }
+
+      .company_name {
+          font-size: 14px;
+          display: contents;
+      }
+
+      hr {
+          margin-top: .5rem;
+          margin-bottom: .8rem;
+      }
+
+      .accordion-button {
+          --bs-accordion-btn-icon-width: 0.6rem;
+          /* padding: 5px; */
+          font-size: 14px;
+      }
+
+      .accordion-body .accordion-button {
+          font-size: 10px;
+          /* background-color: #0d5eff; */
+      }
+
+      .accordion-button svg {
+          --menuLogoSize: 12px;
+          padding-right: 4px;
+          padding-left: 6px;
+      }
+
+      .menu_container {
+          padding: 0;
+      }
+
+      .menu_container::-webkit-scrollbar {
+          width: 6px;
+      }
+
+      #accordionSidebarMenuList {
+          width: calc(var(--sidebarWidth) + (100% - var(--sidebarWidth)));
+      }
+  }
+
+  @media screen and (min-width: 577px) and (max-width: 768px) {
+
+      /* CSS styles here */
+      :root {
+          --sidebarWidth: 50vw;
+      }
+
+      .sidebar.collapsed {
+          left: -51%;
+      }
+  }
+
+  @media screen and (min-width: 769px) and (max-width: 992px) {
+
+      /* CSS styles here */
+      :root {
+          --sidebarWidth: 44vw;
+      }
+
+      .sidebar.collapsed {
+          left: -44%;
+      }
+  }
+
+  @media screen and (min-width: 993px) and (max-width: 1200px) {
+
+      /* CSS styles here */
+      :root {
+          --sidebarWidth: 34vw;
+      }
+
+      .sidebar.collapsed {
+          left: -34%;
+      }
+  }
+
+  @media screen and (min-width: 1201px) {
+      /* CSS styles here */
+  }
