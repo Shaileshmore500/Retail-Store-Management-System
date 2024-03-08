@@ -161,8 +161,6 @@ $(document).ready(() => {
       challan_date: $('#html_ChallanDate').val(),
       quantity: $('#html_Quantity').val(),
       amount: $('#html_Amount').val()
-
-
     };
 
 

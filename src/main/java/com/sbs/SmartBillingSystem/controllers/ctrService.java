@@ -2,27 +2,23 @@ package com.sbs.SmartBillingSystem.controllers;
 
 import com.razorpay.Order;
 import com.razorpay.RazorpayClient;
-import com.razorpay.RazorpayException;
-import com.sbs.SmartBillingSystem.Entity.Bill;
 import com.sbs.SmartBillingSystem.Entity.BillDetails;
 import com.sbs.SmartBillingSystem.Entity.Brand;
 import com.sbs.SmartBillingSystem.Entity.Category;
-import com.sbs.SmartBillingSystem.Entity.Challan;
 import com.sbs.SmartBillingSystem.Entity.Product;
 import com.sbs.SmartBillingSystem.Entity.User;
 import com.sbs.SmartBillingSystem.Entity.serializedObject.DesObjBillProduct;
 
 import com.sbs.SmartBillingSystem.Repository.BillDetailRepo;
-import com.sbs.SmartBillingSystem.Repository.BillRepo;
 import com.sbs.SmartBillingSystem.Repository.BrandRepo;
 import com.sbs.SmartBillingSystem.Repository.CategoryRepo;
 import com.sbs.SmartBillingSystem.Repository.ChallanRepo;
 import com.sbs.SmartBillingSystem.Repository.ProductRepo;
 
 import com.sbs.SmartBillingSystem.Repository.UserRepo;
+import com.sbs.SmartBillingSystem.Services.DataImportService;
 import com.sbs.SmartBillingSystem.Services.InvoiceService;
 
-import jakarta.annotation.Resources;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,20 +26,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import javax.mail.Session;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -64,6 +54,8 @@ public class ctrService {
     CategoryRepo categoryRepo;
     @Autowired
     BillDetailRepo billDetailRepo;
+    @Autowired 
+    DataImportService dataImportService;
 @Autowired
 BCryptPasswordEncoder bCryptPasswordEncoder;
 // @Autowired

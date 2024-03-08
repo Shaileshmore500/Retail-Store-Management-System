@@ -1,49 +1,51 @@
 
 window.onload = function () {
-  
+
   //----- Search bar styling -----//
   let searchIcon = document.createElement('i');
   searchIcon.className = "icon-search";
-  if(document.getElementById('jsonTable_filter'))
-  {
-  let filterLabel = document.getElementById('jsonTable_filter').children[0]
-  filterLabel.prepend(searchIcon);
+  if (document.getElementById('jsonTable_filter')) {
+    let filterLabel = document.getElementById('jsonTable_filter').children[0]
+    filterLabel.prepend(searchIcon);
   }
 }
 
 function jsonToDataTable(jsonData) {
 
-  if(jsonData==null || jsonData.length<=0)
-  {
+  if (jsonData == null || jsonData.length <= 0) {
     $("#EmptyStateModel").append($("#empty-state"))
     $("#empty-state").show();
     return;
   }
 
-var data=[];
-for(var i=0 ; i<jsonData.length;i++)
-{
-  var obj=jsonData[i]
-  data.push({"ID":obj["partyChallan_pid"],
-  "Challan No":obj["challan_no"],
-  "Challan Date":obj["challan_date"]!=null ? new Date(obj["challan_date"]).getDate()+"-"+new Date(obj["challan_date"]).getMonth()+1+"-"+new Date(obj["challan_date"]).getFullYear():"",
-  "Quantity":obj["quantity"],
-  "Supplier":obj["supplier_fid"] !=null?obj["supplier_fid"].name:"",
-  
+  var data = [];
+  for (var i = 0; i < jsonData.length; i++) {
+    var obj = jsonData[i]
+    data.push({
+      "ID": obj["partyChallan_pid"],
+      "Challan No": obj["challan_no"],
+      "Challan Date": obj["challan_date"] != null ? new Date(obj["challan_date"]).getDate() + "-" + new Date(obj["challan_date"]).getMonth() + 1 + "-" + new Date(obj["challan_date"]).getFullYear() : "",
+      "Amount": obj["amount"],
+      "Quantity": obj["quantity"],
+      "Purchase Date":obj["purchase_date"],
+      "Supplier": obj["supplier_fid"] != null ? obj["supplier_fid"].name : "",
+      
+      
 
 
 
 
-})
 
-}
-jsonData=data;
+    })
+
+  }
+  jsonData = data;
 
 
 
   let newKey = 'Action';
   let newValue = '<a  class="btn btn-primary m-1 edit"><i class="btn-edit "></i></a>';
-  
+
   // Loop through the array and add the new key-value pair to each object
   for (let i = 0; i < jsonData.length; i++) {
     jsonData[i] = { [newKey]: newValue, ...jsonData[i] };
@@ -79,8 +81,8 @@ function displayStatus(status, mode) {
         var msg = "Data added successfully..."
       else if (mode === "edit")
         msg = "Data edited successfully..."
-      else if(mode=="delete")
-      msg="Data deleted successfully..."
+      else if (mode == "delete")
+        msg = "Data deleted successfully..."
       else
         msg = "Success..."
       //  showToasty("<i class='fa-solid fa-square-check fa-shake fa-xl text-white'>&nbsp;&nbsp</i>", "bg-success", "Success...", "Success")       
@@ -107,21 +109,20 @@ function displayStatus(status, mode) {
 
 $(document).ready(() => {
 
- 
+
   $(".edit,.view,.add,.delete").on('click', function () {
-//    $("#customloader").show();
+    //    $("#customloader").show();
     debugger
     let currentelement = this;
     $("#save").show();
 
     if (currentelement.classList.contains("add")) {
 
-      window.location.href="/product?pid="
+      window.location.href = "/product?pid="
 
 
     }
-    else if (currentelement.classList.contains("delete"))
-    {
+    else if (currentelement.classList.contains("delete")) {
       // $("#customloader").show();
       // $.ajax({
       //   type: 'GET',
@@ -130,7 +131,7 @@ $(document).ready(() => {
       //     displayStatus("success", "delete")
 
       //    setTimeout(()=>window.location.reload(),3000)
-          
+
       //   },
       //   error : function(){
       //     displayStatus("error", "delete")
@@ -140,27 +141,26 @@ $(document).ready(() => {
 
 
     }
-    else if (currentelement.classList.contains("edit"))
-    {
+    else if (currentelement.classList.contains("edit")) {
       debugger;
-      var pid =$(currentelement).closest('tr').find('td:nth-child(2)').text();
-      window.location.href=`/product?pid=${pid}`;
+      var pid = $(currentelement).closest('tr').find('td:nth-child(2)').text();
+      window.location.href = `/product?pid=${pid}`;
 
 
 
     }
-    
+
 
 
   })
- 
-  
+
+
   $(".btn-form-cancle").click(() => {
     $("input , textarea").val("");
     $("#myModal").css("display", "none")
 
   });
 
-  
+
 
 })
