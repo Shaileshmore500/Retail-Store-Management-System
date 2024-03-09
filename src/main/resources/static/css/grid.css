@@ -189,18 +189,26 @@ p {
     /* /----- Filter Search Bar Styling-----/ */
     #jsonTable_filter{
       position: relative;
+      margin:0
     }
-    #jsonTable_filter label{
-      /* 
-      
-      */
-      /* position: absolute; */
+    /* #jsonTable_filter label{
+      position: absolute;
       right: 205px;
       margin-bottom: 0;
       font-weight: 600;
       color: gray;
       transition:all .125s ease-in-out; 
+    } */
+
+    #jsonTable_filter input{
+      width: 225px;
+      padding: 16px;
+      background-color: #eff6ff;
     }
+    #jsonTable_filter input:focus{
+      outline:solid 3px #80bdff !important;
+    }
+
     #jsonTable_searchInput{
       min-width: 250px;
       min-height: 38px;
@@ -215,7 +223,8 @@ p {
     }
     /* /Table Heading Column Styling/ */
     #jsonTable thead tr:nth-child(1) th{
-      display:none
+      /* display:none */
+      background-color: #eff6ff;
     }
     #jsonTable thead tr:nth-child(2) th{
       font-size: 15px;

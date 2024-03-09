@@ -1,3 +1,24 @@
+// window.onload = function () {
+//   debugger
+window.onload = function () {
+  addButtonGroup();
+  searchBarStyling();
+}
+//   //----- Insert 'ButtonGroup' between 'Record limit selector' and 'Search Bar' -----//
+function addButtonGroup(){
+  let buttonList = document.getElementById('tableButtonGroup');
+  if(document.getElementById('jsonTable_wrapper')){
+  let table_wrapper = document.getElementById('jsonTable_wrapper').children;
+  let table_entryLimit = table_wrapper[0].children[0];
+  table_entryLimit.after(buttonList);
+  }
+}
+
+function searchBarStyling(){
+  document.querySelector('#jsonTable_filter>label').childNodes[0].nodeValue = "";
+  document.querySelector('#jsonTable_filter input').placeholder = 'Search';
+}
+
 window.onload = function () {
 
   //----- Search bar styling -----//

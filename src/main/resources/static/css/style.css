@@ -46,7 +46,7 @@
       background-color: #02090a;
       box-sizing: border-box;
       padding-right: 25px;
-      z-index: 1;
+      z-index: 5;
   }
 
   .profile_icon {
@@ -140,7 +140,7 @@
       border-radius: 8px;
   }
 
-  .field_value .field_data {}
+
 
   .field_data {
       white-space: nowrap;
@@ -244,19 +244,30 @@
 
   .company_name {
       width: -webkit-fill-available;
-      font-size: var(--logoSize);
+      font-size: var(--logoSompanyize);
       transition: all 0.125s ease-in-out;
       display: inline-block;
       vertical-align: -webkit-baseline-middle;
       font-family: 'Protest Guerrilla', sans-serif;
       color: white;
+      
+      
       /* temporary */
       /* background-color: aliceblue; */
   }
 
-  .sidebar_logo:hover .company_name {
-      color: orange;
-  }
+  h1.page_header.text-center {
+    background: #ffa500;
+    width: 97%;
+    margin: 0 auto;
+    /* margin-top: 20px; */
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: -1px 2px 7px #b28b00;
+}
+[type="search"]{
+    margin-top: 30px;
+}
 
   .collapsed .toggle_state {
       transform: translate(-63.5%, -50%);

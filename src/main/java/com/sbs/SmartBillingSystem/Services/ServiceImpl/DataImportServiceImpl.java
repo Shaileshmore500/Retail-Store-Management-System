@@ -41,9 +41,11 @@ public class DataImportServiceImpl implements DataImportService {
         for (Row row : sheet) {
             if (row.getRowNum() == 0)
                 continue;
+            if(row.getCell(0).getStringCellValue()==null || row.getCell(0).getStringCellValue()=="")
+                break;
             Product product = new Product();
-            Brand brand = brandRepo.findById((int) row.getCell(2).getNumericCellValue()).get();
-            Category category = categoryRepo.findById((int) row.getCell(3).getNumericCellValue()).get();
+            Brand brand = brandRepo.findById(Integer.parseInt(row.getCell(2).getStringCellValue())).get();
+            Category category = categoryRepo.findById(Integer.parseInt(row.getCell(3).getStringCellValue())).get();
             product.setCode(row.getCell(0).getStringCellValue());
             product.setName(row.getCell(1).getStringCellValue());
             product.setBrand_fid(brand);

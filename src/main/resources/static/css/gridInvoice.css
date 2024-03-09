@@ -234,7 +234,8 @@
     }
     /* /Table Heading Column Styling/ */
     #jsonTable thead tr:nth-child(1) th{
-      display:none
+      /* display:none */
+      background-color: #eff6ff;
     }
     #jsonTable thead tr:nth-child(2) th{
       font-size: 15px;

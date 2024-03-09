@@ -1,301 +1,232 @@
-﻿﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿﻿<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <!-- <html xmlns="http://www.w3.org/1999/xhtml"> -->
 
-<html
-  lang="en"
-  xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{navbar::layout(~{::section})}"
->
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
-      rel="stylesheet"
-      id="bootstrap-css"
-    />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!------ Include the above in your HEAD tag ---------->
-    <title></title>
-    <style>
-      .table-sortable tbody tr {
-        cursor: move;
-      }
-    </style>
-  </head>
-  <body>
-    <section>
-      <!-- <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script> -->
-      <link rel="stylesheet" th:href="@{/css/ProductForm.css}" />
-      <div
-        class="form-floating col-md-6 mx-auto mb-3 text-center col-4 aligh-center"
-      >
-        <h2>Add Challan</h2>
-      </div>
-      <div class="panel mlr-15" id="pnl_challan">
-        <div >
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{navbar::layout(~{::section})}">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet"
+    id="bootstrap-css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!------ Include the above in your HEAD tag ---------->
+  <title></title>
+  <style>
+    .table-sortable tbody tr {
+      cursor: move;
+    }
+  </style>
+</head>
+
+<body>
+  <section>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script> -->
+    <link rel="stylesheet" th:href="@{/css/ProductForm.css}" />
+    <div class="form-floating col-md-6 mx-auto mb-3 text-center col-4 aligh-center">
+      <h1 class="text-center page_header">Challan</h1>
+    </div>
+    <div class="panel mlr-15" id="pnl_challan">
+      <div>
         <div class="panel-header">Challan Details</div>
         <div class="mb-2 col-6 text-center mt-2 d-flex mlr">
           <div class="form-floating mb-3 col-7 " style="display: none;">
-            <input
-                    type="hidden"
-                    class="form-control"
-                    id="html_PartyChallan_pid"
-                    data-field="PartyChallan_pid"
-                    th:value="${challan!=null?challan.PartyChallan_pid:''}"
-                    
-            />
+            <input type="hidden" class="form-control" id="html_PartyChallan_pid" data-field="PartyChallan_pid"
+              th:value="${challan!=null?challan.PartyChallan_pid:''}" />
 
           </div>
           <div class="form-floating mb-3 col-7 mandatory">
-            <input
-              type="text"
-              class="form-control"
-              id="html_challanno"
-              data-field="challanno"
-              th:value="${challan!=null?challan.challan_no:''}"
-            />
+            <input type="text" class="form-control" id="html_challanno" data-field="challanno"
+              th:value="${challan!=null?challan.challan_no:''}" />
             <label for="floatingInput mr-5" class="ml-15 md_lbl">Challan Number</label>
             <span class="_error2"></span>
           </div>
           <div class="form-floating mb-3 col-7 mandatory">
             <label for="" class="md_lblsel"></label>
-            <select
-              class="form-select form-select-lg mb-3"
-              aria-label=".form-select-lg example"
-              id="html_supplier"
-              data-field="supplier_fid"
-            >            
+            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="html_supplier"
+              data-field="supplier_fid">
               <option selected value="">Supplier</option>
-              <option 
-              th:each="s:${suppliers}" 
-              th:value="${s.supplier_pid}" 
-              th:selected="${challan != null and challan._supplier_fid eq s.supplier_pid}"
-              th:text="${s.code + ' - ' + s.name}"></option>
-              
-                            
-            </select>            
+              <option th:each="s:${suppliers}" th:value="${s.supplier_pid}"
+                th:selected="${challan != null and challan._supplier_fid eq s.supplier_pid}"
+                th:text="${s.code + ' - ' + s.name}"></option>
+
+
+            </select>
             <span class="_error2" style="position: absolute !important;"></span>
           </div>
           <div class="form-floating mb-3 col-7 mandatory">
-            <input
-              type="date"
-              class="form-control"
-              id="html_ChallanDate"
-              data-field="challandate"
-              th:value="${challan != null ? #dates.format(challan.challan_date, 'yyyy-MM-dd') : ''}"
-              
-            />
+            <input type="date" class="form-control" id="html_ChallanDate" data-field="challandate"
+              th:value="${challan != null ? #dates.format(challan.challan_date, 'yyyy-MM-dd') : ''}" />
             <label for="floatingInput mr-5" class="ml-15 md_lbl">Challan Date</label>
             <span class="_error2"></span>
           </div>
         </div>
         <div class="mb-2 col-6 text-center mt-2 d-flex mlr ">
           <div class="form-floating mb-2 col-7 mandatory">
-            <input
-              type="number"
-              class="form-control"
-              id="html_Quantity"
-              data-field="quantity"
-              th:value="${challan!=null?challan.Quantity:''}" 
-            />
+            <input type="number" class="form-control" id="html_Quantity" data-field="quantity"
+              th:value="${challan!=null?challan.Quantity:''}" />
             <label for="floatingInput mr-5" class="ml-15 md_lbl">Quantity</label>
             <span class="_error2">
-              
+
             </span>
           </div>
           <div class="form-floating mb-2 col-8 mandatory">
-            <input
-              type="number"
-              class="form-control"
-              id="html_Amount"
-              data-field="amount"
-              th:value="${challan!=null?challan.amount:''}"
-            />
+            <input type="number" class="form-control" id="html_Amount" data-field="amount"
+              th:value="${challan!=null?challan.amount:''}" />
             <label for="floatingInput mr-5" class="ml-15 md_lbl">Amount</label>
             <span class="_error2"></span>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="panel mlr-15 mt-5" id="pnl_challan">
+      <div>
+        <div class="panel-header">Importing </div>
+        <div class="mb-2 col-6 text-center mt-2 d-flex mlr">
+         
+          <div class="form-floating mb-3 col-7 mandatory">
+            <input type="file" class="form-control" id="html_file" >
+            <span class="_error2"></span>
+          </div>
+          <button class="noselect btn_add ml" id="btn_import">
+            <span class="text">Import</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                viewBox="0 0 512 512">
+                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                <path
+                  d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
+              </svg></span>
+          </button>
         </div>
       </div>
+    </div>
 
-      <div class="panel mlr-15 mt-5" id="addProduct">
-        <div class="panel-header">Add Products</div>
-        <div class="container ">
-          <div class="row clearfix">
-            <div class="col-md-12 table-responsive">
-              <table
-                class="table table-bordered table-hover table-sortable"
-                id="tab_logic"
-              >
-                <thead>
-                   <tr>
-                    <th class="text-center mw150"> Code</th>
-                    <th class="text-center mw150"> Name</th>
-                    <th class="text-center mw150">Size</th>
-                    <th class="text-center mw150">Quantity</th>
-                    <th class="text-center mw150"> MRP</th>
-                    <th class="text-center mw150">Purchase Rate</th>
-                    <th class="text-center mw150">Brand</th>
-                    <th class="text-center mw150">Category</th>
-                    
-                    <th
-                      class="text-center"
-                      style="
+
+
+
+    <div class="panel mlr-15 mt-5" id="addProduct">
+      <div class="panel-header">Add Products</div>
+      <div class="container ">
+        <div class="row clearfix">
+          <div class="col-md-12 table-responsive">
+            <table class="table table-bordered table-hover table-sortable" id="tab_logic">
+              <thead>
+                <tr>
+                  <th class="text-center mw150"> Code</th>
+                  <th class="text-center mw150"> Name</th>
+                  <th class="text-center mw150">Size</th>
+                  <th class="text-center mw150">Quantity</th>
+                  <th class="text-center mw150"> MRP</th>
+                  <th class="text-center mw150">Purchase Rate</th>
+                  <th class="text-center mw150">Brand</th>
+                  <th class="text-center mw150">Category</th>
+
+                  <th class="text-center" style="
                         border-top: 1px solid #ffffff;
                         border-right: 1px solid #ffffff;
-                      "
-                    ></th>
-                  </tr> 
-                </thead>
-                <tbody>
-                  <tr id="addr0"  data-id="0" th:each="product:${products}">
-                    <td data-name="mail" style="display: none;">
-                      <div class="form-floating mb-3 ">
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="html_product_pid"                           
-                          data-field="product_pid"
-                          th:value="${product.product_pid}"
-                        />
-                        <label for="floatingInput mr-5" class=" md_lbl">Product ID</label>
-                        <span class="_error"></span>
-                        
-                      </div>
-                    </td>
-                    <td data-name="mail">
-                      <div class="form-floating mb-3 mandatory">
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="html_MRP"                           
-                          data-field="code"
-                          th:value="${product.code}"
-                        />
-                        <label for="floatingInput mr-5" class=" md_lbl">Product Code</label>
-                        <span class="_error"></span>
-                        
-                      </div>
-                    </td>
-                    <td data-name="mail">
-                      <div class="form-floating mb-3 ">
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="html_style"
-                          data-field="name"
-                          th:value="${product.name}"
-                           
-                        />
-                        <label for="floatingInput mr-5" class=" md_lbl">Product Name</label>
-                        <span class="_error"></span>
-                      </div>
-                    </td>  
-                    <td data-name="mail">
-                      <div class="form-floating mb-3 mandatory">
-                          <input
-                            type="number"
-                            class="form-control"
-                            id="html_size"
-                            data-field="size"
-                            th:value="${product.size}"
-                          />
-                          <label for="floatingInput mr-5" class=" md_lbl">Size</label>
-                          <span class="_error"></span>
-                        </div>
-                  </td>                    
-                   
-                    
-                    <td data-name="mail">
-                      <div class="form-floating mb-3 mandatory">
-                          <input
-                            type="number"
-                            class="form-control"
-                            id="html_qty"
-                            data-field="quantity"
-                            th:value="${product.quantity}"
-                          />
-                          <label for="floatingInput mr-5" class=" md_lbl">Quantity</label>
-                          <span class="_error"></span>
-                        </div>
-                  </td>
-                    <td data-name="mail">
-                      <div class="form-floating mb-3 mandatory">
-                          <input
-                            type="number"
-                            class="form-control"
-                            id="html_MRP"
-                            data-field="mrp"
-                            th:value="${product.mrp}"
-                          />
-                          <label for="floatingInput mr-5" class=" md_lbl">MRP</label>
-                          <span class="_error"></span>
-                        </div>
+                      "></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr id="addr0" data-id="0" th:each="product:${products}">
+                  <td data-name="mail" style="display: none;">
+                    <div class="form-floating mb-3 ">
+                      <input type="text" class="form-control" id="html_product_pid" data-field="product_pid"
+                        th:value="${product.product_pid}" />
+                      <label for="floatingInput mr-5" class=" md_lbl">Product ID</label>
+                      <span class="_error"></span>
+
+                    </div>
                   </td>
                   <td data-name="mail">
                     <div class="form-floating mb-3 mandatory">
-                        <input
-                          type="number"
-                          class="form-control"
-                          id="html_MRP"
-                          data-field="purchase_rate"
-                          th:value="${product.purchase_rate}"
-                        />
-                        <label for="floatingInput mr-5" class=" md_lbl">Purchase Rate</label>
-                        <span class="_error"></span>
-                      </div>
-                </td>
-                    <td data-name="mail">
-                        <div class="form-floating mb-3 mandatory">
-                          <label for="" class="md_lbl"></label>
-                            <select 
-                              class="form-select form-select-lg mb-3"
-                              aria-label=".form-select-lg example"
-                              data-field="brand_fid"
-                              
-                            >                           
+                      <input type="text" class="form-control" id="html_MRP" data-field="code"
+                        th:value="${product.code}" />
+                      <label for="floatingInput mr-5" class=" md_lbl">Product Code</label>
+                      <span class="_error"></span>
 
-                              
-                              <option value="" >Brand</option>
-                                   <option th:each="b:${brands}" 
-                                   th:selected="${product != null && product.brand_fid != null && product.brand_fid.brand_pid == b.brand_pid}"
-                                   th:value="${b.brand_pid}" 
-                                   th:text="${b.code + ' - ' + b.name}"></option>
-                            
-                              
-                            </select>
-                            <span class="_error"></span>
-                          </div>
-                      </td>
-                    <td data-name="mail">
-                        <div class="form-floating mb-3 mandatory">
-                          <label for="" class="md_lbl"></label>
-                            <select
-                              class="form-select form-select-lg mb-3"
-                              aria-label=".form-select-lg example"
-                            data-field="category_fid"
-                            >
-                              <option value="" selected>Category</option>
-                              <option th:each="c:${categories}" 
-                              th:selected="${product!=null && product.category_fid!=null && product.category_fid.category_pid==c.category_pid}"
-                              th:value="${c.category_pid}" 
-                              th:text="${c.name+'-'+c.code}"></option>
-                              
-                            </select>
-                            <span class="_error"></span>
-                          </div>
-                    </td>
-                    <td data-name="del">
-                      <button
-                        name="del0"
-                        class="btn btn-danger glyphicon glyphicon-remove row-remove"
-                      >
-                        <span aria-hidden="true">×</span>
-                      </button>
-                    </td>
-                  </tr>
-                  <!-- <tr>
+                    </div>
+                  </td>
+                  <td data-name="mail">
+                    <div class="form-floating mb-3 ">
+                      <input type="text" class="form-control" id="html_style" data-field="name"
+                        th:value="${product.name}" />
+                      <label for="floatingInput mr-5" class=" md_lbl">Product Name</label>
+                      <span class="_error"></span>
+                    </div>
+                  </td>
+                  <td data-name="mail">
+                    <div class="form-floating mb-3 mandatory">
+                      <input type="number" class="form-control" id="html_size" data-field="size"
+                        th:value="${product.size}" />
+                      <label for="floatingInput mr-5" class=" md_lbl">Size</label>
+                      <span class="_error"></span>
+                    </div>
+                  </td>
+
+
+                  <td data-name="mail">
+                    <div class="form-floating mb-3 mandatory">
+                      <input type="number" class="form-control" id="html_qty" data-field="quantity"
+                        th:value="${product.quantity}" />
+                      <label for="floatingInput mr-5" class=" md_lbl">Quantity</label>
+                      <span class="_error"></span>
+                    </div>
+                  </td>
+                  <td data-name="mail">
+                    <div class="form-floating mb-3 mandatory">
+                      <input type="number" class="form-control" id="html_MRP" data-field="mrp"
+                        th:value="${product.mrp}" />
+                      <label for="floatingInput mr-5" class=" md_lbl">MRP</label>
+                      <span class="_error"></span>
+                    </div>
+                  </td>
+                  <td data-name="mail">
+                    <div class="form-floating mb-3 mandatory">
+                      <input type="number" class="form-control" id="html_MRP" data-field="purchase_rate"
+                        th:value="${product.purchase_rate}" />
+                      <label for="floatingInput mr-5" class=" md_lbl">Purchase Rate</label>
+                      <span class="_error"></span>
+                    </div>
+                  </td>
+                  <td data-name="mail">
+                    <div class="form-floating mb-3 mandatory">
+                      <label for="" class="md_lbl"></label>
+                      <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+                        data-field="brand_fid">
+
+
+                        <option value="">Brand</option>
+                        <option th:each="b:${brands}"
+                          th:selected="${product != null && product.brand_fid != null && product.brand_fid.brand_pid == b.brand_pid}"
+                          th:value="${b.brand_pid}" th:text="${b.code + ' - ' + b.name}"></option>
+
+
+                      </select>
+                      <span class="_error"></span>
+                    </div>
+                  </td>
+                  <td data-name="mail">
+                    <div class="form-floating mb-3 mandatory">
+                      <label for="" class="md_lbl"></label>
+                      <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"
+                        data-field="category_fid">
+                        <option value="" selected>Category</option>
+                        <option th:each="c:${categories}"
+                          th:selected="${product!=null && product.category_fid!=null && product.category_fid.category_pid==c.category_pid}"
+                          th:value="${c.category_pid}" th:text="${c.name+'-'+c.code}"></option>
+
+                      </select>
+                      <span class="_error"></span>
+                    </div>
+                  </td>
+                  <td data-name="del">
+                    <button name="del0" class="btn btn-danger glyphicon glyphicon-remove row-remove">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                  </td>
+                </tr>
+                <!-- <tr>
                     <th class="text-center mw150"> Code</th>
                     <th class="text-center mw150"> Name</th>
                     <th class="text-center mw150">Size</th>
@@ -452,76 +383,72 @@
                       </button>
                     </td>
                   </tr> -->
-                </tbody>
-              </table>
-            </div>
+              </tbody>
+            </table>
           </div>
-          <a id="add_row" class="btn btn-primary float-right">Add Row</a>
         </div>
-        
-      </div>
-      <div class="d-flex mb-2 btn-div mt-5">
-        <button class="noselect btn_del ml" id="btn_cancle">
-          <span class="text">Cancel</span
-          ><span class="icon"
-            ><svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"
-              ></path></svg></span>
-        </button>
-        <button class="noselect btn_add ml" id="tbl_addProduct">
-          <span class="text">Add</span><span class="icon"
-            ><svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="1em"
-              viewBox="0 0 512 512"
-            >
-              <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-              <path
-                d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg></span>
-        </button>
+        <a id="add_row" class="btn btn-primary float-right">Add Row</a>
       </div>
 
-      <script>
-        $(document).ready(function () {
+    </div>
+    <div class="d-flex mb-2 btn-div mt-5">
+      <button class="noselect btn_del ml" id="btn_cancle">
+        <span class="text">Cancel</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+            height="24" viewBox="0 0 24 24">
+            <path
+              d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z">
+            </path>
+          </svg></span>
+      </button>
+      <button class="noselect btn_add ml" id="tbl_addProduct">
+        <span class="text">Add</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" height="1em"
+            viewBox="0 0 512 512">
+            <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+            <path
+              d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
+          </svg></span>
+      </button>
+    </div>
+
+    <script>
 
 
-          $("#master .fa-caret-down").toggleClass("tarnsform");
+
+      $(document).ready(function () {
+
+
+        $("#master .fa-caret-down").toggleClass("tarnsform");
         $(".clild-menu_master").slideToggle();
 
 
-          
 
-          // Sortable Code
-          // var fixHelperModified = function (e, tr) {
-          //   var $originals = tr.children();
-          //   var $helper = tr.clone();
 
-          //   $helper.children().each(function (index) {
+        // Sortable Code
+        // var fixHelperModified = function (e, tr) {
+        //   var $originals = tr.children();
+        //   var $helper = tr.clone();
 
-          //     $(this).width($originals.eq(index).width());
-              
-          //   });
+        //   $helper.children().each(function (index) {
 
-          //   return $helper;
-          // };
+        //     $(this).width($originals.eq(index).width());
 
-          // $(".table-sortable tbody")
-          //   .sortable({
-          //     helper: fixHelperModified,
-          //   })
-          //   .disableSelection();
+        //   });
 
-          // $(".table-sortable thead").disableSelection();
+        //   return $helper;
+        // };
 
-          // $("#add_row").trigger("click");
-        });
-      </script>
-    </section>
-  </body>
+        // $(".table-sortable tbody")
+        //   .sortable({
+        //     helper: fixHelperModified,
+        //   })
+        //   .disableSelection();
+
+        // $(".table-sortable thead").disableSelection();
+
+        // $("#add_row").trigger("click");
+      });
+    </script>
+  </section>
+</body>
+
 </html>

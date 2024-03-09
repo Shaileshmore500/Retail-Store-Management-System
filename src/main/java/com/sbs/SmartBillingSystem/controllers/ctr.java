@@ -268,7 +268,7 @@ var sql_ProfitLoss="\n" + //
         }
         if (products.size() == 0) {
             Product product = new Product();
-            product.setName("product 1");
+           // product.setName("product 1");
             products.add(product);
         }
         model.addAttribute("challan", challan);

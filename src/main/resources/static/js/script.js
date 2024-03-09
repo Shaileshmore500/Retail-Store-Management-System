@@ -122,6 +122,71 @@ function validPanel(id) {
 
 
 $(document).ready(() => {
+
+  $("#btn_import").click(()=>{
+    $(".customloader").show();
+debugger
+
+
+
+    if (!validPanel("pnl_challan")) {
+      showToasty(
+        "<i class='fa-solid fa-triangle-exclamation fa-shake fa-xl text-white'>&nbsp;&nbsp;</i>",
+        "bg-danger",
+        "Please Fix All Errors",
+        "Error"
+      );
+      $(".customloader").hide()
+      return false;
+    }
+    if($("#html_file").val()=='')
+    {
+swal("Error","Please Upload File...", "error");
+$(".customloader").hide()
+return false;    
+}
+
+let obj_challan = {
+  partychallan_pid:$("#html_PartyChallan_pid").val(),
+  challan_no: $('#html_challanno').val(),
+  supplier_fid: $('#html_supplier').val(),
+  challan_date: $('#html_ChallanDate').val(),
+  quantity: $('#html_Quantity').val(),
+  amount: $('#html_Amount').val()
+};
+
+let formdata=new FormData();
+formdata.append('file',document.getElementById('html_file').files[0]);
+formdata.append("challan",JSON.stringify(obj_challan));
+
+$.ajax({
+  url: 'challanimport',
+  type: 'POST',
+  data: formdata,
+  processData: false,
+  contentType: false,
+  success: function(response) {
+    $(".customloader").hide()
+    swal("Success","Data Imported successfully...", "success");
+    setTimeout(() => {
+      swal.close();
+    }, 3000);
+      
+  },
+  error: function(xhr, status, error) {
+    $(".customloader").hide()
+    swal("Error",error, "error");      
+      setTimeout(() => {
+        swal.close();
+      }, 3000);
+  }
+});
+
+    
+  })
+
+
+
   $("#btn_toastclose").click(() => {
     $("#toast").fadeOut(500)
     //   $("#toast").animate({ opacity: 0 }, 500, function(){
