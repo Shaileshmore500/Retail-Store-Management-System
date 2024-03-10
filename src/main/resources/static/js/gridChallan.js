@@ -29,8 +29,7 @@ function jsonToDataTable(jsonData) {
       "Quantity": obj["quantity"],
       "Purchase Date":obj["purchase_date"],
       "Supplier": obj["supplier_fid"] != null ? obj["supplier_fid"].name : "",
-      
-      
+        
 
 
 

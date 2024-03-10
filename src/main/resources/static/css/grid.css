@@ -229,6 +229,7 @@ p {
     #jsonTable thead tr:nth-child(2) th{
       font-size: 15px;
       background-color: #eff6ff;
+      text-wrap: nowrap;
     }
     /* /Default Styling/ */
     #jsonTable thead tr:nth-child(1) th, #jsonTable{
@@ -256,6 +257,7 @@ p {
     #jsonTable tbody tr td{
       border-bottom: solid 1px lightgray;
       font-size: 15px;
+      text-wrap: nowrap;
     }
     #jsonTable tbody tr td:nth-child(1){
       /* max-width: 100px; */

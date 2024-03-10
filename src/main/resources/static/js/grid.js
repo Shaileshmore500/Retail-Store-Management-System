@@ -76,6 +76,37 @@ function jsonToDataTable(jsonData) {
     $("#empty-state").show();
     return;
   }
+  
+  var data = [];
+const form=new URLSearchParams(window.location.search).get('form');
+
+if(form=="user")
+{
+  for (var i = 0; i < jsonData.length; i++) {
+    var obj = jsonData[i]
+    
+    data.push({
+"ID":obj["id"],
+"Name":obj["name"],
+"Email":obj["email"],
+"Role":obj["role"],
+"Mobile":obj["mobile_no"],
+"Address":obj["address"]
+
+
+    })
+    
+  }
+  jsonData=data;
+}
+
+
+
+
+
+
+
+
   let newKey = 'Action';
   let newValue = '<a  class="btn btn-primary m-1 view"><i class="btn-view"></i></a><a  class="btn btn-primary m-1 edit"><i class="btn-edit "></i></a><a  class="btn btn-danger  m-1 delete"><i class="btn-delete"></i> </a>';
 

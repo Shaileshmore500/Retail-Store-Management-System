@@ -50,6 +50,7 @@ public class DataImportServiceImpl implements DataImportService {
             product.setName(row.getCell(1).getStringCellValue());
             product.setBrand_fid(brand);
             product.setCategory_fid(category);
+            product.setChallan_fid(challan);
             product.setMrp((Float.parseFloat(row.getCell(4).getStringCellValue())));
             product.setQuantity((Float.parseFloat(row.getCell(5).getStringCellValue())));
             product.setPurchase_rate((Float.parseFloat(row.getCell(6).getStringCellValue())));

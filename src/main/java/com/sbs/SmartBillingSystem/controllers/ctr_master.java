@@ -465,7 +465,7 @@ public class ctr_master {
             // in advance.</p><p><strong>Best regards,</strong></p><p>[Your Full
             // Name]<br>[Your Position]<br>[Your Company Name]<br>[Your Contact
             // Information]</p>");
-            EmailHelper emailHelper = new EmailHelper();
+            
 
             // var isSendmail = emailHelper.sendMail(subject, "body_Builder".toString(),
             // attchment, receiver, filename);
@@ -485,4 +485,33 @@ public class ctr_master {
         return new ResponseEntity<>("Something Went Wrong...", HttpStatus.BAD_REQUEST);
     }
 
+    @PostMapping("/contactus")
+    public String postMethodName(@RequestParam String name,@RequestParam String mobile, @RequestParam String Email,@RequestParam String body,Model model) {
+        
+        String emailbody="Dear sir,\r\n" + //
+                        "\r\n" + //
+                        "I hope this email finds you well. My name is "+name+", and I am reaching out to request contact from your team regarding inquiry"+"\r\n\r\n" + //
+                           body+"\r\n"    +
+                           "Please kindly arrange for someone from your team to contact me at your earliest convenience. You can reach me via email at "+Email+" or by phone at "+mobile+". \r\n\r\n"+//
+"Thank you very much for your attention to this request. I look forward to hearing from you soon." + //
+        "\r\n" + //
+                        "Warm regards,\r\n" + //
+                                                        "\r\n" + //
+                                                        name+"\r\n" + //                                                        
+                                                        mobile;
+
+        String result = emailService.sendMail(null, "shaileshmore500@gmail.com", null, "Request for Contact", emailbody);
+
+            // public String sendMail(MultipartFile[] file, String to, String[] cc, String
+            // subject, String body) {
+
+            if (result.equals("mail send"))
+                model.addAttribute("status","success");
+                else
+                model.addAttribute("status","error");
+
+        
+                return "forms/contactus";
+    }
+    
 }

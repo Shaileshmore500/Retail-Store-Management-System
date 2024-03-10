@@ -432,4 +432,8 @@ var sql_ProfitLoss="\n" + //
     public String changepassword() {
         return "forms/changepassword";
     }
+    @GetMapping("/contactus")
+    public String contactus() {
+        return "forms/contactus";
+    }
 }
