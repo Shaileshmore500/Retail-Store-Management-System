@@ -244,7 +244,7 @@
 
   .company_name {
       width: -webkit-fill-available;
-      font-size: var(--logoSompanyize);
+      font-size: 25px;
       transition: all 0.125s ease-in-out;
       display: inline-block;
       vertical-align: -webkit-baseline-middle;
@@ -527,4 +527,96 @@
 
   @media screen and (min-width: 1201px) {
       /* CSS styles here */
+  }
+
+  .profile_dropdown {
+    height: max-content;
+    width: 275px;
+    background: #061F21;
+    position: absolute;
+    top: 80px;
+    right: 0.5vw;
+    border-radius: 35px;
+    outline: solid 3px white;
+    outline-offset: -5px;
+    box-sizing: border-box;
+    padding: 5px;
+    padding-bottom: 40px;
+    z-index: 3;
+    display: flex;
+    flex-flow: column nowrap;
+    transition: transform .2s ease-in-out;
+    font-family:  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.profile_image {
+    display: block;
+    aspect-ratio: 1 / 1;
+    width: 125px;
+    /* background-color: #0d6efd; */
+    margin: 10px auto;
+    border-radius: 50%;
+    outline: solid 3px orange;
+    object-position: bottom;
+    object-fit: cover;
+}
+
+.profile_preview {
+    /* border:solid 3px wheat; */
+    margin: 3px;
+    flex: 1;
+    display: flex;
+    flex-flow: column nowrap;
+    row-gap: 2px;
+
+}
+
+.profile_info_field {
+    /* border: solid 1px #0d6efd; */
+    display: flex;
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.field_property {
+    /* border: solid 1px red; */
+    padding: 6px;
+    width: 33%;
+    font-size: 14px;
+}
+
+.field_value {
+    /* border: solid 1px yellow; */
+    flex: 1;
+    padding: 6px;
+    font-size: 14px;
+    /* background-color: gray; */
+    border-radius: 8px;
+}
+
+
+.field_data {
+    white-space: nowrap;
+    text-wrap: wrap;
+    word-break: break-word;
+    font-size: 12px;
+}
+
+  .dropdown_button{
+      display: block;
+      background-color: orange;
+      text-align: center;
+      width: 90%;
+      margin: 0 auto;
+      border-radius: 8px;
+      color: #02080a;
+      cursor: pointer;
+      transition: .25s all ease-in-out;
+      padding: 5px;
+  }
+  .dropdown_button:hover{
+      background-color: #0d6efd;
+      color: #fff;
+      transition: .25s all ease-in-out;
   }

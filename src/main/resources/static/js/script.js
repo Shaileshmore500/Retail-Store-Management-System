@@ -123,6 +123,13 @@ function validPanel(id) {
 
 $(document).ready(() => {
 
+
+  $("#logout").click(()=>{
+    window.location="/logout";
+  })
+  $("#passwordchange").click(()=>{
+    window.location="/changepassword";
+  })
   $("#btn_import").click(()=>{
     $(".customloader").show();
 debugger

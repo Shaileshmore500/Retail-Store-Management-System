@@ -1,0 +1,86 @@
+.panel_title{
+    color: #fff;
+    position: absolute;
+    top: -35px;
+    left: 50px;
+    font-size: 21px;
+    /* width: 100%; */
+    text-align: center;
+}
+.home_links{
+    position: relative;
+        display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+    row-gap: 20px;
+    column-gap: 20px;
+    margin: 30px auto;
+    border: solid #353535;
+    width: 90%;
+    padding: 12px;
+    border-radius: 12px;
+    border-top: solid 50px #353535;
+    }
+    .home_links .card{
+        background-repeat: no-repeat;
+        background-size: 110%;
+        background-position: center;
+        transition: .125s all ease-in-out;
+        color: #fff;
+            width: 18rem;
+    background-color: slategray;
+    background-blend-mode: multiply;
+    min-height: 170px;
+    }
+    .home_links .card:hover{
+        background-size: 200%;
+    }
+    .card_link_box{
+        background-color: #13666d;
+    text-align: center;
+    padding: 3px;
+    border-radius: 8px;
+    transition: .125s all ease-in-out;
+    width: 80%;
+    transform: translateX(-50%);
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    }
+    .card_link_box:hover{
+        background-color: orange;
+    }
+    .card_link_box .card-link{
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        transition: .2s all ease-in-out ;
+        width: 100%;
+        display: inline-block;
+    }
+    .card_link_box:hover .card-link{
+        color: #02080a;
+    }
+    .card_link_box:hover .card-link:hover{
+        color: #fff;
+    }
+    .home_links .card:nth-child(1){
+        background-image: url(../images/homeimages//homeimages/download.jpg);
+    }
+    .home_links .card:nth-child(2){
+        /* background-image: url(src/main/resources/static/images/homeimages/How-to-make-GST-payments-with-a-credit-card-1.jpg); */
+        background-image: url(../images/homeimages/How-to-make-GST-payments-with-a-credit-card-1.jpg);
+
+    }
+    .home_links .card:nth-child(3){
+        background-image: url(../images/homeimages/images.jpg);
+    }
+    .home_links .card:nth-child(4){
+        background-image: url(../images/homeimages/images\ \(1\).jpg);
+    }
+    .home_links .card:nth-child(5){
+        background-image: url(../images/homeimages/images\ \(2\).jpg);
+    }
+    .home_links .card:nth-child(6){
+        background-image: url(../images/homeimages/images\ \(3\).jpg);
+    }

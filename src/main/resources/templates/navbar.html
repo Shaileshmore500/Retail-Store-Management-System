@@ -78,7 +78,7 @@
     </div>
     <div class="dropdown_backdrop collapsed"></div>
     <div class="profile_dropdown collapsed">
-      <img src="/images/jason-martin-slayer-2016-portrait.jpg" alt="" class="profile_image" />
+      <!-- <img src="/images/jason-martin-slayer-2016-portrait.jpg" alt="" class="profile_image" />
       <div class="profile_preview">
         <div class="profile_info_field">
           <div class="field_property">
@@ -94,6 +94,41 @@
           </div>
           <div class="field_value">
           </div>
+        </div>
+      </div> -->
+      <img 
+      th:src="@{'../'+${session.currentUser.getImageUrl()}}"
+      alt="" class="profile_image" />
+      <div class="profile_preview">
+        <div class="profile_info_field">
+          <div class="field_property">
+            <span class="field_data">Username:</span>
+          </div>
+          <div class="field_value">
+            <span class="field_data"th:text=" ${session.currentUser.getName()}"></span>
+          </div>
+        </div>
+        <div class="profile_info_field">
+          <div class="field_property">
+            <span class="field_data">Email:</span>
+          </div>
+          <div class="field_value">
+            <span class="field_data" th:text="${session.currentUser.getEmail()}"></span>
+          </div>
+        </div>
+        <div class="profile_info_field">
+          <div class="field_property">
+            <span class="field_data">Role</span>
+          </div>
+          <div class="field_value">
+          <span class="field_data" th:text="${session.currentUser.getRole()}"></span>
+          </div>
+        </div>
+        <div class="profile_info_field" id="passwordchange">
+          <span class="dropdown_button">Change Password</span>
+        </div>
+        <div class="profile_info_field" id="logout">
+          <span class="dropdown_button">Logout</span>
         </div>
       </div>
     </div>
@@ -142,7 +177,7 @@
           </h2>
         </div>
         <!-- Menu Two -->
-        <div class="accordion-item">
+        <div th:if="${session.currentUser.getRole()=='ROLE_ADMIN'}" class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
               data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
@@ -246,7 +281,7 @@ User
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle" viewBox="0 0 16 16">
 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
 </svg>
-Challan
+Product
 
               </button>
             </a>
@@ -353,6 +388,7 @@ Challan
         <!-- Menu Six -->
         <div class="accordion-item">
           <h2 class="accordion-header">
+            <a th:href="@{/reports}">
             <button class="accordion-button collapsed direct_link" type="button" data-bs-toggle="collapse"
               data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -364,12 +400,13 @@ Challan
                 <path
                   d="M10 7a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0zm-6 4a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0zm4-3a1 1 0 0 0-1 1v3a1 1 0 1 0 2 0V9a1 1 0 0 0-1-1" />
               </svg>
-              <span><a href="">Reports</a></span>
+              <span>Reports</span>
             </button>
+            </a>
           </h2>
         </div>
         <!-- Menu Seven -->
-        <div class="accordion-item">
+        <div th:if="${session.currentUser.getRole()=='ROLE_ADMIN'}" class="accordion-item">
           <h2 class="accordion-header">
             <a th:href="@{/attendance}">
             <button class="accordion-button collapsed direct_link" type="button" data-bs-toggle="collapse"
@@ -387,7 +424,7 @@ Challan
           </h2>
         </div>
         <!-- Menu Eight -->
-        <div class="accordion-item">
+        <div th:if="${session.currentUser.getRole()=='ROLE_ADMIN'}" class="accordion-item">
           <h2 class="accordion-header">
             <a th:href="@{/po}">
             <button class="accordion-button collapsed direct_link" type="button" data-bs-toggle="collapse"

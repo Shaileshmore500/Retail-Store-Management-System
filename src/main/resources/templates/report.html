@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{navbar::layout(~{::section})}">
+<!-- th:replace="navbar::layout(~{::section})" -->
+<!-- th:replace="~{navbar::layout(~{::section})}" -->
+<!-- navbar::layout(~{::section}) -->
+
+
+<head>
+	<meta charset="UTF-8" />
+	<link href="/dist/output.css" rel="stylesheet">
+	<title>this is home page</title>
+</head>
+
+<body>
+	<!-- <div th:replace="~{navbar ::navbar}"></div> -->
+	<section class="banner d-flex justify-content-center align-items-center ">
+		<div class="text-center" style="display: none;">
+			<h1 class="font-weight-bold text-5xl text-red-800">Smart Contact Manager</h1>
+			<p>
+				Start Collecting your contacts in very smarter way. We provide
+				very efficient and smarter way of handling contacts.
+			</p>
+			<button class="btn bg-primary btn-lg text-white">Get Start</button>
+
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<div style="width: 80%; margin: auto;">
+
+			<!-- Chart 1: Monthly Sales and Profits -->
+			<!-- <canvas id="monthlySalesProfitsChart"></canvas> -->
+
+			<!-- Chart 2: Top Selling Products -->
+			<!-- <canvas id="topSellingProductsChart"></canvas> -->
+
+			<!-- Chart 3: Sales by Category -->
+			<!-- <canvas id="salesByCategoryChart"></canvas> -->
+
+			<!-- Chart 4: Customer Demographics -->
+			<!-- <canvas id="customerDemographicsChart"></canvas> -->
+
+			<!-- ... add more charts as needed ... -->
+			<div style="display: flex;">
+
+				<!-- Frame 1: Profit/Loss -->
+				<div class="dashboard-frame" style="width: 50%;">
+					<h3>Profit/Loss</h3>
+					<canvas id="profitLossChart" width="400" height="200"></canvas>
+				</div>
+
+				<!-- Frame 2: Monthly Sales -->
+				<div class="dashboard-frame" style="width: 50%;">
+					<h3>Monthly Sales</h3>
+					<canvas id="monthlySalesChart" width="400" height="200"></canvas>
+				</div>
+			</div>
+			<div style="display: flex;">
+
+				<!-- Frame 3: Monthly Purchase -->
+				<div class="dashboard-frame" style="width: 50%;">
+					<h3>Monthly Purchase</h3>
+					<canvas id="monthlyPurchaseChart" width="400" height="200"></canvas>
+				</div>
+
+				<!-- Frame 4: Brand-wise Stock Balance -->
+				<div class="dashboard-frame" style="width: 50%;">
+					<h3>Brand-wise Stock Balance</h3>
+					<canvas id="brandStockBalanceChart" width="400" height="200"></canvas>
+				</div>
+			</div>
+
+			<div style="display: flex;">
+				<br>
+				<div class="dashboard-frame" style="width: 50%;" >
+					<h3>Category-wise Stock Balance</h3>
+					<canvas id="salesByCategoryChart" width="400" height="200"></canvas>
+				</div>
+			</div>
+
+		</div>
+
+		<script th:inline="javascript">
+			debugger;
+			var monthlySale =/*[[${monthlySale}]]*/'';
+			var monthlyPurchase =/*[[${monthlyPurchase}]]*/'';
+			var StockBrandwise =/*[[${StockBrandwise}]]*/'';
+			var StockCategorywise =/*[[${StockCategorywise}]]*/'';
+			var ProfitLoss =/*[[${ProfitLoss}]]*/'';
+
+			// Sample data (replace with your actual AJAX request)
+			var monthlySalesProfitsData = [
+				[1, 1000, 500],
+				[2, 1200, 600],
+				[3, 800, 400],
+				// ... more data
+			];
+
+			var topSellingProductsData = [
+				{ product: 'Product A', quantity: 50 },
+				{ product: 'Product B', quantity: 45 },
+				{ product: 'Product C', quantity: 30 },
+				// ... more data
+			];
+
+			var salesByCategoryData = [];
+			// 	{ category: 'Electronics', amount: 2000 },
+			// 	{ category: 'Clothing', amount: 1500 },
+			// 	{ category: 'Groceries', amount: 1200 },
+			// 	// ... more data
+			// ];
+			StockCategorywise.forEach(element => {
+				salesByCategoryData.push({ category: element['categoryname'], amount: element['qty'] })
+			});
+
+
+			var profitLossData = [
+				{ month: 'January', profit: ProfitLoss.filter(function (item) { return item.monthYear === 1; }).length > 0 ? ProfitLoss.filter(function (item) { return item.monthYear === 1; })[0]['profit'] : 0 },
+				{ month: 'February', profit: ProfitLoss.filter(function (item) { return item.monthYear === 2; }).length > 0 ? ProfitLoss.filter(function (item) { return item.monthYear === 2; })[0]['profit'] : 0 },
+				{ month: 'March', profit: ProfitLoss.filter(function (item) { return item.monthYear === 3; }).length > 0 ? ProfitLoss.filter(function (item) { return item.monthYear === 3; })[0]['profit'] : 0 },
+				{ month: 'April', profit: ProfitLoss.filter(function (item) { return item.monthYear === 4; }).length > 0 ? ProfitLoss.filter(function (item) { return item.monthYear === 4; })[0]['profit'] : 0 },
+				{ month: 'May', profit: ProfitLoss.filter(function (item) { return item.monthYear === 5; }).length > 0 ? ProfitLoss.filter(function (item) { return item.monthYear === 5; })[0]['profit'] : 0 },
+				{ month: 'June', profit: ProfitLoss.filter(function (item) { return item.monthYear === 6; }).length > 0 ? ProfitLoss.filter(function (item) { return item.monthYear === 6; })[0]['profit'] : 0 },
+				{ month: 'Jully', profit: ProfitLoss.filter(function (item) { return item.monthYear === 7; }).length > 0 ? ProfitLoss.filter(function (item) { return item.monthYear === 7; })[0]['profit'] : 0 },
+				{ month: 'August', profit: ProfitLoss.filter(function (item) { return item.monthYear === 8; }).length > 0 ? ProfitLoss.filter(function (item) { return item.monthYear === 8; })[0]['profit'] : 0 },
+				{ month: 'Suptember', profit: ProfitLoss.filter(function (item) { return item.monthYear === 9; }).length > 0 ? ProfitLoss.filter(function (item) { return item.monthYear === 9; })[0]['profit'] : 0 },
+				{ month: 'Octomber', profit: ProfitLoss.filter(function (item) { return item.monthYear === 10; }).length > 0 ? ProfitLoss.filter(function (item) { return item.monthYear === 10; })[0]['profit'] : 0 },
+				{ month: 'November', profit: ProfitLoss.filter(function (item) { return item.monthYear === 11; }).length > 0 ? ProfitLoss.filter(function (item) { return item.monthYear === 11; })[0]['profit'] : 0 },
+				{ month: 'December', profit: ProfitLoss.filter(function (item) { return item.monthYear === 12; }).length > 0 ? ProfitLoss.filter(function (item) { return item.monthYear === 12; })[0]['profit'] : 0 },
+
+			];
+
+			var monthlySalesData = [
+				{ month: 'January', sales: monthlySale.filter(function (item) { return item.monthYear === 1; }).length > 0 ? monthlySale.filter(function (item) { return item.monthYear === 1; })[0]['totalSales'] : 0 },
+				{ month: 'February', sales: monthlySale.filter(function (item) { return item.monthYear === 2; }).length > 0 ? monthlySale.filter(function (item) { return item.monthYear === 2; })[0]['totalSales'] : 0 },
+				{ month: 'March', sales: monthlySale.filter(function (item) { return item.monthYear === 3; }).length > 0 ? monthlySale.filter(function (item) { return item.monthYear === 3; })[0]['totalSales'] : 0 },
+				{ month: 'April', sales: monthlySale.filter(function (item) { return item.monthYear === 4; }).length > 0 ? monthlySale.filter(function (item) { return item.monthYear === 4; })[0]['totalSales'] : 0 },
+				{ month: 'May', sales: monthlySale.filter(function (item) { return item.monthYear === 5; }).length > 0 ? monthlySale.filter(function (item) { return item.monthYear === 5; })[0]['totalSales'] : 0 },
+				{ month: 'June', sales: monthlySale.filter(function (item) { return item.monthYear === 6; }).length > 0 ? monthlySale.filter(function (item) { return item.monthYear === 6; })[0]['totalSales'] : 0 },
+				{ month: 'Jully', sales: monthlySale.filter(function (item) { return item.monthYear === 7; }).length > 0 ? monthlySale.filter(function (item) { return item.monthYear === 7; })[0]['totalSales'] : 0 },
+				{ month: 'August', sales: monthlySale.filter(function (item) { return item.monthYear === 8; }).length > 0 ? monthlySale.filter(function (item) { return item.monthYear === 8; })[0]['totalSales'] : 0 },
+				{ month: 'Suptember', sales: monthlySale.filter(function (item) { return item.monthYear === 9; }).length > 0 ? monthlySale.filter(function (item) { return item.monthYear === 9; })[0]['totalSales'] : 0 },
+				{ month: 'Octomber', sales: monthlySale.filter(function (item) { return item.monthYear === 10; }).length > 0 ? monthlySale.filter(function (item) { return item.monthYear === 10; })[0]['totalSales'] : 0 },
+				{ month: 'November', sales: monthlySale.filter(function (item) { return item.monthYear === 11; }).length > 0 ? monthlySale.filter(function (item) { return item.monthYear === 11; })[0]['totalSales'] : 0 },
+				{ month: 'December', sales: monthlySale.filter(function (item) { return item.monthYear === 12; }).length > 0 ? monthlySale.filter(function (item) { return item.monthYear === 12; })[0]['totalSales'] : 0 },
+
+			];
+
+
+			var monthlyPurchaseData = [
+				{ month: 'January', purchase: monthlyPurchase.filter(function (item) { return item.monthYear === 1; }).length > 0 ? monthlyPurchase.filter(function (item) { return item.monthYear === 1; })[0]['total_purchase'] : 0 },
+				{ month: 'February', purchase: monthlyPurchase.filter(function (item) { return item.monthYear === 2; }).length > 0 ? monthlyPurchase.filter(function (item) { return item.monthYear === 2; })[0]['total_purchase'] : 0 },
+				{ month: 'March', purchase: monthlyPurchase.filter(function (item) { return item.monthYear === 3; }).length > 0 ? monthlyPurchase.filter(function (item) { return item.monthYear === 3; })[0]['total_purchase'] : 0 },
+				{ month: 'April', purchase: monthlyPurchase.filter(function (item) { return item.monthYear === 4; }).length > 0 ? monthlyPurchase.filter(function (item) { return item.monthYear === 4; })[0]['total_purchase'] : 0 },
+				{ month: 'May', purchase: monthlyPurchase.filter(function (item) { return item.monthYear === 5; }).length > 0 ? monthlyPurchase.filter(function (item) { return item.monthYear === 5; })[0]['total_purchase'] : 0 },
+				{ month: 'June', purchase: monthlyPurchase.filter(function (item) { return item.monthYear === 6; }).length > 0 ? monthlyPurchase.filter(function (item) { return item.monthYear === 6; })[0]['total_purchase'] : 0 },
+				{ month: 'Jully', purchase: monthlyPurchase.filter(function (item) { return item.monthYear === 7; }).length > 0 ? monthlyPurchase.filter(function (item) { return item.monthYear === 7; })[0]['total_purchase'] : 0 },
+				{ month: 'August', purchase: monthlyPurchase.filter(function (item) { return item.monthYear === 8; }).length > 0 ? monthlyPurchase.filter(function (item) { return item.monthYear === 8; })[0]['total_purchase'] : 0 },
+				{ month: 'Suptember', purchase: monthlyPurchase.filter(function (item) { return item.monthYear === 9; }).length > 0 ? monthlyPurchase.filter(function (item) { return item.monthYear === 9; })[0]['total_purchase'] : 0 },
+				{ month: 'Octomber', purchase: monthlyPurchase.filter(function (item) { return item.monthYear === 10; }).length > 0 ? monthlyPurchase.filter(function (item) { return item.monthYear === 10; })[0]['total_purchase'] : 0 },
+				{ month: 'November', purchase: monthlyPurchase.filter(function (item) { return item.monthYear === 11; }).length > 0 ? monthlyPurchase.filter(function (item) { return item.monthYear === 11; })[0]['total_purchase'] : 0 },
+				{ month: 'December', purchase: monthlyPurchase.filter(function (item) { return item.monthYear === 12; }).length > 0 ? monthlyPurchase.filter(function (item) { return item.monthYear === 12; })[0]['total_purchase'] : 0 },
+
+			];
+
+
+
+			var brandStockBalanceData = [];
+			// 	{ brand: 'Brand A', stock: 100 },0
+			// 	{ brand: 'Brand B', stock: 80 },
+			// 	{ brand: 'Brand C', stock: 120 },
+			// 	// ... more data
+			// ];
+			StockBrandwise.forEach(element => {
+				brandStockBalanceData.push({ brand: element['brandname'], stock: element['qty'] })
+			});
+
+
+			// 	// Call functions to create charts using the data
+			// 	createMonthlySalesProfitsChart(monthlySalesProfitsData);
+			// 	createTopSellingProductsChart(topSellingProductsData);
+			// 	createSalesByCategoryChart(salesByCategoryData);
+			// 	createCustomerDemographicsChart(customerDemographicsData);
+
+			// 	 // Functions to create individual charts
+			// 	 function createMonthlySalesProfitsChart(data) {
+			//     var ctx = document.getElementById('monthlySalesProfitsChart').getContext('2d');
+			//     new Chart(ctx, {
+			//         type: 'bar',
+			//         data: {
+			//             labels: data.map(item => item.month),
+			//             datasets: [
+			//                 {
+			//                     label: 'Total Sales',
+			//                     data: data.map(item => item.sales),
+			//                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
+			//                     borderColor: 'rgba(75, 192, 192, 1)',
+			//                     borderWidth: 1
+			//                 },
+			//                 {
+			//                     label: 'Total Profits',
+			//                     data: data.map(item => item.profits),
+			//                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
+			//                     borderColor: 'rgba(255, 99, 132, 1)',
+			//                     borderWidth: 1
+			//                 }
+			//             ]
+			//         },
+			//         options: {
+			//             scales: {
+			//                 y: {
+			//                     beginAtZero: true
+			//                 }
+			//             }
+			//         }
+			//     });
+			// }
+
+			// function createTopSellingProductsChart(data) {
+			//     var ctx = document.getElementById('topSellingProductsChart').getContext('2d');
+			//     new Chart(ctx, {
+			//         type: 'bar',
+			//         data: {
+			//             labels: data.map(item => item.product),
+			//             datasets: [
+			//                 {
+			//                     label: 'Quantity Sold',
+			//                     data: data.map(item => item.quantity),
+			//                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
+			//                     borderColor: 'rgba(75, 192, 192, 1)',
+			//                     borderWidth: 1
+			//                 }
+			//             ]
+			//         },
+			//         options: {
+			//             scales: {
+			//                 y: {
+			//                     beginAtZero: true
+			//                 }
+			//             }
+			//         }
+			//     });
+			// }
+
+
+
+			// function createCustomerDemographicsChart(data) {
+			//     var ctx = document.getElementById('customerDemographicsChart').getContext('2d');
+			//     new Chart(ctx, {
+			//         type: 'doughnut',
+			//         data: data,
+			//     });
+			// }// Call functions to create charts using the data
+			createProfitLossChart(profitLossData);
+			createMonthlySalesChart(monthlySalesData);
+			createMonthlyPurchaseChart(monthlyPurchaseData);
+			createBrandStockBalanceChart(brandStockBalanceData);
+			createSalesByCategoryChart(salesByCategoryData)
+
+			// Functions to create individual charts
+			function createProfitLossChart(data) {
+				var ctx = document.getElementById('profitLossChart').getContext('2d');
+				new Chart(ctx, {
+					type: 'line',
+					data: {
+						labels: data.map(item => item.month),
+						datasets: [
+							{
+								label: 'Profit/Loss',
+								data: data.map(item => item.profit),
+								fill: false,
+								borderColor: 'red',
+								borderWidth: 2
+							}
+						]
+					},
+					options: {
+						scales: {
+							y: {
+								beginAtZero: true
+							}
+						}
+					}
+				});
+			}
+
+			function createMonthlySalesChart(data) {
+				var ctx = document.getElementById('monthlySalesChart').getContext('2d');
+				new Chart(ctx, {
+					type: 'bar',
+					data: {
+						labels: data.map(item => item.month),
+						datasets: [
+							{
+								label: 'Monthly Sales',
+								data: data.map(item => item.sales),
+								backgroundColor: 'blue',
+								borderColor: 'red',
+								borderWidth: 1
+							}
+						]
+					},
+					options: {
+						scales: {
+							y: {
+								beginAtZero: true
+							}
+						}
+					}
+				});
+			}
+
+			function createMonthlyPurchaseChart(data) {
+				var ctx = document.getElementById('monthlyPurchaseChart').getContext('2d');
+				new Chart(ctx, {
+					type: 'bar',
+					data: {
+						labels: data.map(item => item.month),
+						datasets: [
+							{
+								label: 'Monthly Purchase',
+								data: data.map(item => item.purchase),
+								backgroundColor: 'red',//'rgba(255, 99, 132, 0.2)',
+								borderColor: 'rgba(255, 99, 132, 1)',
+								borderWidth: 1
+							}
+						]
+					},
+					options: {
+						scales: {
+							y: {
+								beginAtZero: true
+							}
+						}
+					}
+				});
+			}
+
+			function createBrandStockBalanceChart(data) {
+				var ctx = document.getElementById('brandStockBalanceChart').getContext('2d');
+				new Chart(ctx, {
+					type: 'bar',
+					data: {
+						labels: data.map(item => item.brand),
+						datasets: [
+							{
+								label: 'Stock Balance',
+								data: data.map(item => item.stock),
+								backgroundColor: 'yellow',//'rgba(255, 205, 86, 0.2)',
+								borderColor: 'rgba(255, 205, 86, 1)',
+								borderWidth: 1
+							}
+						]
+					},
+					options: {
+						scales: {
+							y: {
+								beginAtZero: true
+							}
+						}
+					}
+				});
+			}
+			function createSalesByCategoryChart(data) {
+				var ctx = document.getElementById('salesByCategoryChart').getContext('2d');
+				new Chart(ctx, {
+					type: 'pie',
+					data: {
+						labels: data.map(item => item.category),
+						datasets: [
+							{
+								data: data.map(item => item.amount),
+								backgroundColor: [
+									'rgba(255, 99, 132, 0.2)',
+									'rgba(75, 192, 192, 0.2)',
+									'rgba(255, 205, 86, 0.2)'
+								],
+								borderColor: [
+									'rgba(255, 99, 132, 1)',
+									'rgba(75, 192, 192, 1)',
+									'rgba(255, 205, 86, 1)'
+								],
+								borderWidth: 1
+							}
+						]
+					}
+				});
+			}
+		</script>
+
+	</section>
+</body>
+
+</html>
