@@ -108,9 +108,11 @@
 			// 	{ category: 'Groceries', amount: 1200 },
 			// 	// ... more data
 			// ];
+			if(StockCategorywise!=null){
 			StockCategorywise.forEach(element => {
 				salesByCategoryData.push({ category: element['categoryname'], amount: element['qty'] })
 			});
+		}
 
 
 			var profitLossData = [
@@ -170,10 +172,12 @@
 			// 	{ brand: 'Brand C', stock: 120 },
 			// 	// ... more data
 			// ];
+			if(StockBrandwise!=null)
+			{
 			StockBrandwise.forEach(element => {
 				brandStockBalanceData.push({ brand: element['brandname'], stock: element['qty'] })
 			});
-
+		}
 
 			// 	// Call functions to create charts using the data
 			// 	createMonthlySalesProfitsChart(monthlySalesProfitsData);

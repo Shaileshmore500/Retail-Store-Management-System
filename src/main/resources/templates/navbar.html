@@ -97,7 +97,7 @@
         </div>
       </div> -->
       <img 
-      th:src="@{'../'+${session.currentUser.getImageUrl()}}"
+      th:src="@{'/images/'+${session.currentUser.getImageUrl()}}"
       alt="" class="profile_image" />
       <div class="profile_preview">
         <div class="profile_info_field">

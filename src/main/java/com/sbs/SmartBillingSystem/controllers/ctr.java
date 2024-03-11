@@ -76,116 +76,10 @@ public class ctr {
     public String home(Principal principal, HttpServletRequest request, Model model) {
 
         var a = principal.getName();
-        List<Map<String, Object>> monthlySale = new ArrayList<>();
-        List<Map<String, Object>> monthlyPurchase = new ArrayList<>();
-        List<Map<String, Object>> StockBrandwise = new ArrayList<>();
-        List<Map<String, Object>> StockCategorywise = new ArrayList<>();
-        List<Map<String, Object>> ProfitLoss = new ArrayList<>();
+       
         request.getSession().removeAttribute("currentUser");
         request.getSession().setAttribute("currentUser", userRepo.getUserByUserName(a));
-        try {
-            var sql_MOnthlySale = "SELECT  month(date) AS month_year, SUM(net_amount) AS total_sales FROM retailstoremanagementsystem.bill where year(date)=year(now()) GROUP BY DATE_FORMAT(date, '%Y-%m') ORDER BY DATE_FORMAT(date, '%Y-%m');";
-            var sql_MonthlyPurchase = "SELECT  month(created_date) AS month_year, SUM(amount) AS total_purchase \n" + //
-                    "FROM retailstoremanagementsystem.purchase_order where year(created_date)=year(now()) \n" + //
-                    "GROUP BY DATE_FORMAT(created_date, '%Y-%m') \n" + //
-                    "ORDER BY DATE_FORMAT(created_date, '%Y-%m');";
-            var sql_StockBrandwise = "select brand.name as brandname , sum(quantity) as qty from retailstoremanagementsystem.product\n"
-                    + //
-                    "left join retailstoremanagementsystem.brand on brand_fid_brand_pid=brand_pid\n" + //
-                    "group by brand_fid_brand_pid";
-
-            var sql_StockCategoryWise = "select category.name as categoryname , sum(quantity) as qty from retailstoremanagementsystem.product left join retailstoremanagementsystem.category on category_fid_category_pid=category_pid  group by category_fid_category_pid";
-var sql_ProfitLoss="\n" + //
-        " SELECT  month(date) as month,sum(bd.net_amount-(bd.quantity*p.purchase_rate)) as profit FROM retailstoremanagementsystem.bill b\n" + //
-        "left join     retailstoremanagementsystem.bill_details bd on b.bill_pid=bd.bill_fid_bill_pid\n" + //
-        "left JOIN   retailstoremanagementsystem.Product p ON bd.product_fid_product_pid = p.product_pid    group by month(date)    order  by month(date)\n" ;
-
-            monthlySale = jdbcTemplate.query(sql_MOnthlySale, new RowMapper<Map<String, Object>>() {
-                @Override
-                public Map<String, Object> mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-                    int monthYear = resultSet.getInt("month_year");
-                    double totalSales = resultSet.getDouble("total_sales");
-
-                    Map<String, Object> saleMap = new HashMap<>();
-                    saleMap.put("monthYear", monthYear);
-                    saleMap.put("totalSales", totalSales);
-
-                    return saleMap;
-                }
-            });
-
-            monthlyPurchase = jdbcTemplate.query(sql_MonthlyPurchase, new RowMapper<Map<String, Object>>() {
-
-                @Override
-                public Map<String, Object> mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-                    int monthYear = resultSet.getInt("month_year");
-                    double total_purchase = resultSet.getDouble("total_purchase");
-
-                    Map<String, Object> m = new HashMap<>();
-                    m.put("monthYear", monthYear);
-                    m.put("total_purchase", total_purchase);
-                    return m;
-
-                }
-
-            });
-
-            StockBrandwise = jdbcTemplate.query(sql_StockBrandwise, new RowMapper<Map<String, Object>>() {
-
-                @Override
-                public Map<String, Object> mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-                    var brandname = resultSet.getString("brandname");
-                    double qty = resultSet.getDouble("qty");
-
-                    Map<String, Object> m = new HashMap<>();
-                    m.put("brandname", brandname);
-                    m.put("qty", qty);
-                    return m;
-
-                }
-
-            });
-
-            StockCategorywise = jdbcTemplate.query(sql_StockCategoryWise, new RowMapper<Map<String, Object>>() {
-
-                @Override
-                public Map<String, Object> mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-                    var categoryname = resultSet.getString("categoryname");
-                    double qty = resultSet.getDouble("qty");
-
-                    Map<String, Object> m = new HashMap<>();
-                    m.put("categoryname", categoryname);
-                    m.put("qty", qty);
-                    return m;
-
-                }
-
-            });
-
-            ProfitLoss = jdbcTemplate.query(sql_ProfitLoss, new RowMapper<Map<String, Object>>() {
-                @Override
-                public Map<String, Object> mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-                    int monthYear = resultSet.getInt("month");
-                    double profit = resultSet.getDouble("profit");
-
-                    Map<String, Object> m = new HashMap<>();
-                    m.put("monthYear", monthYear);
-                    m.put("profit", profit);
-
-                    return m;
-                }
-            });
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        model.addAttribute("monthlySale", monthlySale);
-        model.addAttribute("monthlyPurchase", monthlyPurchase);
-        model.addAttribute("StockBrandwise", StockBrandwise);
-        model.addAttribute("StockCategorywise", StockCategorywise);
-        model.addAttribute("ProfitLoss", ProfitLoss);
-
+       
         return "home";
     }
 
@@ -437,7 +331,118 @@ var sql_ProfitLoss="\n" + //
         return "forms/contactus";
     }
     @GetMapping("/reports")
-    public String reports() {
+    public String reports(Model model) {
+        
+        List<Map<String, Object>> monthlySale = new ArrayList<>();
+        List<Map<String, Object>> monthlyPurchase = new ArrayList<>();
+        List<Map<String, Object>> StockBrandwise = new ArrayList<>();
+        List<Map<String, Object>> StockCategorywise = new ArrayList<>();
+        List<Map<String, Object>> ProfitLoss = new ArrayList<>();
+        try {
+            var sql_MOnthlySale = "SELECT  month(date) AS month_year, SUM(net_amount) AS total_sales FROM retailstoremanagementsystem.bill where year(date)=year(now()) GROUP BY DATE_FORMAT(date, '%Y-%m') ORDER BY DATE_FORMAT(date, '%Y-%m');";
+            var sql_MonthlyPurchase = "SELECT  month(created_date) AS month_year, SUM(amount) AS total_purchase \n" + //
+                    "FROM retailstoremanagementsystem.purchase_order where year(created_date)=year(now()) \n" + //
+                    "GROUP BY DATE_FORMAT(created_date, '%Y-%m') \n" + //
+                    "ORDER BY DATE_FORMAT(created_date, '%Y-%m');";
+            var sql_StockBrandwise = "select brand.name as brandname , sum(quantity) as qty from retailstoremanagementsystem.product\n"
+                    + //
+                    "left join retailstoremanagementsystem.brand on brand_fid_brand_pid=brand_pid\n" + //
+                    "group by brand_fid_brand_pid";
+
+            var sql_StockCategoryWise = "select category.name as categoryname , sum(quantity) as qty from retailstoremanagementsystem.product left join retailstoremanagementsystem.category on category_fid_category_pid=category_pid  group by category_fid_category_pid";
+var sql_ProfitLoss="\n" + //
+        " SELECT  month(date) as month,sum(bd.net_amount-(bd.quantity*p.purchase_rate)) as profit FROM retailstoremanagementsystem.bill b\n" + //
+        "left join     retailstoremanagementsystem.bill_details bd on b.bill_pid=bd.bill_fid_bill_pid\n" + //
+        "left JOIN   retailstoremanagementsystem.Product p ON bd.product_fid_product_pid = p.product_pid    group by month(date)    order  by month(date)\n" ;
+
+            monthlySale = jdbcTemplate.query(sql_MOnthlySale, new RowMapper<Map<String, Object>>() {
+                @Override
+                public Map<String, Object> mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+                    int monthYear = resultSet.getInt("month_year");
+                    double totalSales = resultSet.getDouble("total_sales");
+
+                    Map<String, Object> saleMap = new HashMap<>();
+                    saleMap.put("monthYear", monthYear);
+                    saleMap.put("totalSales", totalSales);
+
+                    return saleMap;
+                }
+            });
+
+            monthlyPurchase = jdbcTemplate.query(sql_MonthlyPurchase, new RowMapper<Map<String, Object>>() {
+
+                @Override
+                public Map<String, Object> mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+                    int monthYear = resultSet.getInt("month_year");
+                    double total_purchase = resultSet.getDouble("total_purchase");
+
+                    Map<String, Object> m = new HashMap<>();
+                    m.put("monthYear", monthYear);
+                    m.put("total_purchase", total_purchase);
+                    return m;
+
+                }
+
+            });
+
+            StockBrandwise = jdbcTemplate.query(sql_StockBrandwise, new RowMapper<Map<String, Object>>() {
+
+                @Override
+                public Map<String, Object> mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+                    var brandname = resultSet.getString("brandname");
+                    double qty = resultSet.getDouble("qty");
+
+                    Map<String, Object> m = new HashMap<>();
+                    m.put("brandname", brandname);
+                    m.put("qty", qty);
+                    return m;
+
+                }
+
+            });
+
+            StockCategorywise = jdbcTemplate.query(sql_StockCategoryWise, new RowMapper<Map<String, Object>>() {
+
+                @Override
+                public Map<String, Object> mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+                    var categoryname = resultSet.getString("categoryname");
+                    double qty = resultSet.getDouble("qty");
+
+                    Map<String, Object> m = new HashMap<>();
+                    m.put("categoryname", categoryname);
+                    m.put("qty", qty);
+                    return m;
+
+                }
+
+            });
+
+            ProfitLoss = jdbcTemplate.query(sql_ProfitLoss, new RowMapper<Map<String, Object>>() {
+                @Override
+                public Map<String, Object> mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+                    int monthYear = resultSet.getInt("month");
+                    double profit = resultSet.getDouble("profit");
+
+                    Map<String, Object> m = new HashMap<>();
+                    m.put("monthYear", monthYear);
+                    m.put("profit", profit);
+
+                    return m;
+                }
+            });
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        model.addAttribute("monthlySale", monthlySale);
+        model.addAttribute("monthlyPurchase", monthlyPurchase);
+        model.addAttribute("StockBrandwise", StockBrandwise);
+        model.addAttribute("StockCategorywise", StockCategorywise);
+        model.addAttribute("ProfitLoss", ProfitLoss);
+
+
+
         return "/report";
     }
 }

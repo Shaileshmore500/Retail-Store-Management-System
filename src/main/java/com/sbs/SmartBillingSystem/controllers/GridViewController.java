@@ -178,7 +178,7 @@ public class GridViewController {
                 if (resourcesPath == null)
                     user.setImageUrl("default.png");
                 else
-                    user.setImageUrl("/images/" + timestamp + file.getOriginalFilename());
+                    user.setImageUrl(timestamp + file.getOriginalFilename());
                 ;
 
             }

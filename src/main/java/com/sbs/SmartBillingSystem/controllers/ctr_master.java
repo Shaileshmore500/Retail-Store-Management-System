@@ -361,8 +361,9 @@ public class ctr_master {
                 if (resourcesPath == null)
                     user.setImageUrl("default.png");
                 else
-                    user.setImageUrl("/images/" + timestamp + file.getOriginalFilename());
-                ;
+                    user.setImageUrl(timestamp + file.getOriginalFilename());
+                    //user.setImageUrl("/images/" + timestamp + file.getOriginalFilename());
+
 
             }
 
