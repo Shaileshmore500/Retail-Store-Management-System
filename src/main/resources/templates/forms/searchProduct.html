@@ -356,9 +356,27 @@
 
         <script th:src="@{/js/searchProduct.js}"></script>
         <script th:inline="javascript">
+var data=/*[[${data}]]*/"";
+
+if(data != null || data != "" || data.length>0)
+{
+  var product=[];
+  for(var i=0;i<data.length;i++)
+  {
+    var obj=data[i];
+    product.push({
+      "ID":obj["product_pid"],"Code" : obj["code"],"Name":obj["name"],
+      "Purchase Rate":obj["purchase_rate"],"MRP":obj["obj"], "Quantity":obj["quantity"],
+      "Brand":obj["brand_fid"]!=null?obj["brand_fid"]["name"]:"",
+      "Category":obj["category_fid"]!=null?obj["category_fid"]["name"]:""  
+  });
+
+  }
 
 
+JSONToHTMLTable(product, "tblEmployee")
 
+}
 
 
 

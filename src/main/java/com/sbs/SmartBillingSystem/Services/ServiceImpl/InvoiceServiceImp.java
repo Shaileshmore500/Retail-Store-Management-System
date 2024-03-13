@@ -115,6 +115,7 @@ public class InvoiceServiceImp  implements InvoiceService{
 
                 }
             }
+            else{
 
             float amount = 0;
             float Quantity = 0;
@@ -134,6 +135,14 @@ public class InvoiceServiceImp  implements InvoiceService{
                     billDetails.setBillDetails_pid(Integer.parseInt(product.getBillDetails_fid()));
                 billDetailRepo.save(billDetails);
 
+
+                var actualaproduct=productRepo.findById(product.getProduct_pid()).get();
+                actualaproduct.setQuantity(actualaproduct.getQuantity()-product.getQuantity());
+                productRepo.save(actualaproduct);
+
+
+
+
                 Quantity += product.getQuantity();
                 discount_amount += product.getDiscountamt();
                 net_amount += product.getNetamount();
@@ -147,7 +156,7 @@ public class InvoiceServiceImp  implements InvoiceService{
             bill.setQuantity(Quantity);
 
             billRepo.save(bill);
-
+        }
             return true;
         } catch (Exception e) {
             return false;

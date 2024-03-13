@@ -247,6 +247,7 @@ public class ctr {
             brands = brandRepo.findAll();
             model.addAttribute("categories", categories);
             model.addAttribute("brands", brands);
+            model.addAttribute("data",productRepo.findAll());
 
         } catch (Exception exception) {
 

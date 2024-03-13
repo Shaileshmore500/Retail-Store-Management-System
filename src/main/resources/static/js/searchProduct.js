@@ -1,51 +1,68 @@
 
 
-document.getElementById("searchbtn").addEventListener("click", function() {
+document.getElementById("searchbtn").addEventListener("click", function () {
     // Your vanilla JavaScript code here
     $(".customloader").show();
 
-debugger;
-let id=$("#html_id").val();
-var category=$("#html_cat").val();
-var brand=$("#html_brand").val();
+    debugger;
+    let id = $("#html_id").val();
+    var category = $("#html_cat").val();
+    var brand = $("#html_brand").val();
 
-var data={
+    var data = {
 
 
-id:id,category:category,brand:brand
-}
-
-$.ajax({
-    url: '/getProductByParameter', // Change this to your actual API endpoint
-    type: 'POST',
-    contentType: 'application/json',
-    data: JSON.stringify(data),
-    success: function(response) {
-        
-        if(response==null || response.length<=0)
-{
-  //$(".page__body .container section")[1].append($("#empty-state"))
-  $("#EmptyStateModel").append($("#empty-state"))
-  $("#empty-state").show();
-  $(".customloader").hide();
-  return;
-}else
-$(".customloader").hide();
-$("#empty-state").hide();
-        JSONToHTMLTable(response, "tblEmployee");
-    },
-    error: function(xhr, status, error) {
-        $("#EmptyStateModel").append($("#empty-state"))
-        $("#empty-state").show();
-        $(".customloader").hide();
+        id: id, category: category, brand: brand
     }
-});
+
+    $.ajax({
+        url: '/getProductByParameter', // Change this to your actual API endpoint
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (response) {
+debugger
+            if (response == null || response.length <= 0) 
+            {
+                //$(".page__body .container section")[1].append($("#empty-state"))
+                $("#EmptyStateModel").append($("#empty-state"))
+                $("#empty-state").show();
+                $(".customloader").hide();
+                return;
+            } else
+                $(".customloader").hide();
+            $("#empty-state").hide();
+
+
+            var product=[];
+  for(var i=0;i<response.length;i++)
+  {
+    var obj=response[i];
+    product.push({
+      "ID":obj["product_pid"],"Code" : obj["code"],"Name":obj["name"],
+      "Purchase Rate":obj["purchase_rate"],"MRP":obj["obj"], "Quantity":obj["quantity"],
+      "Brand":obj["brand_fid"]!=null?obj["brand_fid"]["name"]:"",
+      "Category":obj["category_fid"]!=null?obj["category_fid"]["name"]:""  
+  });
+
+  }
+
+
+            JSONToHTMLTable(response, "tblEmployee");
+        },
+        error: function (xhr, status, error) {
+            $("#EmptyStateModel").append($("#empty-state"))
+            $("#empty-state").show();
+            $(".customloader").hide();
+            $("#tblEmployee").html("");
+        }
+    });
 
 
 
 });
 function JSONToHTMLTable(jsonData, elementToBind) {
-          
+
     //This Code gets all columns for header   and stored in array col
     var col = [];
     for (var i = 0; i < jsonData.length; i++) {
@@ -59,8 +76,8 @@ function JSONToHTMLTable(jsonData, elementToBind) {
     //This Code creates HTML table
     var table = document.createElement("table");
     table.setAttribute("id", "jsonTable");
-    var classList = ["table", "table-striped", "table-bordered","table-sm"];
-    classList.forEach((classname)=>{
+    var classList = ["table", "table-striped", "table-bordered", "table-sm"];
+    classList.forEach((classname) => {
         table.classList.add(classname);
     })
 
@@ -93,50 +110,49 @@ function JSONToHTMLTable(jsonData, elementToBind) {
     divContainer.innerHTML = "";
     divContainer.appendChild(table);
 }
-   
-
-
-   
-
-
-function jsonToDataTable2(jsonData) {
-if(jsonData==null || jsonData.length<=0)
-{
-//$(".page__body .container section")[1].append($("#empty-state"))
-$("#EmptyStateModel").append($("#empty-state"))
-$("#empty-state").show();
-return;
-}
-let newKey = 'Action';
-let newValue = '<a  class="btn btn-primary m-1 view"><i class="btn-view"></i></a><a  class="btn btn-primary m-1 edit"><i class="btn-edit "></i></a><a  class="btn btn-danger  m-1 delete"><i class="btn-delete"></i> </a>';
-
-// Loop through the array and add the new key-value pair to each object
-for (let i = 0; i < jsonData.length; i++) {
-jsonData[i] = { [newKey]: newValue, ...jsonData[i] };
-}
 
 
 
-var columns = Object.keys(jsonData[0]);
 
-// Initialize DataTable
-var table = $('#jsonTable').DataTable({
-data: jsonData,
-columns: columns.map(function (column) {
-  return { data: column };
-}),
-paging: true, // Enable pagination
-searching: true, // Enable search box
-order: [] // Disable initial sorting
-});
 
-// Add column headers to the table
-$('#jsonTable thead').append('<tr>' +
-columns.map(function (column) {
-  return '<th>' + column + '</th>';
-}).join('') +
-'</tr>');
-}
 
-    
+// function jsonToDataTable2(jsonData) {
+//     if (jsonData == null || jsonData.length <= 0) {
+//         //$(".page__body .container section")[1].append($("#empty-state"))
+//         $("#EmptyStateModel").append($("#empty-state"))
+//         $("#empty-state").show();
+//         return;
+//     }
+//     let newKey = 'Action';
+//     let newValue = '<a  class="btn btn-primary m-1 view"><i class="btn-view"></i></a><a  class="btn btn-primary m-1 edit"><i class="btn-edit "></i></a><a  class="btn btn-danger  m-1 delete"><i class="btn-delete"></i> </a>';
+
+//     // Loop through the array and add the new key-value pair to each object
+//     for (let i = 0; i < jsonData.length; i++) {
+//         jsonData[i] = { [newKey]: newValue, ...jsonData[i] };
+//     }
+
+
+
+//     var columns = Object.keys(jsonData[0]);
+
+//     // Initialize DataTable
+//     var table = $('#jsonTable').DataTable({
+//         data: jsonData,
+//         columns: columns.map(function (column) {
+//             return { data: column };
+//         }),
+//         paging: true, // Enable pagination
+//         searching: true, // Enable search box
+//         order: [] // Disable initial sorting
+//     });
+
+//     // Add column headers to the table
+//     $('#jsonTable thead').append('<tr>' +
+//         columns.map(function (column) {
+//             return '<th>' + column + '</th>';
+//         }).join('') +
+//         '</tr>');
+// }
+
+
 

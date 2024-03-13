@@ -92,8 +92,6 @@ if(form=="user")
 "Role":obj["role"],
 "Mobile":obj["mobile_no"],
 "Address":obj["address"]
-
-
     })
     
   }
@@ -175,12 +173,38 @@ function displayStatus(status, mode) {
 
 $(document).ready(() => {
 
-  $('form').submit(function (event) {
-    debugger;
-    // Prevent the default form submission
+  $('form').submit(function (event) {        
     event.preventDefault();
 
-    $("#customloader").show();
+    var form=new URLSearchParams(window.location.search).get("form")
+
+if(form="customer")
+{
+  debugger
+  var mail_regex= /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  var email = document.getElementsByName("email")[0];
+  var mobile_no=document.getElementsByName("mobile_no")[0];
+  // if(!mail_regex.test(email.value))
+  // {
+  //   email.setCustomValidity("Invalid Email...");
+  //   return false;
+  // }
+  if(mobile_no.value.length!=10)
+  {
+    mobile_no.setCustomValidity("Mobile number must contain 10 digit...")
+    return false;
+  }
+
+
+
+  var confirm_password = document.getElementsByName("code")[0];
+  confirm_password.setCustomValidity("Passwords Don't Match");
+  return false;
+}
+
+
+
+    $("#customloader").show();   
     // Continue with the form submission
     $(this).unbind('submit').submit(); // Unbind the submit event and trigger the form submission
   });
