@@ -36,6 +36,18 @@
       <div class="panel-header">Invoice Details</div>
       <div class="container ">
         <div class="mb-2 col-6 text-center mt-2 d-flex mlr">
+          <div class="form-floating mb-3 col-4 mandatory">
+            <label for="" class="md_lblsel"></label>
+            <select class="form-select form-select-lg mb-3" onChange="change_product(this)" aria-label=".form-select-lg example" id="html_supplier"
+              data-field="supplier_fid">
+              <option selected value="">Product</option>
+              <option th:each="s:${list_product}" th:value="${s.product_pid}"                
+                th:text="${s.code + ' - ' + s.name}"></option>
+
+
+            </select>
+            <span class="_error2" style="position: absolute !important;"></span>
+          </div>
           <div class="form-floating mb-3 col-7 ">
             <input type="text" class="form-control" id="html_productID" data-field="" />
             <label for="floatingInput mr-5" class="ml-15 md_lbl">Product ID</label>
@@ -215,10 +227,14 @@
 
     <script th:src=@{/js/invoice.js}></script>
     <script th:inline="javascript">
+      function change_product(elem)
+        {
+          document.getElementById("html_productID").value=elem.value
+        }
       $(document).ready(function () {
         debugger;
 
-
+        
 
         if(!new URLSearchParams(window.location.search).get("mode")||new URLSearchParams(window.location.search).get("mode")=='edit')
         {

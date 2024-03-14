@@ -5,16 +5,16 @@ window.onload = function () {
   searchBarStyling();
 }
 //   //----- Insert 'ButtonGroup' between 'Record limit selector' and 'Search Bar' -----//
-function addButtonGroup(){
+function addButtonGroup() {
   let buttonList = document.getElementById('tableButtonGroup');
-  if(document.getElementById('jsonTable_wrapper')){
-  let table_wrapper = document.getElementById('jsonTable_wrapper').children;
-  let table_entryLimit = table_wrapper[0].children[0];
-  table_entryLimit.after(buttonList);
+  if (document.getElementById('jsonTable_wrapper')) {
+    let table_wrapper = document.getElementById('jsonTable_wrapper').children;
+    let table_entryLimit = table_wrapper[0].children[0];
+    table_entryLimit.after(buttonList);
   }
 }
 
-function searchBarStyling(){
+function searchBarStyling() {
   document.querySelector('#jsonTable_filter>label').childNodes[0].nodeValue = "";
   document.querySelector('#jsonTable_filter input').placeholder = 'Search';
 }
@@ -76,27 +76,26 @@ function jsonToDataTable(jsonData) {
     $("#empty-state").show();
     return;
   }
-  
-  var data = [];
-const form=new URLSearchParams(window.location.search).get('form');
 
-if(form=="user")
-{
-  for (var i = 0; i < jsonData.length; i++) {
-    var obj = jsonData[i]
-    
-    data.push({
-"ID":obj["id"],
-"Name":obj["name"],
-"Email":obj["email"],
-"Role":obj["role"],
-"Mobile":obj["mobile_no"],
-"Address":obj["address"]
-    })
-    
+  var data = [];
+  const form = new URLSearchParams(window.location.search).get('form');
+
+  if (form == "user") {
+    for (var i = 0; i < jsonData.length; i++) {
+      var obj = jsonData[i]
+
+      data.push({
+        "ID": obj["id"],
+        "Name": obj["name"],
+        "Email": obj["email"],
+        "Role": obj["role"],
+        "Mobile": obj["mobile_no"],
+        "Address": obj["address"]
+      })
+
+    }
+    jsonData = data;
   }
-  jsonData=data;
-}
 
 
 
@@ -139,8 +138,8 @@ if(form=="user")
 function displayStatus(status, mode) {
 
   if (status != null && status != '') {
-0
-     if (status == "success" || status == "Success") {
+    0
+    if (status == "success" || status == "Success") {
       if (mode === "add")
         var msg = "Data added successfully..."
       else if (mode === "edit")
@@ -173,38 +172,73 @@ function displayStatus(status, mode) {
 
 $(document).ready(() => {
 
-  $('form').submit(function (event) {        
+  $('form').submit(function (event) {
+    debugger;
     event.preventDefault();
 
-    var form=new URLSearchParams(window.location.search).get("form")
+    var form = new URLSearchParams(window.location.search).get("form")
 
-if(form="customer")
-{
-  debugger
-  var mail_regex= /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  var email = document.getElementsByName("email")[0];
-  var mobile_no=document.getElementsByName("mobile_no")[0];
-  // if(!mail_regex.test(email.value))
-  // {
-  //   email.setCustomValidity("Invalid Email...");
-  //   return false;
-  // }
-  if(mobile_no.value.length!=10)
-  {
-    mobile_no.setCustomValidity("Mobile number must contain 10 digit...")
-    return false;
-  }
-
-
-
-  var confirm_password = document.getElementsByName("code")[0];
-  confirm_password.setCustomValidity("Passwords Don't Match");
-  return false;
-}
+    if (form == "customer") {
+      debugger
+     
+      var email = document.getElementsByName("email")[0];
+      var mobile_no = document.getElementsByName("mobile_no")[0];
+      var name = document.getElementsByName("name")[0];
+      // if(valid_name(name.value!=""))
+      // {
+      //   name.setCustomValidity("Invalid Email...");
+      //   return false;
+      // }
+      // if (valid_email(email.value)!="") {
+      //   email.setCustomValidity(valid_email(email.value));
+      //   return false;
+      // }
+      if (mobile_no.value.length !=10) {
+        //mobile_no.setCustomValidity("Please Enter 10 Digit Valid Mobile Number");
+        alert("Please Enter 10 Digit Valid Mobile Number");
+        return false;
+      }
 
 
 
-    $("#customloader").show();   
+      
+    }
+    else if(form=="supplier")
+    {
+      var mobile_no = document.getElementsByName("mobile_no")[0];
+      if (mobile_no.value.length !=10) {
+        //mobile_no.setCustomValidity("Please Enter 10 Digit Valid Mobile Number");
+        alert("Please Enter 10 Digit Valid Mobile Number");
+        return false;
+      }
+    }
+    else if(form=="user")
+    {
+      debugger
+      var mobile_no = document.getElementsByName("mobile_no")[0];
+      var pass = document.getElementsByName("password")[0];
+      var cpass = document.getElementsByName("pass2")[0];
+      if (mobile_no.value.length !=10) {
+        //mobile_no.setCustomValidity("Please Enter 10 Digit Valid Mobile Number");
+        alert("Please Enter 10 Digit Valid Mobile Number");
+        return false;
+      }
+      if(pass.value!=cpass.value)
+      {
+        alert("Password and confirm password does not matched...")
+        return false;
+      }
+      if(pass.value.length<6)
+      {
+        alert("Password atleast 6 character long")
+        return false;
+      }
+
+    }
+
+
+
+    $("#customloader").show();
     // Continue with the form submission
     $(this).unbind('submit').submit(); // Unbind the submit event and trigger the form submission
   });
@@ -293,17 +327,15 @@ if(form="customer")
 
     $("#myModal").css("display", "none");
   })
-  $(window).click(function (e) {
-    //debugger
-    // if(e.target==$("#myModal"))
-    // $("#myModal").css("display","none");
-
-  })
   $(".btn-form-cancle").click(() => {
     $("input , textarea").val("");
     $("#myModal").css("display", "none")
 
   });
+
+ 
+
+
 
   // $("#save12").click(() => {
   //   debugger;

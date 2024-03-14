@@ -141,7 +141,7 @@ public class ctr {
             model.addAttribute("categories", categories);
             model.addAttribute("brands", brands);
             model.addAttribute("suppliers", suppilers);
-
+            
             if (!pid.isEmpty()) {
                 // Challan challan= challanRepo.findById(Integer.parseInt(pid)).orElseThrow();
                 challan = challanRepo.findById(Integer.parseInt(pid))
@@ -198,6 +198,7 @@ public class ctr {
             // TODO: handle exception
             e.printStackTrace();
         }
+        model.addAttribute("list_product", productRepo.findAll());
 
         model.addAttribute("bill", bill);
         model.addAttribute("billdetails", billDetails);

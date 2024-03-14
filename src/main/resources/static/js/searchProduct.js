@@ -48,7 +48,7 @@ debugger
   }
 
 
-            JSONToHTMLTable(response, "tblEmployee");
+            JSONToHTMLTable(product, "tblEmployee");
         },
         error: function (xhr, status, error) {
             $("#EmptyStateModel").append($("#empty-state"))

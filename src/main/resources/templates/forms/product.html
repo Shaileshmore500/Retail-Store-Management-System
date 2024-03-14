@@ -35,6 +35,9 @@
               th:value="${challan!=null?challan.PartyChallan_pid:''}" />
 
           </div>
+         
+
+
           <div class="form-floating mb-3 col-7 mandatory">
             <input type="text" class="form-control" id="html_challanno" data-field="challanno"
               th:value="${challan!=null?challan.challan_no:''}" />
@@ -63,7 +66,7 @@
         </div>
         <div class="mb-2 col-6 text-center mt-2 d-flex mlr ">
           <div class="form-floating mb-2 col-7 mandatory">
-            <input type="number" class="form-control" id="html_Quantity" data-field="quantity"
+            <input type="number" min=1 class="form-control" id="html_Quantity" data-field="quantity"
               th:value="${challan!=null?challan.Quantity:''}" />
             <label for="floatingInput mr-5" class="ml-15 md_lbl">Quantity</label>
             <span class="_error2">
@@ -71,7 +74,7 @@
             </span>
           </div>
           <div class="form-floating mb-2 col-8 mandatory">
-            <input type="number" class="form-control" id="html_Amount" data-field="amount"
+            <input type="number" min=1 class="form-control" id="html_Amount" data-field="amount"
               th:value="${challan!=null?challan.amount:''}" />
             <label for="floatingInput mr-5" class="ml-15 md_lbl">Amount</label>
             <span class="_error2"></span>
