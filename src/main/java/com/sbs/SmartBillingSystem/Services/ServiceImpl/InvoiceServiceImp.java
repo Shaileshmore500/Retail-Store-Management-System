@@ -60,20 +60,19 @@ public class InvoiceServiceImp  implements InvoiceService{
             if (!detailstatus)
                 return detailstatus;
 
-            // for (Product product : p) {
-
-            //     float oldBillQty = 0;
-            //     if (product.getBillDetails_fid() != null && product.getBillDetails_fid() != "") {
-            //         BillDetails billDetails = billDetailRepo.findById(Integer.parseInt(product.getBillDetails_fid()))
-            //                 .get();
-            //         oldBillQty = billDetails.getQuantity();
-            //     }
-
-            //     Product pr = productRepo.findById(product.getProduct_pid()).orElseThrow();
-            //     pr.setQuantity(oldBillQty + pr.getQuantity() - product.getQuantity());
-            //     productRepo.save(pr);
-
-            // }
+            /*
+             for (Product product : p) {
+                 float oldBillQty = 0;
+                 if (product.getBillDetails_fid() != null && product.getBillDetails_fid() != "") {
+                     BillDetails billDetails = billDetailRepo.findById(Integer.parseInt(product.getBillDetails_fid()))
+                             .get();
+                     oldBillQty = billDetails.getQuantity();
+                 }
+                 Product pr = productRepo.findById(product.getProduct_pid()).orElseThrow();
+                 pr.setQuantity(oldBillQty + pr.getQuantity() - product.getQuantity());
+                 productRepo.save(pr);
+             }
+            */
 
             return true;
         } catch (Exception e) {
@@ -317,21 +316,21 @@ builder.append("<div class='invoice_banner'>"
             +"      viewBox='0 0 16 16'>"
             +"      <path d='m.334 0 4.358 4.359h7.15v7.15l4.358 4.358V0zM.2 9.72l4.487-4.488v6.281h6.28L6.48 16H.2z' />"
             +"  </svg>"
-            +"  <h2>&nbsp;&nbsp;&nbsp;  My Store Pvt.Ltd</h2>"
+            +"  <h2>    My Store Pvt.Ltd</h2>"
             +" </div>"
             +"<h2 class='document_title'>Invoice</h2>"
             +"</div>");
 builder.append("<div class='address_info'>\r\n" +//
         "            <div class='invoice_from'>\r\n" + //
-        "                <strong> Customer : </strong><br>\r\n" + //
+        "                <strong> Customer : </strong><br/>\r\n" + //
         "                <span> <b>Name : </b> ").append(name).append("\r\n").append( //
-        "                    <br> Mobile : ").append(mobile).append("                   \r\n").append( //
+        "                    <br/> Mobile : ").append(mobile).append("                   \r\n").append( //
         "                </span>\r\n").append( //
         "            </div>\r\n").append( //
         "            <div class='invoice_to'>\r\n").append( //
-        "                <strong>Invoice No : </strong>").append(bill.getBill_pid()).append("<br>\r\n").append( //
-        "                <strong>Invoice Date : </strong>").append(bill.getDate()).append(" <br>\r\n").append( //
-        "                <strong>Payment Mode : </strong>").append(bill.getPayment_type()).append(" <br>\r\n").append( //
+        "                <strong>Invoice No : </strong>").append(bill.getBill_pid()).append("<br/>\r\n").append( //
+        "                <strong>Invoice Date : </strong>").append(bill.getDate()).append(" <br/>\r\n").append( //
+        "                <strong>Payment Mode : </strong>").append(bill.getPayment_type()).append(" <br/>\r\n").append( //
         "                \r\n").append( //
         "            </div>\r\n").append( //
         "        </div>");
@@ -375,7 +374,7 @@ builder.append("<div class='address_info'>\r\n" +//
                         builder.append("<div class='row text-center contact-info'>\r\n" + //
                                 "            <p>This is computer generated invoice</p>\r\n" + //
                                 "            <div class='col-lg-12 col-md-12 col-sm-12' style='text-align: center;'>\r\n" + //
-                                "                <hr>\r\n" + //
+                                "                <hr/>\r\n" + //
                                 "                <span style='padding: 10px 12px;'>\r\n" + //
                                 "                    <strong>Email : </strong> MyStore@retail.com\r\n" + //
                                 "                </span>\r\n" + //
@@ -385,7 +384,7 @@ builder.append("<div class='address_info'>\r\n" +//
                                 "                <span style='padding: 10px 12px;'>\r\n" + //
                                 "                    <strong>Fax : </strong> +012340-908- 890\r\n" + //
                                 "                </span>\r\n" + //
-                                "                <hr>\r\n" + //
+                                "                <hr/>\r\n" + //
                                 "            </div>\r\n" + //
                                 "        </div>\r\n" + //
                                 "    </div>\r\n" //
@@ -405,6 +404,165 @@ builder.append("<div class='address_info'>\r\n" +//
 
     return builder.toString();
 }
-    
+@Override
+    public String invoiceStaticHtml()
+    {
+        return 
+                        "<html><head><title>Print</title>\r\n" + //
+                        "    <style>\r\n" + //                        
+                        "\r\n" + //
+                        "    /* font-family: 'Protest Guerrilla', sans-serif; */\r\n" + //
+                        "    body {\r\n" + //
+                        "        background: beige;\r\n" + //
+                        "        font-family: 'Poppins';\r\n" + //
+                        "    }\r\n" + //
+                        "\r\n" + //
+                        "    .invoice_modal {\r\n" + //
+                        "        width: 900px;\r\n" + //
+                        "        margin-top: 50px;\r\n" + //
+                        "        margin: 0 auto;\r\n" + //
+                        "        background: beige;\r\n" + //
+                        "        font-family: 'Poppins';\r\n" + //
+                        "        border: 2px solid;\r\n" + //
+                        "padding: 7px;\r\n" + //
+                        "border: 1px solid;\r\n" + //
+                        "padding:7px ;\r\n" + //
+                        "    }\r\n" + //
+                        "\r\n" + //
+                        "    .invoice_banner {\r\n" + //
+                        "        /* min-height: 200px; */\r\n" + //
+                        "        height: 50px;\r\n" + //
+                        "        background-color: #02090a;\r\n" + //
+                        "        display: none;\r\n" + //
+                        "        justify-content: space-between;\r\n" + //
+                        "\r\n" + //
+                        "        color: #fff;\r\n" + //
+                        "        padding: 0 30px;\r\n" + //
+                        "    }\r\n" + //
+                        "\r\n" + //
+                        "    .invoice_banner .company_details {\r\n" + //
+                        "        /* border: solid 1px red; */\r\n" + //
+                        "        /* display: flex;\r\n" + //
+                        "        flex-flow: column nowrap;\r\n" + //
+                        "        justify-content: center;\r\n" + //
+                        "        align-items: flex-start; */\r\n" + //
+                        "        display: flex;\r\n" + //
+                        "flex-flow: column nowrap;\r\n" + //
+                        "justify-content: center;\r\n" + //
+                        "align-items: flex-start;\r\n" + //
+                        "flex-direction: row;\r\n" + //
+                        "flex-wrap: wrap;\r\n" + //
+                        "align-content: space-around;\r\n" + //
+                        "    }\r\n" + //
+                        "\r\n" + //
+                        "    .invoice_banner .company_details svg {\r\n" + //
+                        "        height: 38px;\r\n" + //
+                        "        width: 25px;\r\n" + //
+                        "        display: block;\r\n" + //
+                        "    }\r\n" + //
+                        "\r\n" + //
+                        "    .invoice_banner .company_details h2 {\r\n" + //
+                        "        /**font-family: 'Protest Guerrilla', sans-serif;*/\r\n" + //
+                        "        font-size: 30px;\r\n" + //
+                        "        font-weight: 100;\r\n" + //
+                        "        margin: 0;\r\n" + //
+                        "        /* width: 75%; */\r\n" + //
+                        "    }\r\n" + //
+                        "\r\n" + //
+                        "    .invoice_banner h2.document_title {\r\n" + //
+                        "        text-transform: uppercase;\r\n" + //
+                        "        font-family: 'Poppins';\r\n" + //
+                        "        height: fit-content;\r\n" + //
+                        "        align-self: center;\r\n" + //
+                        "        font-size: 40px;\r\n" + //
+                        "        width: 26%;\r\n" + //
+                        "        /* border: solid 1px red; */\r\n" + //
+                        "    }\r\n" + //
+                        "\r\n" + //
+                        "    .address_info {\r\n" + //
+                        "        margin: 30px;\r\n" + //
+                        "        display: flex;\r\n" + //
+                        "        justify-content: space-between;\r\n" + //
+                        "        font-family: 'Poppins';\r\n" + //
+                        "        /* border-bottom: solid 3px gray; */\r\n" + //
+                        "    }\r\n" + //
+                        "\r\n" + //
+                        "    .invoice_from,\r\n" + //
+                        "    .invoice_to {\r\n" + //
+                        "        /* width: 26%; */\r\n" + //
+                        "    }\r\n" + //
+                        "\r\n" + //
+                        "    .billing_container {\r\n" + //
+                        "        padding: 0 30px;\r\n" + //
+                        "    }\r\n" + //
+                        "\r\n" + //
+                        "    #billing_info {\r\n" + //
+                        "        width: -webkit-fill-available;\r\n" + //
+                        "        text-align: left;\r\n" + //
+                        "        border-collapse: collapse;\r\n" + //
+                        "    }\r\n" + //
+                        "\r\n" + //
+                        "    #billing_info thead tr {\r\n" + //
+                        "        background-color: orange;\r\n" + //
+                        "        height: 50px;\r\n" + //
+                        "    }\r\n" + //
+                        "\r\n" + //
+                        "    #billing_info th,\r\n" + //
+                        "    td {\r\n" + //
+                        "        padding: 14px 16px;\r\n" + //
+                        "    }\r\n" + //
+                        "\r\n" + //
+                        "    #billing_info tbody tr:nth-of-type(even) {\r\n" + //
+                        "        background-color: #e8e8d0;\r\n" + //
+                        "    }\r\n" + //
+                        "\r\n" + //
+                        "    #billing_info tbody tr:nth-last-child(1) {\r\n" + //
+                        "        border-bottom: solid 3px gray;\r\n" + //
+                        "    }\r\n" + //
+                        "\r\n" + //
+                        "    #payment_info_container {\r\n" + //
+                        "        display: flex;\r\n" + //
+                        "        justify-content: flex-end;\r\n" + //
+                        "        padding: 30px;\r\n" + //
+                        "    }\r\n" + //
+                        "\r\n" + //
+                        "    #payment_info p {\r\n" + //
+                        "        margin: 0;\r\n" + //
+                        "        margin-bottom: 8px;\r\n" + //
+                        "    }\r\n" + //
+                        "    #billing_total{\r\n" + //
+                        "        border-collapse: collapse;\r\n" + //
+                        "    }\r\n" + //
+                        "    #billing_total th{\r\n" + //
+                        "        text-align: right;\r\n" + //
+                        "    }\r\n" + //
+                        "    #billing_total tbody tr:nth-child(1) th{\r\n" + //
+                        "        color: orange;\r\n" + //
+                        "    }\r\n" + //
+                        "    #billing_total tr:nth-last-child(1){\r\n" + //
+                        "        background-color: orange;\r\n" + //
+                        "        font-size: 18px;\r\n" + //
+                        "    }\r\n" + //
+                        "</style></head><body><div>";
+    }
+    @Override
+    public String invoicemailbody(Bill bill)
+    {
+        return "Dear "+bill.getCustomer_fid().getName()+",\r\n" + //
+                        "\r\n" + //
+                        "I hope this email finds you well. We are writing to provide you with the invoice for your recent order "+bill.getBill_pid()+" placed with My Store Pvt.Ltd.\r\n" + //
+                        "\r\n" + //
+                        "Attached to this email, you will find the invoice detailing the items you have purchased, along with the total amount due. Please review the invoice and let us know if you have any questions or concerns regarding the billing.\r\n" + //
+                        "\r\n" + //
+                        "If everything looks accurate, we kindly request that you process the payment at your earliest convenience. You can find the payment details on the invoice.\r\n" + //
+                        "\r\n" + //
+                        "Thank you for choosing My Store Pvt.Ltd. We appreciate your business and look forward to serving you again in the future.\r\n" + //
+                        "\r\n" + //
+                        
+                        "Best regards,\r\n" + //
+                        "\r\n" + //
+                        "My Store Pvt.Ltd\r\n"
+                       ;
+    }
     
 }

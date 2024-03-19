@@ -11,5 +11,8 @@ public interface InvoiceService {
     public List<String> validateinvoice(List<Product> products);
     public boolean insertInvoiceDetails(List<Product> p, Bill bill);
     public String printIncoice(Bill bill);
+    public String invoiceStaticHtml();
+    public String invoicemailbody(Bill bill);
+
 
 }

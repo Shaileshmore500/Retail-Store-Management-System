@@ -24,7 +24,7 @@ public class EmailServiceImpl implements EmailService {
     private JavaMailSender javaMailSender;
 
     @Override
-    public String sendMail(MultipartFile file, String to, String[] cc, String subject, String body) {
+    public String sendMail(MultipartFile file, String to, String[] cc, String subject, String body,byte[] arrbyte) {
         try {
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 
@@ -34,7 +34,7 @@ public class EmailServiceImpl implements EmailService {
             mimeMessageHelper.setTo(to);
             //mimeMessageHelper.setCc(cc);
             mimeMessageHelper.setSubject(subject);
-            mimeMessageHelper.setText(body);
+            mimeMessageHelper.setText(body==null ? "" : body);
 
             // for (int i = 0; i < file.length; i++) 
             // {
@@ -47,6 +47,11 @@ public class EmailServiceImpl implements EmailService {
             mimeMessageHelper.addAttachment(
                              file.getOriginalFilename(),
                             new ByteArrayResource(file.getBytes()));
+            }
+            else if(arrbyte!=null)
+            {
+                mimeMessageHelper.addAttachment("Invoice.pdf", new ByteArrayResource(arrbyte));
+
             }
             javaMailSender.send(mimeMessage);
 

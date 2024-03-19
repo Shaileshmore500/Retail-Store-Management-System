@@ -74,6 +74,20 @@
     <artifactId>poi-ooxml</artifactId>
     <version>5.0.0</version>
 </dependency>
+<!-- dependencies for pdf writer -->
+<dependency>
+    <groupId>org.xhtmlrenderer</groupId>
+    <artifactId>flying-saucer-pdf</artifactId>
+    <version>9.1.22</version> <!-- Or the latest version available -->
+</dependency>
+<dependency>
+    <groupId>org.xhtmlrenderer</groupId>
+    <artifactId>flying-saucer-core</artifactId>
+    <version>9.1.22</version> <!-- Or the latest version available -->
+</dependency>
+
+
+<!--  -->
 
 		<dependency>
 

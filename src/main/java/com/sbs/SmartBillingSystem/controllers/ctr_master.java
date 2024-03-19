@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.ByteArrayOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -49,10 +50,15 @@ import com.sbs.SmartBillingSystem.Repository.SupplierRepo;
 import com.sbs.SmartBillingSystem.Repository.UserRepo;
 import com.sbs.SmartBillingSystem.Services.EmailService;
 import com.sbs.SmartBillingSystem.Services.InvoiceService;
+
+import jakarta.servlet.http.HttpServletResponse;
+
 import com.sbs.SmartBillingSystem.Entity.serializedObject.*;
 //<<<<<<< HEAD
 
 import org.springframework.web.multipart.MultipartFile;
+import org.xhtmlrenderer.pdf.ITextRenderer;
+
 //>>>>>>> bd73ce8323737b0d97e12ef35a3914d69be88555
 //=======
 import com.sbs.SmartBillingSystem.Helper.EmailHelper;
@@ -292,7 +298,7 @@ public class ctr_master {
 
     @PostMapping("/generateinvoice")
     // public ResponseEntity<?> generateInvoice(@RequestBody List<Product> p) {
-    public ResponseEntity<?> generateInvoice(@RequestBody DesObjBillProduct billProduct, Principal principal) {
+    public ResponseEntity<?> generateInvoice(@RequestBody DesObjBillProduct billProduct, Principal principal, HttpServletResponse response) {
         try {
 
             List<Product> productList = billProduct.getProduct();
@@ -322,6 +328,51 @@ public class ctr_master {
 
             if (updateStatus) {
                 var invoicehtml=invoiceService.printIncoice(bill2);
+                if(bill2!=null && bill2.getCustomer_fid()!=null && bill2.getCustomer_fid().getEmail()!=null && bill2.getCustomer_fid().getEmail()!="")
+                {
+                     try {
+
+                        
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            ITextRenderer renderer = new ITextRenderer();
+            renderer.setDocumentFromString(invoiceService.invoiceStaticHtml() +invoicehtml+"</div></body></html>");
+            renderer.layout();
+            renderer.createPDF(outputStream);
+            renderer.finishPDF();
+            
+            // Set response content type
+            response.setContentType("application/pdf");
+            
+            // Optionally, you can set the Content-Disposition header to force download the PDF
+            // response.setHeader("Content-Disposition", "attachment; filename=\"converted_document.pdf\"");
+            
+            // Write PDF to response output stream
+            //response.getOutputStream().write(outputStream.toByteArray());
+            emailService.sendMail(null, bill2.getCustomer_fid().getEmail(), null, "Invoice", invoiceService.invoicemailbody(bill2),outputStream.toByteArray());
+
+        } catch (Exception e){
+            e.printStackTrace();
+            // Handle exception
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+
+                }
+                
                 return new ResponseEntity<>(invoicehtml, HttpStatus.OK);
             }
         } catch (Exception e) {
@@ -470,7 +521,7 @@ public class ctr_master {
 
             // var isSendmail = emailHelper.sendMail(subject, "body_Builder".toString(),
             // attchment, receiver, filename);
-            String result = emailService.sendMail(file, suppiler.getEmail(), null, subject, body_Builder.toString());
+            String result = emailService.sendMail(file, suppiler.getEmail(), null, subject, body_Builder.toString(),null);
 
             // public String sendMail(MultipartFile[] file, String to, String[] cc, String
             // subject, String body) {
@@ -501,7 +552,7 @@ public class ctr_master {
                                                         name+"\r\n" + //                                                        
                                                         mobile;
 
-        String result = emailService.sendMail(null, "shaileshmore500@gmail.com", null, "Request for Contact", emailbody);
+        String result = emailService.sendMail(null, "shaileshmore500@gmail.com", null, "Request for Contact", emailbody,null);
 
             // public String sendMail(MultipartFile[] file, String to, String[] cc, String
             // subject, String body) {
