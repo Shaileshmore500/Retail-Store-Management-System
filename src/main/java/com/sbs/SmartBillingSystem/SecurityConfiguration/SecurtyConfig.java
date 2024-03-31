@@ -23,10 +23,9 @@ public class SecurtyConfig {
      public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
          http.csrf().disable()
                  .authorizeHttpRequests()
-                 .requestMatchers("/forgotpassword")
+                 .requestMatchers("/saveuser","/register","/css/**")
                  .permitAll()
-                 .requestMatchers("/home")
-                 .hasRole("ADMIN")
+                 
                  .anyRequest()
                  .authenticated()
                  .and()

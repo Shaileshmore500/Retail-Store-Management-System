@@ -3,19 +3,28 @@ package com.sbs.SmartBillingSystem.controllers;
 import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sbs.SmartBillingSystem.Repository.AttendenceRepo;
 import com.sbs.SmartBillingSystem.Repository.BillDetailRepo;
@@ -56,6 +65,8 @@ public class ctr {
     BillDetailRepo billDetailRepo;
     @Autowired
     EntityManager entityManager;
+   
+    
     @Autowired
     ReportDataService dataService;
     @Autowired
@@ -64,7 +75,8 @@ public class ctr {
     AttendenceRepo attendenceRepo;
     @Autowired
     PurchaseOrderRepo orderRepo;
-
+ @Autowired
+    PasswordEncoder passwordEncoder;
     // if u want to use method base authorization then use this anotation
     // @PreAuthorize("hasRoll('ADMIN')")
     @GetMapping("/login")
@@ -179,6 +191,66 @@ public class ctr {
     @GetMapping("/brand")
     public String brand() {
         return "forms/brand";
+    }
+    @GetMapping("/register")
+    public String signup() {
+        return "signup";
+    }
+    @PostMapping("/saveuser")
+    public String registerUser(@RequestParam String id,
+            @RequestParam String email,
+            @RequestParam String name,
+            @RequestParam String mobile_no,
+          
+            @RequestParam String address,
+            @RequestParam String password, @RequestParam("file") MultipartFile file,
+            Model model) {
+
+        try {
+
+            User user = new User();
+            user.setEmail(email);
+            user.setAddress(address);
+            user.setEnabled(true);
+            user.setMobile_no(mobile_no);
+            user.setName(name);
+            user.setPassword(password);
+            user.setRole("ROLE_OTHER");
+
+            if (file != null) {
+
+                String timestamp = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+
+                Path resourcesPath = Paths
+                        .get("src", "main", "resources", "static", "images", timestamp + file.getOriginalFilename())
+                        .toAbsolutePath();
+
+                byte[] img_byte = file.getBytes();
+                Files.write(resourcesPath, img_byte);
+
+                if (resourcesPath == null)
+                    user.setImageUrl("default.png");
+                else
+                    user.setImageUrl(timestamp + file.getOriginalFilename());
+                ;
+
+            }
+
+            
+
+              
+            user.setEnabled(true);
+
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+            this.userRepo.save(user);
+
+            model.addAttribute("status", "success");
+        } catch (Exception e) {
+            model.addAttribute("status", "error");
+            return "signup";
+        }
+        return "login";
     }
 
     @GetMapping("/invoice")

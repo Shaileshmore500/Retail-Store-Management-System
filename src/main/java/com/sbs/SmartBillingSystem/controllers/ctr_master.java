@@ -383,6 +383,8 @@ public class ctr_master {
 
     }
 
+    
+
     @PostMapping("/master/registerUser")
     public String registerUser(@ModelAttribute("user") User user, @RequestParam("file") MultipartFile file
 

@@ -1,0 +1,155 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+    <link rel="stylesheet" th:href="@{/css/nav.css}" />
+    <link rel="stylesheet" th:href="@{/css/form.css}" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet"
+    id="bootstrap-css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
+  </head>
+  <body>
+    
+    <section class="html__section" >
+      <div class="login-box">
+        <h2>Sign Up</h2>
+        <form action="#" th:action="@{/saveuser}" method="POST" id="form" enctype="multipart/form-data">
+          
+            <div th:if="${status eq 'error'}" class="alert alert-danger">
+                <p>An error occurred. Please try again.</p>
+            </div>
+            <!-- <div
+            th:if="${errormessage}"
+            th:text="${errormessage}"
+            id="errormessage"
+            class="alert alert-danger"
+          ></div>
+
+          <div
+            th:if="${sucmessage}"
+            th:text="${sucmessage}"
+            class="alert alert-success"
+          ></div> -->
+          <div class="user-box">
+            <input type="hidden" name="id"  />
+          </div>
+          <div class="user-box">
+            <input
+              type="text"
+              name="name"
+              
+              required=""
+            />
+            <label>User Name</label>
+          </div>
+          <div class="user-box">
+            <input
+              type="text"
+              name="email"
+              required=""
+            />
+            <label>Email</label>
+          </div>
+          <div class="user-box">
+            <input
+              type="text"
+              name="mobile_no"
+             
+              required=""
+            />
+            <label>Mobile Number</label>
+          </div>
+          <!-- <div class="form-floating mb-3 col-12 mandatory user-box" style="padding: 0px;">
+            <label for="" class="md_lblsel"></label>
+          <select
+              class="form-select form-select-lg mb-3 "
+              aria-label=".form-select-lg example"
+              id="html_role"
+              data-field="supplier_fid"
+              name="role"
+              required
+            >            
+              <option selected value="">Role</option>
+              <option value="ROLE_ADMIN">ADMIN</option>
+              <option value="ROLE_MANAGER">Manager</option>
+              <option value="ROLE_CASHIER">CASHIER</option>
+              <option value="ROLE_SALESMAN">SALESMAN</option>
+              <option value="ROLE_OTHER">Other</option>
+              
+                            
+            </select> 
+            </div> -->
+          
+          <div class="user-box">
+            <!-- <input
+              type="text"
+              name="address"              
+              required=""
+            />
+             -->
+             <textarea name="address" id="" cols="30" rows="15" required></textarea>
+            <label>Address</label>
+          </div>
+          <div class="user-box">
+            <input
+              type="password"
+              name="password"
+              
+              required=""
+            />
+            <label>Password</label>
+          </div>
+          <div class="user-box">
+            <input
+              type="text"
+              name="pass2"             
+              required=""
+            />
+            <label>Confirm Password</label>
+          </div>
+          <div class="user-box">
+            <input
+              type="File" accept="image/x-png,image/gif,image/jpeg"
+              name="file"
+             
+              required=""
+            />
+            <label>Image</label>
+          </div>
+          <div class="button-container">
+            <button type="submit" id="save" style="border-radius: 25px" class="btn-form">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              Save
+            </button>
+            <button type="cancle" id="cancle" style="border-radius: 25px" class="btn-form-cancle btn-danger">
+      
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              Cancel
+            </button>
+          </div>
+        
+        </form>
+      </div>
+    
+      <script>
+
+
+
+
+      </script>
+      
+    </section>
+   
+    
+    
+  </body>
+</html>
